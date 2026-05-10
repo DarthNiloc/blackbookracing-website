@@ -25,20 +25,32 @@ interface CodeRow {
   roi_pct: number | null;
 }
 
+interface Summary {
+  n_picks: number;
+  n_wins: number;
+  n_voided: number;
+  hit_rate_pct: number | null;
+  total_stake_pts: number;
+  total_profit_pts: number;
+  roi_pct: number | null;
+}
+
+interface TierHeadline extends Summary {
+  name: 'open' | 'club' | 'blackbook';
+  label: string;
+  blurb: string;
+  first_date: string | null;
+  last_date: string | null;
+  n_days: number;
+}
+
 interface Ledger {
   generated_at: string;
   first_date: string | null;
   last_date: string | null;
   n_days: number;
-  summary: {
-    n_picks: number;
-    n_wins: number;
-    n_voided: number;
-    hit_rate_pct: number | null;
-    total_stake_pts: number;
-    total_profit_pts: number;
-    roi_pct: number | null;
-  };
+  summary: Summary;
+  tier_headlines: TierHeadline[];
   by_race_code: CodeRow[];
   picks: Pick[];
 }
@@ -80,33 +92,51 @@ const codeName: Record<string, string> = {
       reconcile to Betfair Starting Price after the race. Losers published alongside winners.
     </p>
 
-    <section class="stats">
-          <div class="stat">
-            <span class="stat-label">Picks</span>
-            <span class="stat-value">{ledger.summary.n_picks}</span>
+    <section class="tier-band">
+      <p class="tier-band-eyebrow">Live performance by tier</p>
+      <div class="tier-grid">
+        {ledger.tier_headlines.map(t => (
+          <div class={"tier-card tier-card-" + t.name}>
+            <div class="tier-card-head">
+              <span class={"tier-pill tier-pill-" + t.name}>{t.label}</span>
+            </div>
+            <div class="tier-stats">
+              <div class="tier-stat tier-stat-roi">
+                <span class={"tier-stat-value " + ((t.roi_pct ?? 0) >= 0 ? "pos" : "neg")}>
+                  {fmtPct(t.roi_pct)}
+                </span>
+                <span class="tier-stat-label">ROI</span>
+              </div>
+              <div class="tier-stat-row">
+                <div class="tier-stat-mini">
+                  <span class="tier-stat-mini-value">{t.n_picks}</span>
+                  <span class="tier-stat-mini-label">Picks</span>
+                </div>
+                <div class="tier-stat-mini">
+                  <span class="tier-stat-mini-value">{t.hit_rate_pct?.toFixed(1)}%</span>
+                  <span class="tier-stat-mini-label">Hit rate</span>
+                </div>
+                <div class="tier-stat-mini">
+                  <span class={"tier-stat-mini-value " + (t.total_profit_pts >= 0 ? "pos" : "neg")}>
+                    {fmtSign(t.total_profit_pts)}<span class="pt">pt</span>
+                  </span>
+                  <span class="tier-stat-mini-label">P&amp;L</span>
+                </div>
+              </div>
+            </div>
+            <p class="tier-blurb">{t.blurb}</p>
           </div>
-          <div class="stat">
-            <span class="stat-label">Hit rate</span>
-            <span class="stat-value">{ledger.summary.hit_rate_pct?.toFixed(1)}%</span>
-          </div>
-          <div class="stat">
-            <span class="stat-label">ROI</span>
-            <span class={"stat-value " + ((ledger.summary.roi_pct ?? 0) >= 0 ? "pos" : "neg")}>
-              {fmtPct(ledger.summary.roi_pct)}
-            </span>
-          </div>
-          <div class="stat">
-            <span class="stat-label">Profit</span>
-            <span class={"stat-value " + (ledger.summary.total_profit_pts >= 0 ? "pos" : "neg")}>
-              {fmtSign(ledger.summary.total_profit_pts)}<span class="unit">pt</span>
-            </span>
-          </div>
-        </section>
-
-        <p class="period">
-          {ledger.first_date && fmtDate(ledger.first_date)} <span class="dash">—</span>{' '}
-          {ledger.last_date && fmtDate(ledger.last_date)} <span class="dot">▲</span> {ledger.n_days} race days
-        </p>
+        ))}
+      </div>
+      <p class="period">
+        {ledger.first_date && fmtDate(ledger.first_date)} <span class="dash">—</span>{' '}
+        {ledger.last_date && fmtDate(ledger.last_date)} <span class="dot">▲</span> {ledger.n_days} race days
+      </p>
+      <p class="tier-band-note">
+        Open detail is published below. Club and Blackbook detail goes to subscribers each morning;
+        these headline numbers are computed from the same audit log.
+      </p>
+    </section>
 
         <section class="block">
           <h2>By race code</h2>
@@ -208,26 +238,97 @@ const codeName: Record<string, string> = {
       text-align: center;
     }
 
-    .stats {
-      display: grid;
-      grid-template-columns: repeat(4, 1fr);
-      gap: 16px;
-      max-width: 720px;
+    /* === 3-tier comparison band === */
+    .tier-band {
+      max-width: 1080px;
       margin: 0 auto 18px;
-      padding: 28px 24px;
-      border-top: 1px solid var(--ink);
-      border-bottom: 1px solid var(--ink);
     }
 
-    .stat {
+    .tier-band-eyebrow {
+      font-family: 'Inter', sans-serif;
+      font-size: 11px;
+      letter-spacing: 0.25em;
+      text-transform: uppercase;
+      color: var(--gold);
+      font-weight: 600;
       text-align: center;
+      margin-bottom: 24px;
+    }
+
+    .tier-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 18px;
+    }
+
+    .tier-card {
+      padding: 28px 24px;
+      border: 1px solid var(--rule);
+      border-radius: 4px;
+      background: var(--cream);
       display: flex;
       flex-direction: column;
-      gap: 6px;
+      gap: 18px;
+    }
+
+    .tier-card-club {
+      border-color: var(--gold);
+      box-shadow: inset 0 0 0 1px var(--gold);
+    }
+
+    .tier-card-head {
+      display: flex;
+    }
+
+    .tier-pill {
+      font-family: 'Inter', sans-serif;
+      font-weight: 700;
+      font-size: 10px;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      padding: 4px 10px;
+      border-radius: 3px;
+    }
+
+    .tier-pill-open {
+      background: rgba(10, 10, 10, 0.06);
+      color: var(--ink);
+    }
+
+    .tier-pill-club {
+      background: var(--ink);
+      color: var(--cream);
+    }
+
+    .tier-pill-blackbook {
+      background: var(--gold);
+      color: var(--ink);
+    }
+
+    .tier-stats {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
       font-feature-settings: 'tnum';
     }
 
-    .stat-label {
+    .tier-stat-roi {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+      padding-bottom: 14px;
+      border-bottom: 1px solid var(--rule);
+    }
+
+    .tier-stat-value {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 40px;
+      font-weight: 600;
+      letter-spacing: 0.01em;
+      line-height: 1;
+    }
+
+    .tier-stat-label {
       font-family: 'Inter', sans-serif;
       font-size: 10px;
       letter-spacing: 0.22em;
@@ -236,23 +337,65 @@ const codeName: Record<string, string> = {
       font-weight: 600;
     }
 
-    .stat-value {
-      font-family: 'Cormorant Garamond', serif;
-      font-size: 30px;
-      font-weight: 600;
-      letter-spacing: 0.02em;
-      color: var(--ink);
+    .tier-stat-row {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 10px;
     }
 
-    .stat-value .unit {
-      font-size: 14px;
-      letter-spacing: 0.04em;
+    .tier-stat-mini {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+
+    .tier-stat-mini-value {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 22px;
+      font-weight: 600;
+      letter-spacing: 0.01em;
+      line-height: 1;
+    }
+
+    .tier-stat-mini-value .pt {
+      font-size: 12px;
       color: var(--ink-mute);
       margin-left: 2px;
+      letter-spacing: 0.04em;
+    }
+
+    .tier-stat-mini-label {
+      font-family: 'Inter', sans-serif;
+      font-size: 9px;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--ink-mute);
+      font-weight: 600;
     }
 
     .pos { color: #2d5a2d; }
     .neg { color: #8b2a2a; }
+
+    .tier-blurb {
+      font-family: 'EB Garamond', serif;
+      font-size: 14px;
+      line-height: 1.5;
+      color: var(--ink-soft);
+      padding-top: 12px;
+      border-top: 1px solid var(--rule);
+      margin-top: auto;
+    }
+
+    .tier-band-note {
+      font-family: 'Inter', sans-serif;
+      font-size: 12px;
+      letter-spacing: 0.04em;
+      color: var(--ink-mute);
+      text-align: center;
+      max-width: 580px;
+      margin: 24px auto 56px;
+      line-height: 1.55;
+    }
 
     .period {
       font-family: 'Inter', sans-serif;
@@ -260,7 +403,7 @@ const codeName: Record<string, string> = {
       letter-spacing: 0.06em;
       color: var(--ink-mute);
       text-align: center;
-      margin-bottom: 56px;
+      margin: 28px 0 4px;
       font-feature-settings: 'tnum';
     }
 
@@ -373,6 +516,15 @@ const codeName: Record<string, string> = {
       font-feature-settings: 'tnum';
     }
 
+    @media (max-width: 920px) {
+      .tier-grid {
+        grid-template-columns: 1fr;
+        gap: 14px;
+        max-width: 480px;
+        margin: 0 auto;
+      }
+    }
+
     @media (max-width: 720px) {
       .page-title {
         font-size: 28px;
@@ -383,14 +535,16 @@ const codeName: Record<string, string> = {
         margin-bottom: 40px;
       }
 
-      .stats {
-        grid-template-columns: repeat(2, 1fr);
-        gap: 24px 16px;
-        padding: 24px 16px;
+      .tier-card {
+        padding: 24px 22px;
       }
 
-      .stat-value {
-        font-size: 26px;
+      .tier-stat-value {
+        font-size: 34px;
+      }
+
+      .tier-stat-mini-value {
+        font-size: 19px;
       }
 
       .data-table {
