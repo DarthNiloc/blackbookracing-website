@@ -1,0 +1,182 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+---
+
+<BaseLayout
+  title="Sample pick — Blackbook Racing Club"
+  description="A demonstration of our daily pick format. Timestamped pre-off, reconciled to Betfair SP after the race."
+>
+  <article class="page">
+    <p class="eyebrow">Sample</p>
+    <h1 class="page-title">A pick, as we publish it</h1>
+    <p class="lede">
+      Every selection is timestamped before the off and reconciled to Betfair SP after the race.
+      This is the format Club and Blackbook subscribers see each day.
+    </p>
+
+    <div class="pick-card">
+      <div class="pick-head">▲ BLACKBOOK <span class="bar">|</span> 2026-05-10 <span class="dot">·</span> 15:25 BEV</div>
+      <div class="pick-meta">Race 4 — 5f Handicap</div>
+      <div class="pick-horse">SILVER ARROW</div>
+      <div class="pick-meta">
+        Stake: 1.5pt @ Betfair SP<br />
+        Price: 4.8 (Betfair, captured 18:00 BST)
+      </div>
+      <div class="pick-why">
+        <span class="pick-why-label">Why</span>
+        master-rank top + market overlooks
+      </div>
+      <div class="pick-why">
+        <span class="pick-why-label">Conviction</span>
+        A (top tier on today's slate)
+      </div>
+      <div class="pick-footnote">Logged 18:42 BST <span class="dot">·</span> pre-off <span class="dot">·</span> team-reviewed</div>
+    </div>
+
+    <p class="note">
+      Open tier drops the Conviction line and the team-reviewed tag — keeps it cleaner for free subs.
+    </p>
+  </article>
+
+  <style>
+    .page {
+      padding-top: 16px;
+    }
+
+    .eyebrow {
+      font-family: 'Inter', sans-serif;
+      font-size: 11px;
+      letter-spacing: 0.25em;
+      text-transform: uppercase;
+      color: var(--gold);
+      font-weight: 600;
+      text-align: center;
+      margin-bottom: 12px;
+    }
+
+    .page-title {
+      font-family: 'Cormorant Garamond', serif;
+      font-weight: 700;
+      font-size: 40px;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+      text-align: center;
+      margin-bottom: 24px;
+    }
+
+    .lede {
+      font-family: 'EB Garamond', serif;
+      font-size: 19px;
+      line-height: 1.55;
+      color: var(--ink-soft);
+      max-width: 600px;
+      margin: 0 auto 56px;
+      text-align: center;
+    }
+
+    .pick-card {
+      background: var(--ink);
+      color: var(--cream);
+      padding: 36px 40px;
+      max-width: 640px;
+      margin: 0 auto;
+      border-radius: 4px;
+      font-family: 'Inter', sans-serif;
+      font-size: 14px;
+      line-height: 1.65;
+      font-feature-settings: 'tnum';
+    }
+
+    .pick-head {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 16px;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--gold);
+      font-weight: 600;
+      margin-bottom: 14px;
+    }
+
+    .pick-head .bar {
+      color: rgba(245, 241, 232, 0.45);
+      margin: 0 6px;
+    }
+
+    .pick-head .dot {
+      margin: 0 4px;
+    }
+
+    .pick-meta {
+      color: rgba(245, 241, 232, 0.78);
+      font-size: 14px;
+    }
+
+    .pick-horse {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 36px;
+      font-weight: 600;
+      letter-spacing: 0.04em;
+      color: var(--cream);
+      margin: 18px 0 8px;
+      line-height: 1.1;
+    }
+
+    .pick-why {
+      margin-top: 16px;
+      padding-top: 16px;
+      border-top: 1px solid rgba(245, 241, 232, 0.18);
+    }
+
+    .pick-why-label {
+      color: var(--gold);
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 13px;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      font-weight: 700;
+      display: block;
+      margin-bottom: 4px;
+    }
+
+    .pick-footnote {
+      margin-top: 18px;
+      padding-top: 14px;
+      border-top: 1px solid rgba(245, 241, 232, 0.18);
+      color: rgba(245, 241, 232, 0.55);
+      font-size: 12px;
+    }
+
+    .pick-footnote .dot {
+      margin: 0 6px;
+    }
+
+    .note {
+      font-family: 'Inter', sans-serif;
+      font-size: 12px;
+      letter-spacing: 0.04em;
+      color: var(--ink-mute);
+      text-align: center;
+      max-width: 560px;
+      margin: 28px auto 0;
+    }
+
+    @media (max-width: 640px) {
+      .page-title {
+        font-size: 28px;
+      }
+
+      .lede {
+        font-size: 17px;
+        margin-bottom: 40px;
+      }
+
+      .pick-card {
+        padding: 28px 24px;
+      }
+
+      .pick-horse {
+        font-size: 30px;
+      }
+    }
+  </style>
+</BaseLayout>

@@ -1,0 +1,137 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+---
+
+<BaseLayout
+  title="How we work — Blackbook Racing Club"
+  description="Methodology, ledger, and what we don't do. A small UK team of horse racing enthusiasts publishing timestamped picks reconciled to Betfair SP."
+>
+  <article class="page">
+    <p class="eyebrow">How we work</p>
+    <h1 class="page-title">Methodology &amp; ledger</h1>
+
+    <section class="block">
+      <h2>Who we are</h2>
+      <p>
+        We are a small UK-based team of horse racing enthusiasts. We've been building, refining,
+        and backtesting our blackbook methodology on decades of UK racing data — and we're still
+        doing it every day.
+      </p>
+    </section>
+
+    <section class="block">
+      <h2>What we do</h2>
+      <p>
+        Every UK race day, we run the field through our methodology, the team reviews the
+        strongest plays of the day, and we publish them on Telegram and the public ledger. Every
+        selection is timestamped before the off. Every result is reconciled to Betfair SP after
+        the race.
+      </p>
+    </section>
+
+    <section class="block">
+      <h2>Our methodology</h2>
+      <p>
+        We assess every UK runner across a deep stack of signals — speed figures, handicap
+        context, market behaviour, trainer/jockey form, and our own private indicators built on
+        decades of historical data. A selection only fires when a runner clears the threshold on
+        a stream we've validated across our extensive backtest history. Every morning, the team
+        reviews the day's slate before publication.
+      </p>
+    </section>
+
+    <section class="block">
+      <h2>How we measure ourselves</h2>
+      <p>
+        The full ledger is public. Timestamps are pre-off. Settlements reconcile to Betfair SP.
+        We publish losers alongside winners and per-race-code performance — including the
+        courses where we don't have an edge.
+      </p>
+    </section>
+
+    <section class="block">
+      <h2>What we don't do</h2>
+      <p>
+        Claim guaranteed returns. Post stakes after the result. Hide losing months. Sell systems
+        we wouldn't bet ourselves.
+      </p>
+    </section>
+
+    <section class="block">
+      <h2>The Blackbook</h2>
+      <p>
+        Members in the Blackbook tier get our curated list of horses worth tracking — animals
+        our team has flagged across multiple runs and expects to fire when conditions align.
+        Every entry has a reason and a target run window.
+      </p>
+    </section>
+  </article>
+
+  <style>
+    .page {
+      padding-top: 16px;
+    }
+
+    .eyebrow {
+      font-family: 'Inter', sans-serif;
+      font-size: 11px;
+      letter-spacing: 0.25em;
+      text-transform: uppercase;
+      color: var(--gold);
+      font-weight: 600;
+      text-align: center;
+      margin-bottom: 12px;
+    }
+
+    .page-title {
+      font-family: 'Cormorant Garamond', serif;
+      font-weight: 700;
+      font-size: 40px;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+      text-align: center;
+      margin-bottom: 56px;
+    }
+
+    .block {
+      max-width: 680px;
+      margin: 0 auto;
+      padding-bottom: 36px;
+    }
+
+    .block + .block {
+      padding-top: 36px;
+      border-top: 1px solid var(--rule);
+    }
+
+    .block h2 {
+      font-size: 20px;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      font-weight: 600;
+      margin-bottom: 14px;
+    }
+
+    .block p {
+      font-family: 'EB Garamond', serif;
+      font-size: 19px;
+      line-height: 1.6;
+      color: var(--ink);
+    }
+
+    @media (max-width: 640px) {
+      .page-title {
+        font-size: 28px;
+        margin-bottom: 40px;
+      }
+
+      .block h2 {
+        font-size: 17px;
+      }
+
+      .block p {
+        font-size: 17px;
+      }
+    }
+  </style>
+</BaseLayout>

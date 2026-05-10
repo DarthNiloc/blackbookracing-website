@@ -1,0 +1,219 @@
+---
+interface Props {
+  title: string;
+  description?: string;
+}
+
+const { title, description = "The thinking punter's racing club. Data-driven UK racing picks with a public audit trail and a curated blackbook of horses worth tracking." } = Astro.props;
+const pathname = Astro.url.pathname;
+const isActive = (href: string) => pathname === href || (href !== '/' && pathname.startsWith(href));
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content={description} />
+    <link rel="icon" type="image/png" href="/logo.png" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600;700&family=EB+Garamond:wght@400;500;600&family=Inter:wght@400;500;600&display=swap"
+      rel="stylesheet"
+    />
+    <title>{title}</title>
+  </head>
+  <body>
+    <header class="site-header">
+      <div class="header-inner">
+        <a class="brand" href="/" aria-label="Blackbook Racing — home">
+          <img src="/logo.png" alt="Blackbook Racing" />
+        </a>
+        <nav class="site-nav" aria-label="Primary">
+          <a href="/" class={isActive('/') ? 'is-active' : ''}>Home</a>
+          <a href="/how-we-work" class={isActive('/how-we-work') ? 'is-active' : ''}>How we work</a>
+          <a href="/sample" class={isActive('/sample') ? 'is-active' : ''}>Sample</a>
+        </nav>
+      </div>
+    </header>
+
+    <main><slot /></main>
+
+    <footer class="site-footer">
+      <div class="footer-inner">
+        <p>Past performance does not guarantee future returns.</p>
+        <p>18+ <span class="dot">▲</span> BeGambleAware</p>
+      </div>
+    </footer>
+
+    <style is:global>
+      :root {
+        --ink: #0A0A0A;
+        --cream: #F5F1E8;
+        --gold: #C1A467;
+        --ink-soft: rgba(10, 10, 10, 0.7);
+        --ink-mute: rgba(10, 10, 10, 0.55);
+        --rule: rgba(10, 10, 10, 0.12);
+      }
+
+      * {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+      }
+
+      html {
+        background: var(--cream);
+      }
+
+      body {
+        background: var(--cream);
+        color: var(--ink);
+        font-family: 'EB Garamond', Georgia, serif;
+        font-size: 18px;
+        line-height: 1.6;
+        min-height: 100vh;
+        display: flex;
+        flex-direction: column;
+      }
+
+      main {
+        flex: 1 0 auto;
+        width: 100%;
+        max-width: 980px;
+        margin: 0 auto;
+        padding: 64px 40px;
+      }
+
+      h1, h2, h3 {
+        font-family: 'Cormorant Garamond', serif;
+        font-weight: 700;
+        color: var(--ink);
+      }
+
+      a {
+        color: var(--ink);
+        text-decoration: underline;
+        text-decoration-color: var(--gold);
+        text-underline-offset: 4px;
+        text-decoration-thickness: 1px;
+      }
+
+      a:hover {
+        text-decoration-thickness: 2px;
+      }
+
+      .site-header {
+        border-bottom: 1px solid var(--rule);
+        background: var(--cream);
+      }
+
+      .header-inner {
+        max-width: 980px;
+        margin: 0 auto;
+        padding: 20px 40px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 24px;
+      }
+
+      .brand {
+        display: inline-flex;
+        align-items: center;
+        text-decoration: none;
+        line-height: 0;
+      }
+
+      .brand img {
+        height: 56px;
+        width: auto;
+        display: block;
+      }
+
+      .site-nav {
+        display: flex;
+        gap: 28px;
+        align-items: center;
+      }
+
+      .site-nav a {
+        font-family: 'Inter', sans-serif;
+        font-size: 12px;
+        letter-spacing: 0.18em;
+        text-transform: uppercase;
+        color: var(--ink);
+        text-decoration: none;
+        font-weight: 500;
+        padding-bottom: 4px;
+        border-bottom: 1px solid transparent;
+      }
+
+      .site-nav a:hover {
+        border-bottom-color: var(--gold);
+      }
+
+      .site-nav a.is-active {
+        border-bottom-color: var(--gold);
+        color: var(--ink);
+      }
+
+      .site-footer {
+        flex: 0 0 auto;
+        border-top: 1px solid var(--rule);
+        background: var(--cream);
+        margin-top: 64px;
+      }
+
+      .footer-inner {
+        max-width: 980px;
+        margin: 0 auto;
+        padding: 32px 40px 40px;
+        text-align: center;
+        font-family: 'Inter', sans-serif;
+        font-size: 12px;
+        letter-spacing: 0.04em;
+        color: var(--ink-mute);
+      }
+
+      .footer-inner p + p {
+        margin-top: 6px;
+      }
+
+      .footer-inner .dot {
+        color: var(--gold);
+        margin: 0 6px;
+      }
+
+      @media (max-width: 640px) {
+        .header-inner {
+          padding: 16px 22px;
+          gap: 16px;
+          flex-wrap: wrap;
+        }
+
+        .brand img {
+          height: 44px;
+        }
+
+        .site-nav {
+          gap: 18px;
+        }
+
+        .site-nav a {
+          font-size: 11px;
+          letter-spacing: 0.14em;
+        }
+
+        main {
+          padding: 40px 22px;
+        }
+
+        .footer-inner {
+          padding: 28px 22px 32px;
+        }
+      }
+    </style>
+  </body>
+</html>

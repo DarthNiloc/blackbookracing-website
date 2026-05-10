@@ -1,17 +1,90 @@
 ---
-
+import BaseLayout from '../layouts/BaseLayout.astro';
 ---
 
-<html lang="en">
-	<head>
-		<meta charset="utf-8" />
-		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-		<link rel="icon" href="/favicon.ico" />
-		<meta name="viewport" content="width=device-width" />
-		<meta name="generator" content={Astro.generator} />
-		<title>Astro</title>
-	</head>
-	<body>
-		<h1>Astro</h1>
-	</body>
-</html>
+<BaseLayout title="Blackbook Racing Club — The thinking punter's racing club">
+  <section class="hero">
+    <p class="eyebrow">Every pick logged <span class="sep">·</span> Every result reconciled</p>
+    <h1 class="brand-line">The thinking punter's racing club.</h1>
+    <p class="substance">
+      A small UK team of horse racing enthusiasts. Decades of UK racing data behind every selection.
+      Hand-reviewed selections delivered each morning, logged before the off, reconciled after — and
+      a curated blackbook of horses worth tracking.
+    </p>
+  </section>
+
+  <figure class="hero-photo">
+    <img src="/hero-racing.jpg" alt="Horses racing on turf" loading="lazy" />
+  </figure>
+
+  <style>
+    .hero {
+      text-align: center;
+      padding: 32px 0 24px;
+    }
+
+    .eyebrow {
+      font-family: 'Inter', sans-serif;
+      font-size: 11px;
+      letter-spacing: 0.25em;
+      text-transform: uppercase;
+      color: var(--gold);
+      font-weight: 600;
+      margin-bottom: 28px;
+    }
+
+    .eyebrow .sep {
+      margin: 0 6px;
+      opacity: 0.7;
+    }
+
+    .brand-line {
+      font-family: 'Cormorant Garamond', serif;
+      font-weight: 600;
+      font-size: 44px;
+      letter-spacing: 0.01em;
+      line-height: 1.15;
+      max-width: 720px;
+      margin: 0 auto 32px;
+    }
+
+    .substance {
+      font-family: 'EB Garamond', serif;
+      font-size: 20px;
+      line-height: 1.55;
+      max-width: 600px;
+      margin: 0 auto;
+      color: var(--ink-soft);
+    }
+
+    .hero-photo {
+      margin: 80px auto 0;
+      max-width: 880px;
+    }
+
+    .hero-photo img {
+      width: 100%;
+      height: auto;
+      display: block;
+      border-radius: 4px;
+    }
+
+    @media (max-width: 640px) {
+      .hero {
+        padding: 16px 0 8px;
+      }
+
+      .brand-line {
+        font-size: 30px;
+      }
+
+      .substance {
+        font-size: 17px;
+      }
+
+      .hero-photo {
+        margin-top: 56px;
+      }
+    }
+  </style>
+</BaseLayout>
