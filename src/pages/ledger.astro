@@ -15,16 +15,6 @@ interface Pick {
   logged_at: string | null;
 }
 
-interface CodeRow {
-  race_code: string;
-  n_picks: number;
-  n_wins: number;
-  hit_rate_pct: number | null;
-  total_stake_pts: number;
-  total_profit_pts: number;
-  roi_pct: number | null;
-}
-
 interface CourseRow {
   course: string;
   n_picks: number;
@@ -45,14 +35,15 @@ interface Summary {
   roi_pct: number | null;
 }
 
-interface TierHeadline extends Summary {
-  name: 'open' | 'club' | 'blackbook';
+interface StreamPackage extends Summary {
+  name: 'flat' | 'all_weather' | 'hurdle';
   label: string;
-  blurb: string;
+  race_code: string;
+  pitch: string;
+  scope: string;
   first_date: string | null;
   last_date: string | null;
   n_days: number;
-  by_race_code: CodeRow[];
 }
 
 interface Ledger {
@@ -61,8 +52,7 @@ interface Ledger {
   last_date: string | null;
   n_days: number;
   summary: Summary;
-  tier_headlines: TierHeadline[];
-  by_race_code: CodeRow[];
+  stream_packages: StreamPackage[];
   by_course: CourseRow[];
   picks: Pick[];
 }
@@ -83,13 +73,6 @@ function fmtPct(n: number | null): string {
   return (n >= 0 ? '+' : '') + n.toFixed(1) + '%';
 }
 
-const codeName: Record<string, string> = {
-  FLT: 'Flat',
-  AWF: 'All-weather',
-  HDL: 'Hurdle',
-  CHS: 'Chase',
-  NHF: 'Bumper',
-};
 ---
 
 <BaseLayout
@@ -104,39 +87,39 @@ const codeName: Record<string, string> = {
       reconcile to Betfair Starting Price after the race. Losers published alongside winners.
     </p>
 
-    <section class="tier-band">
-      <p class="tier-band-eyebrow">Live performance by tier</p>
-      <div class="tier-grid">
-        {ledger.tier_headlines.map(t => (
-          <div class={"tier-card tier-card-" + t.name}>
-            <div class="tier-card-head">
-              <span class={"tier-pill tier-pill-" + t.name}>{t.label}</span>
+    <section class="package-band">
+      <p class="package-band-eyebrow">Live performance by stream</p>
+      <div class="package-grid">
+        {ledger.stream_packages.map(p => (
+          <div class={"package-card package-card-" + p.name}>
+            <div class="package-head">
+              <h2 class="package-label">{p.label}</h2>
+              <span class="package-code">{p.race_code}</span>
             </div>
-            <div class="tier-stats">
-              <div class="tier-stat tier-stat-roi">
-                <span class={"tier-stat-value " + ((t.roi_pct ?? 0) >= 0 ? "pos" : "neg")}>
-                  {fmtPct(t.roi_pct)}
+            <p class="package-pitch">{p.pitch}</p>
+            <div class="package-stats">
+              <div class="package-stat-roi">
+                <span class={"package-stat-value " + ((p.roi_pct ?? 0) >= 0 ? "pos" : "neg")}>
+                  {fmtPct(p.roi_pct)}
                 </span>
-                <span class="tier-stat-label">ROI</span>
+                <span class="package-stat-label">ROI</span>
               </div>
-              <div class="tier-stat-row">
-                <div class="tier-stat-mini">
-                  <span class="tier-stat-mini-value">{t.n_picks}</span>
-                  <span class="tier-stat-mini-label">Picks</span>
+              <div class="package-stat-row">
+                <div class="package-stat-mini">
+                  <span class="package-stat-mini-value">{p.n_picks}</span>
+                  <span class="package-stat-mini-label">Picks</span>
                 </div>
-                <div class="tier-stat-mini">
-                  <span class="tier-stat-mini-value">{t.hit_rate_pct?.toFixed(1)}%</span>
-                  <span class="tier-stat-mini-label">Hit rate</span>
+                <div class="package-stat-mini">
+                  <span class="package-stat-mini-value">{p.hit_rate_pct?.toFixed(1)}%</span>
+                  <span class="package-stat-mini-label">Hit rate</span>
                 </div>
-                <div class="tier-stat-mini">
-                  <span class={"tier-stat-mini-value " + (t.total_profit_pts >= 0 ? "pos" : "neg")}>
-                    {fmtSign(t.total_profit_pts)}<span class="pt">pt</span>
-                  </span>
-                  <span class="tier-stat-mini-label">P&amp;L</span>
+                <div class="package-stat-mini">
+                  <span class="package-stat-mini-value">{p.n_days}</span>
+                  <span class="package-stat-mini-label">Race days</span>
                 </div>
               </div>
             </div>
-            <p class="tier-blurb">{t.blurb}</p>
+            <p class="package-scope">{p.scope}</p>
           </div>
         ))}
       </div>
@@ -144,65 +127,12 @@ const codeName: Record<string, string> = {
         {ledger.first_date && fmtDate(ledger.first_date)} <span class="dash">—</span>{' '}
         {ledger.last_date && fmtDate(ledger.last_date)} <span class="dot">▲</span> {ledger.n_days} race days
       </p>
-      <p class="tier-band-note">
-        Open detail is published below. Club and Blackbook detail goes to subscribers each morning;
-        these headline numbers are computed from the same audit log.
-      </p>
     </section>
 
         <section class="block">
-          <h2>By race code, across all tiers</h2>
+          <h2>By course</h2>
           <p class="block-note">
-            Each tier's settled performance broken out by UK race code. Coverage gaps shown as
-            zero rows — we don't run synthetic numbers for codes we haven't bet.
-          </p>
-          <div class="matrix-wrap">
-            <table class="data-table matrix-table">
-              <thead>
-                <tr>
-                  <th rowspan="2">Code</th>
-                  {ledger.tier_headlines.map(t => (
-                    <th colspan="2" class={"num tier-col tier-col-" + t.name}>{t.label}</th>
-                  ))}
-                </tr>
-                <tr>
-                  {ledger.tier_headlines.map(t => (
-                    <>
-                      <th class={"num tier-col tier-col-" + t.name}>n</th>
-                      <th class={"num tier-col tier-col-" + t.name}>ROI</th>
-                    </>
-                  ))}
-                </tr>
-              </thead>
-              <tbody>
-                {ledger.tier_headlines[0].by_race_code.map((_, codeIdx) => {
-                  const code = ledger.tier_headlines[0].by_race_code[codeIdx].race_code;
-                  return (
-                    <tr>
-                      <td><strong>{code}</strong> <span class="code-name">{codeName[code] || ''}</span></td>
-                      {ledger.tier_headlines.map(t => {
-                        const c = t.by_race_code[codeIdx];
-                        return (
-                          <>
-                            <td class={"num tier-col tier-col-" + t.name}>{c.n_picks || '—'}</td>
-                            <td class={"num tier-col tier-col-" + t.name + " " + ((c.roi_pct ?? 0) >= 0 ? "pos" : "neg")}>
-                              {c.n_picks > 0 ? fmtPct(c.roi_pct) : '—'}
-                            </td>
-                          </>
-                        );
-                      })}
-                    </tr>
-                  );
-                })}
-              </tbody>
-            </table>
-          </div>
-        </section>
-
-        <section class="block">
-          <h2>By course (Open tier)</h2>
-          <p class="block-note">
-            Performance at every UK racecourse where we've placed at least three Open-tier picks.
+            Performance at every UK racecourse where we've placed at least three settled picks.
             Sorted by volume. Negative-ROI rows are visible because they should be — that's where
             we don't have an edge.
           </p>
@@ -304,13 +234,13 @@ const codeName: Record<string, string> = {
       text-align: center;
     }
 
-    /* === 3-tier comparison band === */
-    .tier-band {
+    /* === Stream package band === */
+    .package-band {
       max-width: 1080px;
-      margin: 0 auto 18px;
+      margin: 0 auto 56px;
     }
 
-    .tier-band-eyebrow {
+    .package-band-eyebrow {
       font-family: 'Inter', sans-serif;
       font-size: 11px;
       letter-spacing: 0.25em;
@@ -321,64 +251,63 @@ const codeName: Record<string, string> = {
       margin-bottom: 24px;
     }
 
-    .tier-grid {
+    .package-grid {
       display: grid;
       grid-template-columns: repeat(3, 1fr);
       gap: 18px;
     }
 
-    .tier-card {
+    .package-card {
       padding: 28px 24px;
       border: 1px solid var(--rule);
       border-radius: 4px;
       background: var(--cream);
       display: flex;
       flex-direction: column;
-      gap: 18px;
+      gap: 16px;
     }
 
-    .tier-card-club {
-      border-color: var(--gold);
-      box-shadow: inset 0 0 0 1px var(--gold);
-    }
-
-    .tier-card-head {
+    .package-head {
       display: flex;
+      align-items: baseline;
+      justify-content: space-between;
+      gap: 10px;
+      padding-bottom: 12px;
+      border-bottom: 1px solid var(--rule);
     }
 
-    .tier-pill {
-      font-family: 'Inter', sans-serif;
+    .package-label {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 26px;
       font-weight: 700;
-      font-size: 10px;
-      letter-spacing: 0.18em;
+      letter-spacing: 0.06em;
       text-transform: uppercase;
-      padding: 4px 10px;
-      border-radius: 3px;
+      margin: 0;
     }
 
-    .tier-pill-open {
-      background: rgba(10, 10, 10, 0.06);
-      color: var(--ink);
+    .package-code {
+      font-family: 'Inter', sans-serif;
+      font-size: 10px;
+      letter-spacing: 0.22em;
+      color: var(--gold);
+      font-weight: 700;
     }
 
-    .tier-pill-club {
-      background: var(--ink);
-      color: var(--cream);
+    .package-pitch {
+      font-family: 'EB Garamond', serif;
+      font-size: 16px;
+      line-height: 1.45;
+      color: var(--ink-soft);
     }
 
-    .tier-pill-blackbook {
-      background: var(--gold);
-      color: var(--ink);
-    }
-
-    .tier-stats {
+    .package-stats {
       display: flex;
       flex-direction: column;
       gap: 16px;
       font-feature-settings: 'tnum';
     }
 
-    .tier-stat-roi {
+    .package-stat-roi {
       display: flex;
       flex-direction: column;
       gap: 4px;
@@ -386,15 +315,15 @@ const codeName: Record<string, string> = {
       border-bottom: 1px solid var(--rule);
     }
 
-    .tier-stat-value {
+    .package-stat-value {
       font-family: 'Cormorant Garamond', serif;
-      font-size: 40px;
+      font-size: 38px;
       font-weight: 600;
       letter-spacing: 0.01em;
       line-height: 1;
     }
 
-    .tier-stat-label {
+    .package-stat-label {
       font-family: 'Inter', sans-serif;
       font-size: 10px;
       letter-spacing: 0.22em;
@@ -403,34 +332,27 @@ const codeName: Record<string, string> = {
       font-weight: 600;
     }
 
-    .tier-stat-row {
+    .package-stat-row {
       display: grid;
       grid-template-columns: repeat(3, 1fr);
       gap: 10px;
     }
 
-    .tier-stat-mini {
+    .package-stat-mini {
       display: flex;
       flex-direction: column;
       gap: 4px;
     }
 
-    .tier-stat-mini-value {
+    .package-stat-mini-value {
       font-family: 'Cormorant Garamond', serif;
-      font-size: 22px;
+      font-size: 20px;
       font-weight: 600;
       letter-spacing: 0.01em;
       line-height: 1;
     }
 
-    .tier-stat-mini-value .pt {
-      font-size: 12px;
-      color: var(--ink-mute);
-      margin-left: 2px;
-      letter-spacing: 0.04em;
-    }
-
-    .tier-stat-mini-label {
+    .package-stat-mini-label {
       font-family: 'Inter', sans-serif;
       font-size: 9px;
       letter-spacing: 0.2em;
@@ -442,25 +364,15 @@ const codeName: Record<string, string> = {
     .pos { color: #2d5a2d; }
     .neg { color: #8b2a2a; }
 
-    .tier-blurb {
+    .package-scope {
       font-family: 'EB Garamond', serif;
       font-size: 14px;
+      font-style: italic;
       line-height: 1.5;
-      color: var(--ink-soft);
-      padding-top: 12px;
+      color: var(--ink-mute);
+      padding-top: 10px;
       border-top: 1px solid var(--rule);
       margin-top: auto;
-    }
-
-    .tier-band-note {
-      font-family: 'Inter', sans-serif;
-      font-size: 12px;
-      letter-spacing: 0.04em;
-      color: var(--ink-mute);
-      text-align: center;
-      max-width: 580px;
-      margin: 24px auto 56px;
-      line-height: 1.55;
     }
 
     .period {
@@ -508,41 +420,6 @@ const codeName: Record<string, string> = {
       color: var(--ink-soft);
       max-width: 720px;
       margin-bottom: 22px;
-    }
-
-    /* === Matrix table (codes × tiers) === */
-    .matrix-wrap {
-      overflow-x: auto;
-    }
-
-    .matrix-table th.tier-col,
-    .matrix-table td.tier-col {
-      border-left: 1px solid var(--rule);
-    }
-
-    .matrix-table thead tr:first-child th.tier-col {
-      font-family: 'Inter', sans-serif;
-      font-size: 11px;
-      letter-spacing: 0.18em;
-      font-weight: 700;
-      text-transform: uppercase;
-      text-align: center;
-      padding: 12px 12px 6px;
-    }
-
-    .matrix-table thead tr:nth-child(2) th {
-      padding-top: 4px;
-      padding-bottom: 8px;
-    }
-
-    .matrix-table .tier-col-club,
-    .matrix-table thead tr:first-child th.tier-col-club {
-      background: rgba(193, 164, 103, 0.08);
-    }
-
-    .matrix-table .tier-col-blackbook,
-    .matrix-table thead tr:first-child th.tier-col-blackbook {
-      background: rgba(193, 164, 103, 0.16);
     }
 
     /* === Course table === */
@@ -637,7 +514,7 @@ const codeName: Record<string, string> = {
     }
 
     @media (max-width: 920px) {
-      .tier-grid {
+      .package-grid {
         grid-template-columns: 1fr;
         gap: 14px;
         max-width: 480px;
@@ -655,16 +532,16 @@ const codeName: Record<string, string> = {
         margin-bottom: 40px;
       }
 
-      .tier-card {
+      .package-card {
         padding: 24px 22px;
       }
 
-      .tier-stat-value {
-        font-size: 34px;
+      .package-stat-value {
+        font-size: 32px;
       }
 
-      .tier-stat-mini-value {
-        font-size: 19px;
+      .package-stat-mini-value {
+        font-size: 18px;
       }
 
       .data-table {
@@ -678,10 +555,6 @@ const codeName: Record<string, string> = {
 
       .picks-table .horse {
         font-size: 14px;
-      }
-
-      .data-table .code-name {
-        display: none;
       }
     }
   </style>

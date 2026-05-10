@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-05-10T17:22:39Z",
+  "generated_at": "2026-05-10T17:41:58Z",
   "first_date": "2026-04-20",
   "last_date": "2026-05-09",
   "n_days": 19,
@@ -12,259 +12,57 @@
     "total_profit_pts": 95.52,
     "roi_pct": 34.61
   },
-  "tier_headlines": [
+  "stream_packages": [
     {
-      "name": "open",
-      "label": "Open",
-      "blurb": "Highest-conviction sub-streams. Free in the public Telegram channel.",
-      "first_date": "2026-04-20",
-      "last_date": "2026-05-09",
-      "n_days": 19,
-      "n_picks": 276,
-      "n_wins": 80,
-      "n_voided": 0,
-      "hit_rate_pct": 29.0,
-      "total_stake_pts": 276.0,
-      "total_profit_pts": 95.52,
-      "roi_pct": 34.61,
-      "by_race_code": [
-        {
-          "race_code": "FLT",
-          "n_picks": 199,
-          "n_wins": 54,
-          "n_voided": 0,
-          "hit_rate_pct": 27.1,
-          "total_stake_pts": 199.0,
-          "total_profit_pts": 65.01,
-          "roi_pct": 32.67
-        },
-        {
-          "race_code": "AWF",
-          "n_picks": 44,
-          "n_wins": 14,
-          "n_voided": 0,
-          "hit_rate_pct": 31.8,
-          "total_stake_pts": 44.0,
-          "total_profit_pts": 15.64,
-          "roi_pct": 35.55
-        },
-        {
-          "race_code": "HDL",
-          "n_picks": 33,
-          "n_wins": 12,
-          "n_voided": 0,
-          "hit_rate_pct": 36.4,
-          "total_stake_pts": 33.0,
-          "total_profit_pts": 14.87,
-          "roi_pct": 45.06
-        },
-        {
-          "race_code": "CHS",
-          "n_picks": 0,
-          "n_wins": 0,
-          "n_voided": 0,
-          "hit_rate_pct": null,
-          "total_stake_pts": 0,
-          "total_profit_pts": 0,
-          "roi_pct": null
-        },
-        {
-          "race_code": "NHF",
-          "n_picks": 0,
-          "n_wins": 0,
-          "n_voided": 0,
-          "hit_rate_pct": null,
-          "total_stake_pts": 0,
-          "total_profit_pts": 0,
-          "roi_pct": null
-        }
-      ]
-    },
-    {
-      "name": "club",
-      "label": "Club",
-      "blurb": "Headline daily slate. Value picks across our validated streams.",
-      "first_date": "2026-04-20",
-      "last_date": "2026-05-09",
-      "n_days": 19,
-      "n_picks": 300,
-      "n_wins": 86,
-      "n_voided": 0,
-      "hit_rate_pct": 28.7,
-      "total_stake_pts": 300.0,
-      "total_profit_pts": 106.67,
-      "roi_pct": 35.56,
-      "by_race_code": [
-        {
-          "race_code": "FLT",
-          "n_picks": 207,
-          "n_wins": 56,
-          "n_voided": 0,
-          "hit_rate_pct": 27.1,
-          "total_stake_pts": 207.0,
-          "total_profit_pts": 69.58,
-          "roi_pct": 33.61
-        },
-        {
-          "race_code": "AWF",
-          "n_picks": 45,
-          "n_wins": 15,
-          "n_voided": 0,
-          "hit_rate_pct": 33.3,
-          "total_stake_pts": 45.0,
-          "total_profit_pts": 23.48,
-          "roi_pct": 52.18
-        },
-        {
-          "race_code": "HDL",
-          "n_picks": 48,
-          "n_wins": 15,
-          "n_voided": 0,
-          "hit_rate_pct": 31.2,
-          "total_stake_pts": 48.0,
-          "total_profit_pts": 13.61,
-          "roi_pct": 28.35
-        },
-        {
-          "race_code": "CHS",
-          "n_picks": 0,
-          "n_wins": 0,
-          "n_voided": 0,
-          "hit_rate_pct": null,
-          "total_stake_pts": 0,
-          "total_profit_pts": 0,
-          "roi_pct": null
-        },
-        {
-          "race_code": "NHF",
-          "n_picks": 0,
-          "n_wins": 0,
-          "n_voided": 0,
-          "hit_rate_pct": null,
-          "total_stake_pts": 0,
-          "total_profit_pts": 0,
-          "roi_pct": null
-        }
-      ]
-    },
-    {
-      "name": "blackbook",
-      "label": "Blackbook",
-      "blurb": "Fullest daily slate. Value plus form across all validated streams.",
-      "first_date": "2026-04-20",
-      "last_date": "2026-05-09",
-      "n_days": 19,
-      "n_picks": 724,
-      "n_wins": 238,
-      "n_voided": 0,
-      "hit_rate_pct": 32.9,
-      "total_stake_pts": 724.0,
-      "total_profit_pts": 237.24,
-      "roi_pct": 32.77,
-      "by_race_code": [
-        {
-          "race_code": "FLT",
-          "n_picks": 547,
-          "n_wins": 176,
-          "n_voided": 0,
-          "hit_rate_pct": 32.2,
-          "total_stake_pts": 547.0,
-          "total_profit_pts": 184.32,
-          "roi_pct": 33.7
-        },
-        {
-          "race_code": "AWF",
-          "n_picks": 129,
-          "n_wins": 47,
-          "n_voided": 0,
-          "hit_rate_pct": 36.4,
-          "total_stake_pts": 129.0,
-          "total_profit_pts": 39.31,
-          "roi_pct": 30.47
-        },
-        {
-          "race_code": "HDL",
-          "n_picks": 48,
-          "n_wins": 15,
-          "n_voided": 0,
-          "hit_rate_pct": 31.2,
-          "total_stake_pts": 48.0,
-          "total_profit_pts": 13.61,
-          "roi_pct": 28.35
-        },
-        {
-          "race_code": "CHS",
-          "n_picks": 0,
-          "n_wins": 0,
-          "n_voided": 0,
-          "hit_rate_pct": null,
-          "total_stake_pts": 0,
-          "total_profit_pts": 0,
-          "roi_pct": null
-        },
-        {
-          "race_code": "NHF",
-          "n_picks": 0,
-          "n_wins": 0,
-          "n_voided": 0,
-          "hit_rate_pct": null,
-          "total_stake_pts": 0,
-          "total_profit_pts": 0,
-          "roi_pct": null
-        }
-      ]
-    }
-  ],
-  "by_race_code": [
-    {
+      "name": "flat",
+      "label": "Flat",
       "race_code": "FLT",
-      "n_picks": 199,
-      "n_wins": 54,
+      "pitch": "Turf flat racing across the UK.",
+      "scope": "Across the full Flat season \u2014 handicaps, novices, listed, and pattern races.",
+      "first_date": "2026-04-20",
+      "last_date": "2026-05-09",
+      "n_days": 19,
+      "n_picks": 547,
+      "n_wins": 176,
       "n_voided": 0,
-      "hit_rate_pct": 27.1,
-      "total_stake_pts": 199.0,
-      "total_profit_pts": 65.01,
-      "roi_pct": 32.67
+      "hit_rate_pct": 32.2,
+      "total_stake_pts": 547.0,
+      "total_profit_pts": 184.32,
+      "roi_pct": 33.7
     },
     {
+      "name": "all_weather",
+      "label": "All-Weather",
       "race_code": "AWF",
-      "n_picks": 44,
-      "n_wins": 14,
-      "n_voided": 0,
-      "hit_rate_pct": 31.8,
-      "total_stake_pts": 44.0,
-      "total_profit_pts": 15.64,
-      "roi_pct": 35.55
-    },
-    {
-      "race_code": "HDL",
-      "n_picks": 33,
-      "n_wins": 12,
+      "pitch": "All-weather flat racing on synthetic surfaces.",
+      "scope": "Southwell, Wolverhampton, Lingfield AW, Newcastle AW, Kempton AW, Chelmsford.",
+      "first_date": "2026-04-20",
+      "last_date": "2026-05-07",
+      "n_days": 9,
+      "n_picks": 129,
+      "n_wins": 47,
       "n_voided": 0,
       "hit_rate_pct": 36.4,
-      "total_stake_pts": 33.0,
-      "total_profit_pts": 14.87,
-      "roi_pct": 45.06
+      "total_stake_pts": 129.0,
+      "total_profit_pts": 39.31,
+      "roi_pct": 30.47
     },
     {
-      "race_code": "CHS",
-      "n_picks": 0,
-      "n_wins": 0,
+      "name": "hurdle",
+      "label": "Hurdle",
+      "race_code": "HDL",
+      "pitch": "National Hunt hurdle racing.",
+      "scope": "Jumping over the smaller obstacles \u2014 handicaps and conditions hurdles.",
+      "first_date": "2026-04-20",
+      "last_date": "2026-05-09",
+      "n_days": 11,
+      "n_picks": 48,
+      "n_wins": 15,
       "n_voided": 0,
-      "hit_rate_pct": null,
-      "total_stake_pts": 0,
-      "total_profit_pts": 0,
-      "roi_pct": null
-    },
-    {
-      "race_code": "NHF",
-      "n_picks": 0,
-      "n_wins": 0,
-      "n_voided": 0,
-      "hit_rate_pct": null,
-      "total_stake_pts": 0,
-      "total_profit_pts": 0,
-      "roi_pct": null
+      "hit_rate_pct": 31.2,
+      "total_stake_pts": 48.0,
+      "total_profit_pts": 13.61,
+      "roi_pct": 28.35
     }
   ],
   "by_course": [
