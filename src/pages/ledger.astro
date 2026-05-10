@@ -1,7 +1,6 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
-import { readFileSync, existsSync } from 'node:fs';
-import { join } from 'node:path';
+import ledgerData from '../../public/ledger.json';
 
 interface Pick {
   date: string;
@@ -44,10 +43,7 @@ interface Ledger {
   picks: Pick[];
 }
 
-const ledgerPath = join(process.cwd(), 'public', 'ledger.json');
-const ledger: Ledger | null = existsSync(ledgerPath)
-  ? JSON.parse(readFileSync(ledgerPath, 'utf-8'))
-  : null;
+const ledger = ledgerData as Ledger;
 
 function fmtDate(iso: string): string {
   const d = new Date(iso + 'T00:00:00Z');
@@ -84,13 +80,7 @@ const codeName: Record<string, string> = {
       reconcile to Betfair Starting Price after the race. Losers published alongside winners.
     </p>
 
-    {ledger === null && (
-      <p class="note">Ledger publishes from 2026-05-11. Bookmark this page; first reconciled picks land tomorrow morning.</p>
-    )}
-
-    {ledger !== null && (
-      <>
-        <section class="stats">
+    <section class="stats">
           <div class="stat">
             <span class="stat-label">Picks</span>
             <span class="stat-value">{ledger.summary.n_picks}</span>
@@ -180,8 +170,6 @@ const codeName: Record<string, string> = {
         <p class="note generated">
           Generated {ledger.generated_at}.
         </p>
-      </>
-    )}
   </article>
 
   <style>
