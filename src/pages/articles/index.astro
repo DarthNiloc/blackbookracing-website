@@ -1,0 +1,194 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { getCollection } from 'astro:content';
+
+const articles = await getCollection('articles');
+const sorted = articles.sort((a, b) => b.data.date.getTime() - a.data.date.getTime());
+
+const tierLabel = (t: string) => t === 'open' ? 'Free' : t === 'club' ? 'Club' : 'Blackbook';
+
+function fmtDate(d: Date): string {
+  return d.toLocaleDateString('en-GB', { day: '2-digit', month: 'short', year: 'numeric', timeZone: 'UTC' });
+}
+---
+
+<BaseLayout
+  title="Articles — Blackbook Racing Club"
+  description="Methodology pieces, ledger explainers, and the editorial substance behind the picks. Members-only long-form for Club and Blackbook subscribers."
+>
+  <article class="page">
+    <p class="eyebrow">Articles</p>
+    <h1 class="page-title">Editorial</h1>
+    <p class="lede">
+      Methodology, explainers, and long-form pieces. Free articles read in full. Club and
+      Blackbook articles open with a teaser; the full piece is for members.
+    </p>
+
+    <section class="article-list">
+      {sorted.map(article => (
+        <a class={"article-card tier-" + article.data.tier} href={`/articles/${article.id.replace(/\.md$/, '')}`}>
+          <div class="card-meta">
+            <span class={"tier-badge tier-badge-" + article.data.tier}>{tierLabel(article.data.tier)}</span>
+            <span class="date">{fmtDate(article.data.date)}</span>
+            {article.data.readMinutes && <span class="read">{article.data.readMinutes} min read</span>}
+          </div>
+          <h2 class="card-title">{article.data.title}</h2>
+          <p class="card-summary">{article.data.summary}</p>
+          <p class="card-cta">
+            {article.data.tier === 'open' ? 'Read article' : 'Read teaser'}
+            <span class="arrow"> →</span>
+          </p>
+        </a>
+      ))}
+    </section>
+  </article>
+
+  <style>
+    .page {
+      padding-top: 16px;
+    }
+
+    .eyebrow {
+      font-family: 'Inter', sans-serif;
+      font-size: 11px;
+      letter-spacing: 0.25em;
+      text-transform: uppercase;
+      color: var(--gold);
+      font-weight: 600;
+      text-align: center;
+      margin-bottom: 12px;
+    }
+
+    .page-title {
+      font-family: 'Cormorant Garamond', serif;
+      font-weight: 700;
+      font-size: 40px;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+      text-align: center;
+      margin-bottom: 24px;
+    }
+
+    .lede {
+      font-family: 'EB Garamond', serif;
+      font-size: 19px;
+      line-height: 1.55;
+      color: var(--ink-soft);
+      max-width: 600px;
+      margin: 0 auto 56px;
+      text-align: center;
+    }
+
+    .article-list {
+      max-width: 760px;
+      margin: 0 auto;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .article-card {
+      display: block;
+      padding: 28px 24px;
+      border: 1px solid var(--rule);
+      border-radius: 4px;
+      text-decoration: none;
+      color: inherit;
+      background: var(--cream);
+      transition: border-color 120ms ease;
+    }
+
+    .article-card:hover {
+      border-color: var(--gold);
+    }
+
+    .card-meta {
+      font-family: 'Inter', sans-serif;
+      font-size: 11px;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--ink-mute);
+      font-weight: 500;
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      margin-bottom: 10px;
+    }
+
+    .tier-badge {
+      font-weight: 700;
+      letter-spacing: 0.18em;
+      padding: 3px 8px;
+      border-radius: 3px;
+      font-size: 10px;
+    }
+
+    .tier-badge-open {
+      background: rgba(10, 10, 10, 0.06);
+      color: var(--ink);
+    }
+
+    .tier-badge-club {
+      background: var(--ink);
+      color: var(--cream);
+    }
+
+    .tier-badge-blackbook {
+      background: var(--gold);
+      color: var(--ink);
+    }
+
+    .card-title {
+      font-family: 'Cormorant Garamond', serif;
+      font-weight: 600;
+      font-size: 26px;
+      letter-spacing: 0.02em;
+      line-height: 1.2;
+      margin-bottom: 10px;
+    }
+
+    .card-summary {
+      font-family: 'EB Garamond', serif;
+      font-size: 17px;
+      line-height: 1.55;
+      color: var(--ink-soft);
+      margin-bottom: 14px;
+    }
+
+    .card-cta {
+      font-family: 'Inter', sans-serif;
+      font-size: 11px;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      font-weight: 600;
+      color: var(--gold);
+    }
+
+    .card-cta .arrow {
+      color: var(--ink);
+    }
+
+    @media (max-width: 640px) {
+      .page-title {
+        font-size: 28px;
+      }
+
+      .lede {
+        font-size: 17px;
+        margin-bottom: 40px;
+      }
+
+      .article-card {
+        padding: 22px 18px;
+      }
+
+      .card-title {
+        font-size: 21px;
+      }
+
+      .card-summary {
+        font-size: 15px;
+      }
+    }
+  </style>
+</BaseLayout>

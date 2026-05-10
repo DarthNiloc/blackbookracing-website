@@ -1,0 +1,297 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { getCollection, render } from 'astro:content';
+
+export async function getStaticPaths() {
+  const articles = await getCollection('articles');
+  return articles.map(article => ({
+    params: { slug: article.id.replace(/\.md$/, '') },
+    props: { article },
+  }));
+}
+
+const { article } = Astro.props;
+const { Content } = await render(article);
+
+function fmtDate(d: Date): string {
+  return d.toLocaleDateString('en-GB', { day: '2-digit', month: 'long', year: 'numeric', timeZone: 'UTC' });
+}
+
+const tierLabel = (t: string) => t === 'open' ? 'Free' : t === 'club' ? 'Club' : 'Blackbook';
+const isPaid = article.data.tier !== 'open';
+---
+
+<BaseLayout
+  title={article.data.title + " — Blackbook Racing Club"}
+  description={article.data.summary}
+  ogType="article"
+>
+  <article class="page">
+    <header class="article-head">
+      <p class="eyebrow"><a href="/articles">Articles</a></p>
+      <div class="head-meta">
+        <span class={"tier-badge tier-badge-" + article.data.tier}>{tierLabel(article.data.tier)}</span>
+        <span class="date">{fmtDate(article.data.date)}</span>
+        {article.data.readMinutes && <span class="read">{article.data.readMinutes} min read</span>}
+      </div>
+      <h1 class="title">{article.data.title}</h1>
+      <p class="standfirst">{article.data.summary}</p>
+      <p class="byline">By {article.data.author}</p>
+    </header>
+
+    <div class="article-body">
+      <Content />
+    </div>
+
+    {isPaid && (
+      <div class="paywall">
+        <p class="paywall-eyebrow">{tierLabel(article.data.tier)} members only</p>
+        <p class="paywall-text">
+          The rest of this piece is for {tierLabel(article.data.tier)} subscribers. View tiers
+          to see what's included and the founding-member offer.
+        </p>
+        <a class="paywall-cta" href="/subscribe">View tiers →</a>
+      </div>
+    )}
+
+    <p class="back">
+      <a href="/articles">← All articles</a>
+    </p>
+  </article>
+
+  <style>
+    .page {
+      max-width: 720px;
+      margin: 0 auto;
+      padding-top: 16px;
+    }
+
+    .article-head {
+      text-align: center;
+      margin-bottom: 48px;
+      padding-bottom: 32px;
+      border-bottom: 1px solid var(--rule);
+    }
+
+    .eyebrow {
+      font-family: 'Inter', sans-serif;
+      font-size: 11px;
+      letter-spacing: 0.25em;
+      text-transform: uppercase;
+      font-weight: 600;
+      margin-bottom: 24px;
+    }
+
+    .eyebrow a {
+      color: var(--gold);
+      text-decoration: none;
+    }
+
+    .head-meta {
+      font-family: 'Inter', sans-serif;
+      font-size: 11px;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--ink-mute);
+      font-weight: 500;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 14px;
+      margin-bottom: 18px;
+    }
+
+    .tier-badge {
+      font-weight: 700;
+      letter-spacing: 0.18em;
+      padding: 3px 8px;
+      border-radius: 3px;
+      font-size: 10px;
+    }
+
+    .tier-badge-open {
+      background: rgba(10, 10, 10, 0.06);
+      color: var(--ink);
+    }
+
+    .tier-badge-club {
+      background: var(--ink);
+      color: var(--cream);
+    }
+
+    .tier-badge-blackbook {
+      background: var(--gold);
+      color: var(--ink);
+    }
+
+    .title {
+      font-family: 'Cormorant Garamond', serif;
+      font-weight: 600;
+      font-size: 38px;
+      letter-spacing: 0.01em;
+      line-height: 1.2;
+      margin-bottom: 18px;
+    }
+
+    .standfirst {
+      font-family: 'EB Garamond', serif;
+      font-size: 19px;
+      font-style: italic;
+      line-height: 1.5;
+      color: var(--ink-soft);
+      max-width: 560px;
+      margin: 0 auto 16px;
+    }
+
+    .byline {
+      font-family: 'Inter', sans-serif;
+      font-size: 11px;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--ink-mute);
+      font-weight: 500;
+    }
+
+    .article-body {
+      font-family: 'EB Garamond', serif;
+      font-size: 19px;
+      line-height: 1.65;
+      color: var(--ink);
+    }
+
+    .article-body :global(p) {
+      margin-bottom: 22px;
+    }
+
+    .article-body :global(h2) {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 26px;
+      font-weight: 600;
+      letter-spacing: 0.02em;
+      margin-top: 40px;
+      margin-bottom: 14px;
+    }
+
+    .article-body :global(h3) {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 22px;
+      font-weight: 600;
+      margin-top: 32px;
+      margin-bottom: 10px;
+    }
+
+    .article-body :global(blockquote) {
+      border-left: 2px solid var(--gold);
+      padding: 6px 0 6px 20px;
+      margin: 24px 0;
+      color: var(--ink-soft);
+      font-style: italic;
+    }
+
+    .article-body :global(strong) {
+      font-weight: 700;
+    }
+
+    .article-body :global(hr) {
+      border: 0;
+      border-top: 1px solid var(--rule);
+      margin: 36px auto;
+      max-width: 80px;
+    }
+
+    .article-body :global(code) {
+      font-family: 'Inter', monospace;
+      font-size: 0.92em;
+      background: rgba(10, 10, 10, 0.05);
+      padding: 1px 5px;
+      border-radius: 2px;
+    }
+
+    .paywall {
+      margin-top: 40px;
+      padding: 36px 32px;
+      border: 1px solid var(--gold);
+      border-radius: 4px;
+      background: var(--cream);
+      text-align: center;
+    }
+
+    .paywall-eyebrow {
+      font-family: 'Inter', sans-serif;
+      font-size: 11px;
+      letter-spacing: 0.25em;
+      text-transform: uppercase;
+      color: var(--gold);
+      font-weight: 600;
+      margin-bottom: 14px;
+    }
+
+    .paywall-text {
+      font-family: 'EB Garamond', serif;
+      font-size: 18px;
+      line-height: 1.55;
+      color: var(--ink);
+      max-width: 480px;
+      margin: 0 auto 22px;
+    }
+
+    .paywall-cta {
+      display: inline-block;
+      padding: 12px 26px;
+      font-family: 'Inter', sans-serif;
+      font-size: 12px;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      font-weight: 600;
+      background: var(--ink);
+      color: var(--cream);
+      text-decoration: none;
+      border-radius: 4px;
+    }
+
+    .paywall-cta:hover {
+      background: #1a1a1a;
+    }
+
+    .back {
+      margin-top: 48px;
+      padding-top: 24px;
+      border-top: 1px solid var(--rule);
+      text-align: center;
+      font-family: 'Inter', sans-serif;
+      font-size: 12px;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      font-weight: 600;
+    }
+
+    .back a {
+      color: var(--ink);
+      text-decoration: none;
+      border-bottom: 1px solid var(--gold);
+      padding-bottom: 4px;
+    }
+
+    @media (max-width: 640px) {
+      .title {
+        font-size: 28px;
+      }
+
+      .standfirst {
+        font-size: 17px;
+      }
+
+      .article-body {
+        font-size: 17px;
+      }
+
+      .article-body :global(h2) {
+        font-size: 22px;
+      }
+
+      .paywall {
+        padding: 28px 20px;
+      }
+    }
+  </style>
+</BaseLayout>
