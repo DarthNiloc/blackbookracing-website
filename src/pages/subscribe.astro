@@ -102,6 +102,39 @@ const tiers: Tier[] = [
       ))}
     </section>
 
+    <section class="member-preview">
+      <p class="preview-eyebrow">What members see</p>
+      <h2 class="preview-title">A taste of each tier</h2>
+      <div class="preview-grid">
+        <div class="preview-card">
+          <span class="preview-tier preview-tier-club">Club</span>
+          <h3>The daily slate</h3>
+          <p class="preview-snip">▲ BLACKBOOK CLUB SLATE <span class="bar">|</span> Tomorrow <span class="dot">·</span> 5 picks</p>
+          <p class="preview-snip-small">14:30 KEMPTON · DAWN HORIZON</p>
+          <p class="preview-snip-small">15:25 BEVERLEY · NORTHERN SCRIBE</p>
+          <p class="preview-snip-small quiet">…three more, logged 18:42 BST</p>
+        </div>
+        <div class="preview-card">
+          <span class="preview-tier preview-tier-blackbook">Blackbook</span>
+          <h3>Horses to track</h3>
+          <p class="preview-snip"><strong>ATLANTIC CROSSING</strong></p>
+          <p class="preview-snip-small">4yo · A.B. Smith</p>
+          <p class="preview-snip-small">Flagged twice in 12 days. Want 12-13f, soft.</p>
+          <p class="preview-snip-small quiet">Status: pending third flag</p>
+        </div>
+        <div class="preview-card">
+          <span class="preview-tier preview-tier-blackbook">Blackbook</span>
+          <h3>Weekly editorial</h3>
+          <p class="preview-snip"><em>The week's verdict — 2026-05-04 → 2026-05-10</em></p>
+          <p class="preview-snip-small">14 picks at +12.4pt. Headline a 14.0 winner at Lingfield.</p>
+          <p class="preview-snip-small quiet">Long-form, members only, every Monday.</p>
+        </div>
+      </div>
+      <p class="preview-cta">
+        <a href="/members">See the full previews →</a>
+      </p>
+    </section>
+
     <section class="note-section">
       <h2>How it works</h2>
       <p>
@@ -287,6 +320,131 @@ const tiers: Tier[] = [
       cursor: default;
     }
 
+    /* === Inline member-preview block === */
+    .member-preview {
+      max-width: 1080px;
+      margin: 0 auto 64px;
+      padding-top: 64px;
+      border-top: 1px solid var(--rule);
+      text-align: center;
+    }
+
+    .preview-eyebrow {
+      font-family: 'Inter', sans-serif;
+      font-size: 11px;
+      letter-spacing: 0.25em;
+      text-transform: uppercase;
+      color: var(--gold);
+      font-weight: 600;
+      margin-bottom: 12px;
+    }
+
+    .preview-title {
+      font-family: 'Cormorant Garamond', serif;
+      font-weight: 700;
+      font-size: 28px;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+      margin-bottom: 36px;
+    }
+
+    .preview-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 18px;
+      margin-bottom: 28px;
+      text-align: left;
+    }
+
+    .preview-card {
+      padding: 22px 22px;
+      border: 1px solid var(--rule);
+      border-radius: 4px;
+      background: var(--cream);
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .preview-tier {
+      font-family: 'Inter', sans-serif;
+      font-weight: 700;
+      font-size: 10px;
+      letter-spacing: 0.18em;
+      padding: 3px 8px;
+      border-radius: 3px;
+      text-transform: uppercase;
+      align-self: flex-start;
+    }
+
+    .preview-tier-club {
+      background: var(--ink);
+      color: var(--cream);
+    }
+
+    .preview-tier-blackbook {
+      background: var(--gold);
+      color: var(--ink);
+    }
+
+    .preview-card h3 {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 20px;
+      font-weight: 700;
+      letter-spacing: 0.04em;
+      margin-bottom: 4px;
+    }
+
+    .preview-snip {
+      font-family: 'Inter', sans-serif;
+      font-size: 12px;
+      letter-spacing: 0.05em;
+      color: var(--ink);
+      font-feature-settings: 'tnum';
+    }
+
+    .preview-snip .bar {
+      color: var(--ink-mute);
+      margin: 0 4px;
+    }
+
+    .preview-snip .dot {
+      color: var(--gold);
+      margin: 0 4px;
+    }
+
+    .preview-snip-small {
+      font-family: 'Inter', sans-serif;
+      font-size: 12px;
+      line-height: 1.5;
+      color: var(--ink-soft);
+      font-feature-settings: 'tnum';
+    }
+
+    .preview-snip-small.quiet {
+      color: var(--ink-mute);
+      font-style: italic;
+    }
+
+    .preview-cta {
+      font-family: 'Inter', sans-serif;
+      font-size: 12px;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      font-weight: 600;
+    }
+
+    .preview-cta a {
+      color: var(--ink);
+      text-decoration: none;
+      border-bottom: 1px solid var(--gold);
+      padding-bottom: 4px;
+    }
+
+    .preview-cta a:hover {
+      border-bottom-width: 2px;
+    }
+
     .note-section {
       max-width: 680px;
       margin: 0 auto;
@@ -320,6 +478,14 @@ const tiers: Tier[] = [
         grid-template-columns: 1fr;
         gap: 18px;
         max-width: 480px;
+      }
+
+      .preview-grid {
+        grid-template-columns: 1fr;
+        gap: 14px;
+        max-width: 480px;
+        margin-left: auto;
+        margin-right: auto;
       }
     }
 

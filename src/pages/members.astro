@@ -1,0 +1,585 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+---
+
+<BaseLayout
+  title="Preview — Blackbook Racing Club"
+  description="A preview of what Club and Blackbook subscribers see. The daily slate, the seasonal blackbook of horses to track, and the weekly editorial — illustrated with sample content."
+>
+  <article class="page">
+    <p class="eyebrow">Preview</p>
+    <h1 class="page-title">What members see</h1>
+    <p class="lede">
+      Club and Blackbook tiers don't open for paid signup until launch. These samples show the
+      format and substance of each deliverable. Numbers and horses below are illustrative — the
+      live ledger has the real ones.
+    </p>
+
+    <!-- ====== Club: daily slate ====== -->
+    <section class="preview-section">
+      <header class="section-head">
+        <span class="tier-badge tier-badge-club">Club</span>
+        <h2>The daily slate</h2>
+        <p class="section-pitch">
+          Pre-off picks delivered to a private Telegram channel each evening, then reconciled
+          to Betfair Starting Price the next morning. Same format every day.
+        </p>
+      </header>
+
+      <div class="telegram-mock">
+        <div class="tg-head">▲ BLACKBOOK CLUB SLATE <span class="bar">|</span> 2026-05-04</div>
+        <div class="tg-meta">Tomorrow <span class="dot">·</span> 5 picks <span class="dot">·</span> 1pt @ Betfair SP</div>
+        <div class="tg-list">
+          <div class="tg-pick">
+            <div class="tg-when">13:55 PONTEFRACT <span class="code">FLT</span></div>
+            <div class="tg-horse">SILVER ARROW</div>
+          </div>
+          <div class="tg-pick">
+            <div class="tg-when">14:30 KEMPTON (A.W) <span class="code">AWF</span></div>
+            <div class="tg-horse">DAWN HORIZON</div>
+          </div>
+          <div class="tg-pick">
+            <div class="tg-when">15:05 UTTOXETER <span class="code">CHS</span></div>
+            <div class="tg-horse">GLENMORE</div>
+          </div>
+          <div class="tg-pick">
+            <div class="tg-when">15:25 BEVERLEY <span class="code">FLT</span></div>
+            <div class="tg-horse">NORTHERN SCRIBE</div>
+          </div>
+          <div class="tg-pick">
+            <div class="tg-when">15:45 PONTEFRACT <span class="code">FLT</span></div>
+            <div class="tg-horse">EMERALD ISLE</div>
+          </div>
+        </div>
+        <div class="tg-foot">Logged 18:42 BST <span class="dot">·</span> pre-off <span class="dot">·</span> team-reviewed</div>
+        <div class="tg-foot quiet">Reconciled tomorrow morning at BSP.</div>
+      </div>
+    </section>
+
+    <!-- ====== Blackbook: horses to track ====== -->
+    <section class="preview-section">
+      <header class="section-head">
+        <span class="tier-badge tier-badge-blackbook">Blackbook</span>
+        <h2>Horses to track</h2>
+        <p class="section-pitch">
+          A working list of horses we've flagged across multiple runs and expect to fire when
+          conditions align. Each entry has a reason and a target run window. Updated through
+          the season.
+        </p>
+      </header>
+
+      <div class="bb-entry">
+        <div class="bb-head">
+          <span class="mark">▲</span>
+          <span class="bb-name">ATLANTIC CROSSING</span>
+        </div>
+        <p class="bb-bio">4yo bay gelding <span class="dot">·</span> Trainer A.B. Smith <span class="dot">·</span> Owner: Smith Bloodstock</p>
+        <div class="bb-flags">
+          <p>
+            <strong>First flagged 2026-04-17</strong> — finished 4th of 12 at Wetherby, beaten
+            ~2L. Held up off a hot pace, made up four lengths from the home turn.
+          </p>
+          <p>
+            <strong>Second flag 2026-04-29</strong> — finished 2nd of 9 at Doncaster, just
+            held off by a Group-class finisher. Master rating +3lb LTO. Now likely off OR-92
+            for a long-distance handicap.
+          </p>
+        </div>
+        <p class="bb-why">
+          <span class="bb-label">Why on the list</span>
+          Showing strong sectionals over 11f, but the form lines suggest 12-13f on testing
+          ground is the proper trip. Yard has shown patience with him since debut.
+        </p>
+        <div class="bb-target">
+          <div><span class="bb-label">Target window</span> next 30 days <span class="dot">·</span> 11-13f <span class="dot">·</span> soft / heavy</div>
+          <div><span class="bb-label">Status</span> pending — flag a third time and we'll back at the right trip.</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ====== Blackbook: weekly editorial ====== -->
+    <section class="preview-section">
+      <header class="section-head">
+        <span class="tier-badge tier-badge-blackbook">Blackbook</span>
+        <h2>Weekly editorial</h2>
+        <p class="section-pitch">
+          A members-only piece each Monday — what the slate did, where the methodology
+          surprised us, and what we're watching next. First paragraph below; the rest is for
+          subscribers.
+        </p>
+      </header>
+
+      <article class="editorial-mock">
+        <p class="ed-eyebrow">The week's verdict</p>
+        <h3 class="ed-title">2026-05-04 → 2026-05-10</h3>
+        <p class="ed-byline">By the team</p>
+        <div class="ed-body">
+          <p>
+            The slate produced 14 picks at <strong>+12.4pt</strong>, with the headline run a
+            14.0 winner at Lingfield on Wednesday on master-form. Two tighter losing days
+            bookended a strong middle of the week, and the Blackbook flagged a fourth horse
+            in the spring 11-13f cohort we've been watching since Newbury Trials weekend.
+          </p>
+        </div>
+        <div class="paywall">
+          <p class="paywall-eyebrow">Blackbook members only</p>
+          <p class="paywall-text">
+            The full piece breaks down each pick, the methodology adjustments after the
+            losing days, and the four-horse cohort we expect to start firing in the next
+            three weeks.
+          </p>
+          <a class="paywall-cta" href="/subscribe">View tiers →</a>
+        </div>
+      </article>
+    </section>
+
+    <section class="cta-section">
+      <p class="cta-text">
+        Open is free in Telegram. Club and Blackbook open for paid signup at launch.
+      </p>
+      <a class="cta-btn" href="/subscribe">Compare tiers →</a>
+    </section>
+  </article>
+
+  <style>
+    .page {
+      padding-top: 16px;
+    }
+
+    .eyebrow {
+      font-family: 'Inter', sans-serif;
+      font-size: 11px;
+      letter-spacing: 0.25em;
+      text-transform: uppercase;
+      color: var(--gold);
+      font-weight: 600;
+      text-align: center;
+      margin-bottom: 12px;
+    }
+
+    .page-title {
+      font-family: 'Cormorant Garamond', serif;
+      font-weight: 700;
+      font-size: 40px;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+      text-align: center;
+      margin-bottom: 24px;
+    }
+
+    .lede {
+      font-family: 'EB Garamond', serif;
+      font-size: 19px;
+      line-height: 1.55;
+      color: var(--ink-soft);
+      max-width: 600px;
+      margin: 0 auto 72px;
+      text-align: center;
+    }
+
+    .preview-section {
+      max-width: 720px;
+      margin: 0 auto 72px;
+    }
+
+    .preview-section + .preview-section {
+      padding-top: 56px;
+      border-top: 1px solid var(--rule);
+    }
+
+    .section-head {
+      text-align: center;
+      margin-bottom: 32px;
+    }
+
+    .section-head .tier-badge {
+      display: inline-block;
+      margin-bottom: 14px;
+    }
+
+    .section-head h2 {
+      font-family: 'Cormorant Garamond', serif;
+      font-weight: 700;
+      font-size: 28px;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      margin-bottom: 14px;
+    }
+
+    .section-pitch {
+      font-family: 'EB Garamond', serif;
+      font-size: 17px;
+      line-height: 1.55;
+      color: var(--ink-soft);
+      max-width: 560px;
+      margin: 0 auto;
+    }
+
+    .tier-badge {
+      font-family: 'Inter', sans-serif;
+      font-weight: 700;
+      letter-spacing: 0.18em;
+      padding: 4px 10px;
+      border-radius: 3px;
+      font-size: 10px;
+      text-transform: uppercase;
+    }
+
+    .tier-badge-club {
+      background: var(--ink);
+      color: var(--cream);
+    }
+
+    .tier-badge-blackbook {
+      background: var(--gold);
+      color: var(--ink);
+    }
+
+    /* === Club: telegram-style daily slate mock === */
+    .telegram-mock {
+      background: var(--ink);
+      color: var(--cream);
+      padding: 32px 36px;
+      border-radius: 4px;
+      font-family: 'Inter', sans-serif;
+      font-feature-settings: 'tnum';
+      max-width: 540px;
+      margin: 0 auto;
+    }
+
+    .tg-head {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 16px;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--gold);
+      font-weight: 600;
+      margin-bottom: 6px;
+    }
+
+    .tg-head .bar {
+      color: rgba(245, 241, 232, 0.45);
+      margin: 0 6px;
+    }
+
+    .tg-meta {
+      font-size: 13px;
+      color: rgba(245, 241, 232, 0.78);
+      margin-bottom: 22px;
+    }
+
+    .tg-meta .dot,
+    .tg-foot .dot {
+      margin: 0 6px;
+      color: var(--gold);
+    }
+
+    .tg-list {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+      margin-bottom: 22px;
+    }
+
+    .tg-pick {
+      padding-bottom: 14px;
+      border-bottom: 1px solid rgba(245, 241, 232, 0.12);
+    }
+
+    .tg-pick:last-child {
+      border-bottom: none;
+      padding-bottom: 0;
+    }
+
+    .tg-when {
+      font-size: 12px;
+      letter-spacing: 0.1em;
+      color: rgba(245, 241, 232, 0.7);
+      margin-bottom: 4px;
+    }
+
+    .tg-when .code {
+      color: var(--gold);
+      margin-left: 6px;
+    }
+
+    .tg-horse {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 24px;
+      font-weight: 600;
+      letter-spacing: 0.04em;
+      color: var(--cream);
+    }
+
+    .tg-foot {
+      padding-top: 14px;
+      border-top: 1px solid rgba(245, 241, 232, 0.18);
+      font-size: 12px;
+      color: rgba(245, 241, 232, 0.7);
+    }
+
+    .tg-foot.quiet {
+      color: rgba(245, 241, 232, 0.5);
+      padding-top: 4px;
+      border-top: none;
+    }
+
+    /* === Blackbook: horse entry === */
+    .bb-entry {
+      max-width: 640px;
+      margin: 0 auto;
+      padding: 32px 28px;
+      border: 1px solid var(--gold);
+      border-radius: 4px;
+      background: var(--cream);
+      box-shadow: inset 0 0 0 1px var(--gold);
+    }
+
+    .bb-head {
+      display: flex;
+      align-items: baseline;
+      gap: 10px;
+      padding-bottom: 12px;
+      margin-bottom: 8px;
+      border-bottom: 1px solid var(--rule);
+    }
+
+    .bb-head .mark {
+      color: var(--gold);
+      font-size: 14px;
+    }
+
+    .bb-name {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 30px;
+      font-weight: 700;
+      letter-spacing: 0.04em;
+      color: var(--ink);
+    }
+
+    .bb-bio {
+      font-family: 'Inter', sans-serif;
+      font-size: 12px;
+      letter-spacing: 0.06em;
+      color: var(--ink-mute);
+      margin-bottom: 22px;
+    }
+
+    .bb-bio .dot,
+    .bb-target .dot {
+      margin: 0 6px;
+      color: var(--gold);
+    }
+
+    .bb-flags {
+      margin-bottom: 22px;
+    }
+
+    .bb-flags p {
+      font-family: 'EB Garamond', serif;
+      font-size: 17px;
+      line-height: 1.55;
+      color: var(--ink);
+      margin-bottom: 14px;
+    }
+
+    .bb-flags p:last-child {
+      margin-bottom: 0;
+    }
+
+    .bb-why {
+      font-family: 'EB Garamond', serif;
+      font-size: 17px;
+      line-height: 1.55;
+      color: var(--ink);
+      padding-top: 18px;
+      border-top: 1px solid var(--rule);
+      margin-bottom: 18px;
+    }
+
+    .bb-label {
+      display: inline-block;
+      font-family: 'Inter', sans-serif;
+      font-size: 10px;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--gold);
+      font-weight: 700;
+      margin-right: 8px;
+    }
+
+    .bb-target {
+      font-family: 'Inter', sans-serif;
+      font-size: 13px;
+      line-height: 1.6;
+      color: var(--ink);
+      padding-top: 14px;
+      border-top: 1px solid var(--rule);
+    }
+
+    .bb-target .bb-label {
+      font-size: 10px;
+      vertical-align: 1px;
+    }
+
+    .bb-target div {
+      margin-bottom: 6px;
+    }
+
+    /* === Editorial mock === */
+    .editorial-mock {
+      max-width: 640px;
+      margin: 0 auto;
+    }
+
+    .ed-eyebrow {
+      font-family: 'Inter', sans-serif;
+      font-size: 11px;
+      letter-spacing: 0.25em;
+      text-transform: uppercase;
+      color: var(--gold);
+      font-weight: 600;
+      text-align: center;
+      margin-bottom: 8px;
+    }
+
+    .ed-title {
+      font-family: 'Cormorant Garamond', serif;
+      font-weight: 700;
+      font-size: 32px;
+      letter-spacing: 0.04em;
+      text-align: center;
+      margin-bottom: 8px;
+    }
+
+    .ed-byline {
+      font-family: 'Inter', sans-serif;
+      font-size: 11px;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--ink-mute);
+      text-align: center;
+      margin-bottom: 24px;
+    }
+
+    .ed-body {
+      font-family: 'EB Garamond', serif;
+      font-size: 19px;
+      line-height: 1.65;
+      color: var(--ink);
+      margin-bottom: 28px;
+    }
+
+    .paywall {
+      padding: 28px 28px;
+      border: 1px solid var(--gold);
+      border-radius: 4px;
+      background: var(--cream);
+      text-align: center;
+    }
+
+    .paywall-eyebrow {
+      font-family: 'Inter', sans-serif;
+      font-size: 11px;
+      letter-spacing: 0.25em;
+      text-transform: uppercase;
+      color: var(--gold);
+      font-weight: 600;
+      margin-bottom: 12px;
+    }
+
+    .paywall-text {
+      font-family: 'EB Garamond', serif;
+      font-size: 17px;
+      line-height: 1.55;
+      color: var(--ink);
+      max-width: 480px;
+      margin: 0 auto 18px;
+    }
+
+    .paywall-cta {
+      display: inline-block;
+      padding: 10px 22px;
+      font-family: 'Inter', sans-serif;
+      font-size: 12px;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      font-weight: 600;
+      background: var(--ink);
+      color: var(--cream);
+      text-decoration: none;
+      border-radius: 4px;
+    }
+
+    /* === Final CTA === */
+    .cta-section {
+      max-width: 600px;
+      margin: 0 auto;
+      padding-top: 32px;
+      border-top: 1px solid var(--rule);
+      text-align: center;
+    }
+
+    .cta-text {
+      font-family: 'EB Garamond', serif;
+      font-size: 18px;
+      line-height: 1.5;
+      color: var(--ink);
+      margin-bottom: 20px;
+    }
+
+    .cta-btn {
+      display: inline-block;
+      padding: 14px 28px;
+      font-family: 'Inter', sans-serif;
+      font-size: 12px;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      font-weight: 600;
+      background: var(--ink);
+      color: var(--cream);
+      text-decoration: none;
+      border-radius: 4px;
+    }
+
+    @media (max-width: 640px) {
+      .page-title {
+        font-size: 28px;
+      }
+
+      .lede {
+        font-size: 17px;
+        margin-bottom: 56px;
+      }
+
+      .telegram-mock {
+        padding: 24px 22px;
+      }
+
+      .tg-horse {
+        font-size: 20px;
+      }
+
+      .bb-entry {
+        padding: 24px 20px;
+      }
+
+      .bb-name {
+        font-size: 24px;
+      }
+
+      .bb-flags p,
+      .bb-why {
+        font-size: 16px;
+      }
+
+      .ed-title {
+        font-size: 26px;
+      }
+
+      .ed-body {
+        font-size: 17px;
+      }
+    }
+  </style>
+</BaseLayout>
