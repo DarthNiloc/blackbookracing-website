@@ -25,6 +25,16 @@ interface CodeRow {
   roi_pct: number | null;
 }
 
+interface CourseRow {
+  course: string;
+  n_picks: number;
+  n_wins: number;
+  hit_rate_pct: number | null;
+  total_stake_pts: number;
+  total_profit_pts: number;
+  roi_pct: number | null;
+}
+
 interface Summary {
   n_picks: number;
   n_wins: number;
@@ -42,6 +52,7 @@ interface TierHeadline extends Summary {
   first_date: string | null;
   last_date: string | null;
   n_days: number;
+  by_race_code: CodeRow[];
 }
 
 interface Ledger {
@@ -52,6 +63,7 @@ interface Ledger {
   summary: Summary;
   tier_headlines: TierHeadline[];
   by_race_code: CodeRow[];
+  by_course: CourseRow[];
   picks: Pick[];
 }
 
@@ -139,11 +151,65 @@ const codeName: Record<string, string> = {
     </section>
 
         <section class="block">
-          <h2>By race code</h2>
-          <table class="data-table">
+          <h2>By race code, across all tiers</h2>
+          <p class="block-note">
+            Each tier's settled performance broken out by UK race code. Coverage gaps shown as
+            zero rows — we don't run synthetic numbers for codes we haven't bet.
+          </p>
+          <div class="matrix-wrap">
+            <table class="data-table matrix-table">
+              <thead>
+                <tr>
+                  <th rowspan="2">Code</th>
+                  {ledger.tier_headlines.map(t => (
+                    <th colspan="2" class={"num tier-col tier-col-" + t.name}>{t.label}</th>
+                  ))}
+                </tr>
+                <tr>
+                  {ledger.tier_headlines.map(t => (
+                    <>
+                      <th class={"num tier-col tier-col-" + t.name}>n</th>
+                      <th class={"num tier-col tier-col-" + t.name}>ROI</th>
+                    </>
+                  ))}
+                </tr>
+              </thead>
+              <tbody>
+                {ledger.tier_headlines[0].by_race_code.map((_, codeIdx) => {
+                  const code = ledger.tier_headlines[0].by_race_code[codeIdx].race_code;
+                  return (
+                    <tr>
+                      <td><strong>{code}</strong> <span class="code-name">{codeName[code] || ''}</span></td>
+                      {ledger.tier_headlines.map(t => {
+                        const c = t.by_race_code[codeIdx];
+                        return (
+                          <>
+                            <td class={"num tier-col tier-col-" + t.name}>{c.n_picks || '—'}</td>
+                            <td class={"num tier-col tier-col-" + t.name + " " + ((c.roi_pct ?? 0) >= 0 ? "pos" : "neg")}>
+                              {c.n_picks > 0 ? fmtPct(c.roi_pct) : '—'}
+                            </td>
+                          </>
+                        );
+                      })}
+                    </tr>
+                  );
+                })}
+              </tbody>
+            </table>
+          </div>
+        </section>
+
+        <section class="block">
+          <h2>By course (Open tier)</h2>
+          <p class="block-note">
+            Performance at every UK racecourse where we've placed at least three Open-tier picks.
+            Sorted by volume. Negative-ROI rows are visible because they should be — that's where
+            we don't have an edge.
+          </p>
+          <table class="data-table course-table">
             <thead>
               <tr>
-                <th>Code</th>
+                <th>Course</th>
                 <th class="num">Picks</th>
                 <th class="num">Hit</th>
                 <th class="num">ROI</th>
@@ -151,9 +217,9 @@ const codeName: Record<string, string> = {
               </tr>
             </thead>
             <tbody>
-              {ledger.by_race_code.map(c => (
-                <tr>
-                  <td><strong>{c.race_code}</strong> <span class="code-name">{codeName[c.race_code] || ''}</span></td>
+              {ledger.by_course.map(c => (
+                <tr class={(c.roi_pct ?? 0) < 0 ? 'row-neg' : ''}>
+                  <td class="course-name">{c.course}</td>
                   <td class="num">{c.n_picks}</td>
                   <td class="num">{c.hit_rate_pct?.toFixed(1)}%</td>
                   <td class={"num " + ((c.roi_pct ?? 0) >= 0 ? "pos" : "neg")}>{fmtPct(c.roi_pct)}</td>
@@ -432,7 +498,61 @@ const codeName: Record<string, string> = {
       letter-spacing: 0.1em;
       text-transform: uppercase;
       font-weight: 600;
-      margin-bottom: 20px;
+      margin-bottom: 8px;
+    }
+
+    .block-note {
+      font-family: 'EB Garamond', serif;
+      font-size: 16px;
+      line-height: 1.55;
+      color: var(--ink-soft);
+      max-width: 720px;
+      margin-bottom: 22px;
+    }
+
+    /* === Matrix table (codes × tiers) === */
+    .matrix-wrap {
+      overflow-x: auto;
+    }
+
+    .matrix-table th.tier-col,
+    .matrix-table td.tier-col {
+      border-left: 1px solid var(--rule);
+    }
+
+    .matrix-table thead tr:first-child th.tier-col {
+      font-family: 'Inter', sans-serif;
+      font-size: 11px;
+      letter-spacing: 0.18em;
+      font-weight: 700;
+      text-transform: uppercase;
+      text-align: center;
+      padding: 12px 12px 6px;
+    }
+
+    .matrix-table thead tr:nth-child(2) th {
+      padding-top: 4px;
+      padding-bottom: 8px;
+    }
+
+    .matrix-table .tier-col-club,
+    .matrix-table thead tr:first-child th.tier-col-club {
+      background: rgba(193, 164, 103, 0.08);
+    }
+
+    .matrix-table .tier-col-blackbook,
+    .matrix-table thead tr:first-child th.tier-col-blackbook {
+      background: rgba(193, 164, 103, 0.16);
+    }
+
+    /* === Course table === */
+    .course-table .course-name {
+      font-family: 'EB Garamond', serif;
+      font-size: 15px;
+    }
+
+    .row-neg .course-name {
+      color: var(--ink-soft);
     }
 
     .data-table {
