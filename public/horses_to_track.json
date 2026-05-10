@@ -1,0 +1,64 @@
+{
+  "generated_at": "2026-05-10T21:50:42Z",
+  "target_date": "2026-05-11",
+  "n_alerts": 3,
+  "alerts": [
+    {
+      "horse": "Stellarmasterpiece",
+      "trainer": "Micky Hammond",
+      "signal_summary": "top of the field on top-speed rating; highest long-term form rating; improving rating trend",
+      "last_run_narrative": "finished 3rd at Catterick 2026-04-22",
+      "last_run": {
+        "date": "2026-04-22",
+        "course": "CATTERICK",
+        "race_code": "FLT",
+        "bsp": 8.29,
+        "bsppos": 3
+      },
+      "next_run": {
+        "race_date": "2026-05-11",
+        "race_time": "15:30",
+        "course": "CATTERICK",
+        "bf_back_decimal": 12.0
+      }
+    },
+    {
+      "horse": "Cape Fear",
+      "trainer": "Andrew Balding",
+      "signal_summary": "top of the field on top-speed rating; biggest market-vs-rating edge",
+      "last_run_narrative": "finished 2nd at Beverley 2026-04-23 as favourite",
+      "last_run": {
+        "date": "2026-04-23",
+        "course": "BEVERLEY",
+        "race_code": "FLT",
+        "bsp": 2.58,
+        "bsppos": 2
+      },
+      "next_run": {
+        "race_date": "2026-05-11",
+        "race_time": "17:42",
+        "course": "WINDSOR",
+        "bf_back_decimal": 6.4
+      }
+    },
+    {
+      "horse": "Mount Ruapehu",
+      "trainer": "Iain Jardine",
+      "signal_summary": "biggest market-vs-rating edge; top conviction tier",
+      "last_run_narrative": "finished 2nd at Hamilton 2026-05-03 at a short price",
+      "last_run": {
+        "date": "2026-05-03",
+        "course": "HAMILTON",
+        "race_code": "FLT",
+        "bsp": 5.89,
+        "bsppos": 2
+      },
+      "next_run": {
+        "race_date": "2026-05-11",
+        "race_time": "14:30",
+        "course": "CATTERICK",
+        "bf_back_decimal": 7.0
+      }
+    }
+  ]
+}

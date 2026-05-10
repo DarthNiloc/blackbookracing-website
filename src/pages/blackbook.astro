@@ -1,33 +1,150 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
+import horsesToTrack from '../../public/horses_to_track.json';
+
+interface NextRun {
+  race_date: string;
+  race_time: string;
+  course: string;
+  bf_back_decimal: number | null;
+}
+
+interface LastRun {
+  date: string;
+  course: string;
+  race_code: string | null;
+  bsp: number | null;
+  bsppos: number;
+}
+
+interface Alert {
+  horse: string;
+  trainer: string;
+  signal_summary: string;
+  last_run_narrative: string;
+  last_run: LastRun;
+  next_run: NextRun;
+}
+
+const data = horsesToTrack as {
+  generated_at: string;
+  target_date: string;
+  n_alerts: number;
+  alerts: Alert[];
+};
+
+const titleCase = (s: string): string =>
+  s.toLowerCase().replace(/\b\w/g, (c) => c.toUpperCase());
+
+const formatPrice = (d: number | null): string => {
+  if (d == null) return '—';
+  if (d < 4) return d.toFixed(2);
+  return d.toFixed(1);
+};
+
+const formatBackPrice = (d: number | null): string => {
+  if (d == null) return 'price n/a';
+  return formatPrice(d) + ' Betfair';
+};
+
+const targetDate = data.target_date;
+const targetLabel = new Date(targetDate + 'T12:00:00Z').toLocaleDateString('en-GB', {
+  weekday: 'long', day: 'numeric', month: 'long',
+});
+
+const generatedAt = new Date(data.generated_at);
+const generatedLabel = generatedAt.toLocaleString('en-GB', {
+  day: 'numeric', month: 'short', hour: '2-digit', minute: '2-digit', timeZone: 'Europe/London',
+}) + ' BST';
 ---
 
 <BaseLayout
   title="The Blackbook — Blackbook Racing Club"
-  description="The seasonal Blackbook of horses worth tracking — Blackbook-tier members only."
+  description="Daily watchlist of horses worth tracking — Blackbook-tier exclusive."
 >
   <article class="page">
-    <p class="eyebrow">Members area</p>
+    <p class="eyebrow">Blackbook-tier exclusive</p>
     <h1 class="page-title">The Blackbook</h1>
-    <div class="stub-card">
-      <p class="stub-lede">
-        The Blackbook is the seasonal list of horses we've flagged across multiple runs and expect
-        to fire when conditions align. Each entry has a reason and a target run window.
+    <p class="lede">
+      Our scan re-runs every night across the last 21 days of selections.
+      It surfaces horses whose ratings said they should have won, that
+      finished close-up but lost, and that are entered to run again
+      tomorrow. Updated each morning. Full feed posted to the Blackbook
+      Telegram channel.
+    </p>
+
+    <section class="watch-block">
+      <header class="watch-head">
+        <p class="section-eyebrow">Watchlist for {targetLabel}</p>
+        <p class="meta">
+          {data.n_alerts} {data.n_alerts === 1 ? 'entry' : 'entries'} ·
+          updated {generatedLabel}
+        </p>
+      </header>
+
+      {data.alerts.length === 0 && (
+        <div class="empty">
+          <p>No tracked horses entered tomorrow. The watchlist is rebuilt overnight — check back in the morning.</p>
+        </div>
+      )}
+
+      <ol class="alerts">
+        {data.alerts.map((a) => (
+          <li class="alert-card">
+            <div class="alert-head">
+              <h2 class="horse">{a.horse}</h2>
+              <p class="trainer">Trainer: {a.trainer}</p>
+            </div>
+
+            <div class="alert-grid">
+              <div class="cell cell-next">
+                <p class="cell-label">Runs</p>
+                <p class="cell-main">{titleCase(a.next_run.course)} — {a.next_run.race_time}</p>
+                <p class="cell-sub">{formatBackPrice(a.next_run.bf_back_decimal)}</p>
+              </div>
+              <div class="cell cell-last">
+                <p class="cell-label">Last out</p>
+                <p class="cell-main">{a.last_run_narrative}</p>
+                <p class="cell-sub">BSP {a.last_run.bsp ? a.last_run.bsp.toFixed(2) : '—'}</p>
+              </div>
+            </div>
+
+            <p class="signal">{a.signal_summary}</p>
+          </li>
+        ))}
+      </ol>
+    </section>
+
+    <section class="explainer">
+      <h2 class="explainer-title">How the watchlist works</h2>
+      <p>
+        Every settled pick we make is logged with a score across multiple
+        rating signals — top-speed rating, long-term form rating,
+        market-vs-rating edge, improving trend. When a strongly-rated
+        pick gets beaten close-up, we flag it. When that same horse
+        appears on the next day's Betfair card, the alert fires.
       </p>
-      <p class="stub-lede stub-lede-secondary">
-        Blackbook-tier members only. Paid signup opens at launch.
+      <p>
+        Beaten favourites and well-rated near-misses are the most
+        profitable cohort in our backtests — the market often takes a
+        view from the visible result and lengthens the price next time,
+        while the underlying rating hasn't changed.
       </p>
-      <div class="stub-ctas">
-        <a class="cta cta-primary" href="/subscribe">View Blackbook tier</a>
-        <a class="cta" href="/members">See a sample entry</a>
-      </div>
-    </div>
+    </section>
+
+    <section class="cta-section">
+      <p class="cta-lede">
+        Daily watchlist + value picks + form reads + horses-to-track + weekly editorial.
+        Delivered to the private Blackbook Telegram channel each morning.
+      </p>
+      <a class="cta cta-primary" href="/subscribe">Join Blackbook</a>
+    </section>
   </article>
 
   <style>
     .page {
       padding-top: 16px;
-      max-width: 640px;
+      max-width: 760px;
       margin: 0 auto;
     }
 
@@ -45,47 +162,188 @@ import BaseLayout from '../layouts/BaseLayout.astro';
     .page-title {
       font-family: 'Cormorant Garamond', serif;
       font-weight: 700;
-      font-size: 40px;
+      font-size: 44px;
       letter-spacing: 0.04em;
       text-transform: uppercase;
       text-align: center;
+      margin-bottom: 18px;
+    }
+
+    .lede {
+      font-family: 'EB Garamond', serif;
+      font-size: 18px;
+      line-height: 1.6;
+      color: var(--ink-soft);
+      text-align: center;
+      max-width: 600px;
+      margin: 0 auto 36px;
+    }
+
+    .section-eyebrow {
+      font-family: 'Inter', sans-serif;
+      font-size: 11px;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--ink);
+      font-weight: 600;
+      margin: 0;
+    }
+
+    .watch-head {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      gap: 12px;
+      flex-wrap: wrap;
+      border-bottom: 1px solid var(--ink-line);
+      padding-bottom: 10px;
+      margin-bottom: 18px;
+    }
+
+    .meta {
+      font-family: 'Inter', sans-serif;
+      font-size: 12px;
+      color: var(--ink-soft);
+      margin: 0;
+    }
+
+    .alerts {
+      list-style: none;
+      padding: 0;
+      margin: 0 0 48px;
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+    }
+
+    .alert-card {
+      border: 1px solid var(--ink-line);
+      border-left: 3px solid var(--gold);
+      background: var(--cream);
+      border-radius: 4px;
+      padding: 20px 22px;
+    }
+
+    .alert-head {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      gap: 12px;
+      flex-wrap: wrap;
+      margin-bottom: 12px;
+    }
+
+    .horse {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 26px;
+      font-weight: 700;
+      letter-spacing: 0.02em;
+      margin: 0;
+      color: var(--ink);
+    }
+
+    .trainer {
+      font-family: 'Inter', sans-serif;
+      font-size: 12px;
+      color: var(--ink-soft);
+      margin: 0;
+    }
+
+    .alert-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 18px;
+      margin-bottom: 12px;
+    }
+
+    .cell-label {
+      font-family: 'Inter', sans-serif;
+      font-size: 10px;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--ink-soft);
+      margin: 0 0 4px;
+    }
+
+    .cell-main {
+      font-family: 'Inter', sans-serif;
+      font-size: 14px;
+      font-weight: 600;
+      color: var(--ink);
+      margin: 0 0 2px;
+    }
+
+    .cell-sub {
+      font-family: 'Inter', sans-serif;
+      font-size: 12px;
+      color: var(--ink-soft);
+      margin: 0;
+    }
+
+    .signal {
+      font-family: 'EB Garamond', serif;
+      font-style: italic;
+      font-size: 15px;
+      color: var(--ink);
+      margin: 0;
+      padding-top: 10px;
+      border-top: 1px dashed var(--ink-line);
+    }
+
+    .empty {
+      border: 1px dashed var(--ink-line);
+      padding: 24px;
+      text-align: center;
+      border-radius: 4px;
+      margin-bottom: 48px;
+    }
+
+    .empty p {
+      font-family: 'EB Garamond', serif;
+      color: var(--ink-soft);
+      margin: 0;
+    }
+
+    .explainer {
+      border-top: 1px solid var(--ink-line);
+      padding-top: 28px;
       margin-bottom: 40px;
     }
 
-    .stub-card {
-      border: 1px solid var(--gold);
-      box-shadow: inset 0 0 0 1px var(--gold);
-      border-radius: 4px;
-      padding: 40px 36px;
-      background: var(--cream);
-      text-align: center;
+    .explainer-title {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 24px;
+      font-weight: 700;
+      letter-spacing: 0.03em;
+      margin: 0 0 14px;
     }
 
-    .stub-lede {
+    .explainer p {
       font-family: 'EB Garamond', serif;
-      font-size: 19px;
-      line-height: 1.55;
-      color: var(--ink);
-      margin-bottom: 20px;
-    }
-
-    .stub-lede-secondary {
-      font-size: 16px;
+      font-size: 17px;
+      line-height: 1.6;
       color: var(--ink-soft);
-      font-style: italic;
-      margin-bottom: 32px;
+      margin: 0 0 12px;
     }
 
-    .stub-ctas {
-      display: flex;
-      gap: 14px;
-      justify-content: center;
-      flex-wrap: wrap;
+    .cta-section {
+      text-align: center;
+      padding: 28px 0 12px;
+      border-top: 1px solid var(--ink-line);
+    }
+
+    .cta-lede {
+      font-family: 'EB Garamond', serif;
+      font-size: 17px;
+      color: var(--ink-soft);
+      max-width: 540px;
+      margin: 0 auto 18px;
+      line-height: 1.5;
     }
 
     .cta {
       display: inline-block;
-      padding: 12px 22px;
+      padding: 12px 24px;
       font-family: 'Inter', sans-serif;
       font-size: 12px;
       letter-spacing: 0.18em;
@@ -104,16 +362,11 @@ import BaseLayout from '../layouts/BaseLayout.astro';
     }
 
     @media (max-width: 640px) {
-      .page-title {
-        font-size: 28px;
-      }
-
-      .stub-card {
-        padding: 32px 22px;
-      }
-
-      .stub-lede {
-        font-size: 17px;
+      .page-title { font-size: 30px; }
+      .horse { font-size: 22px; }
+      .alert-grid {
+        grid-template-columns: 1fr;
+        gap: 14px;
       }
     }
   </style>
