@@ -1,6 +1,7 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
 import horsesToTrack from '../../public/horses_to_track.json';
+import horsesLedger from '../../public/horses_to_track_ledger.json';
 
 interface NextRun {
   race_date: string;
@@ -26,12 +27,44 @@ interface Alert {
   next_run: NextRun;
 }
 
+interface LedgerSummary {
+  n_alerts: number;
+  n_wins: number;
+  hit_rate_pct: number | null;
+  total_stake_pts: number;
+  total_profit_pts: number;
+  roi_pct: number | null;
+}
+
+interface BestWinner {
+  horse: string;
+  course: string;
+  race_date: string;
+  bsp: number | null;
+  profit_pts: number;
+}
+
 const data = horsesToTrack as {
   generated_at: string;
   target_date: string;
   n_alerts: number;
   alerts: Alert[];
 };
+
+const ledger = horsesLedger as {
+  generated_at: string;
+  stake_per_alert_pts: number;
+  rolling_window_days: number;
+  first_race_date: string | null;
+  last_race_date: string | null;
+  all_time: LedgerSummary;
+  rolling_30d: LedgerSummary;
+  best_winners_30d: BestWinner[];
+};
+
+const fmtPL = (pl: number): string => (pl >= 0 ? '+' : '') + pl.toFixed(2);
+const fmtROI = (roi: number | null): string =>
+  roi == null ? '—' : (roi >= 0 ? '+' : '') + roi.toFixed(1) + '%';
 
 const titleCase = (s: string): string =>
   s.toLowerCase().replace(/\b\w/g, (c) => c.toUpperCase());
@@ -72,6 +105,55 @@ const generatedLabel = generatedAt.toLocaleString('en-GB', {
       tomorrow. Updated each morning. Full feed posted to the Blackbook
       Telegram channel.
     </p>
+
+    <section class="ledger-block">
+      <header class="watch-head">
+        <p class="section-eyebrow">Track record · last {ledger.rolling_window_days} days</p>
+        <p class="meta">
+          {ledger.first_race_date} → {ledger.last_race_date} ·
+          {ledger.stake_per_alert_pts}pt stake per pick at BSP
+        </p>
+      </header>
+      <div class="ledger-grid">
+        <div class="ledger-cell">
+          <p class="cell-label">Picks</p>
+          <p class="ledger-value">{ledger.rolling_30d.n_alerts}</p>
+        </div>
+        <div class="ledger-cell">
+          <p class="cell-label">Winners</p>
+          <p class="ledger-value">{ledger.rolling_30d.n_wins}</p>
+        </div>
+        <div class="ledger-cell">
+          <p class="cell-label">Strike rate</p>
+          <p class="ledger-value">{ledger.rolling_30d.hit_rate_pct ?? '—'}{ledger.rolling_30d.hit_rate_pct != null ? '%' : ''}</p>
+        </div>
+        <div class="ledger-cell">
+          <p class="cell-label">P&amp;L</p>
+          <p class={'ledger-value ' + (ledger.rolling_30d.total_profit_pts >= 0 ? 'pos' : 'neg')}>
+            {fmtPL(ledger.rolling_30d.total_profit_pts)}pt
+          </p>
+        </div>
+        <div class="ledger-cell">
+          <p class="cell-label">ROI</p>
+          <p class={'ledger-value ' + ((ledger.rolling_30d.roi_pct ?? 0) >= 0 ? 'pos' : 'neg')}>
+            {fmtROI(ledger.rolling_30d.roi_pct)}
+          </p>
+        </div>
+      </div>
+      {ledger.best_winners_30d.length > 0 && (
+        <div class="winners-list">
+          <p class="cell-label">Recent winners</p>
+          <ul>
+            {ledger.best_winners_30d.slice(0, 5).map((w) => (
+              <li>
+                <span class="winner-horse">{w.horse}</span>
+                <span class="winner-meta">{w.course} · {w.race_date}{w.bsp ? ` · BSP ${w.bsp.toFixed(2)}` : ''} · {fmtPL(w.profit_pts)}pt</span>
+              </li>
+            ))}
+          </ul>
+        </div>
+      )}
+    </section>
 
     <section class="watch-block">
       <header class="watch-head">
@@ -290,6 +372,74 @@ const generatedLabel = generatedAt.toLocaleString('en-GB', {
       border-top: 1px dashed var(--ink-line);
     }
 
+    .ledger-block {
+      margin-bottom: 40px;
+    }
+
+    .ledger-grid {
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      gap: 16px;
+      padding: 20px 22px;
+      border: 1px solid var(--ink-line);
+      border-radius: 4px;
+      background: var(--cream);
+      margin-bottom: 14px;
+    }
+
+    .ledger-cell {
+      text-align: center;
+    }
+
+    .ledger-value {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 28px;
+      font-weight: 700;
+      color: var(--ink);
+      margin: 4px 0 0;
+      letter-spacing: 0.02em;
+    }
+
+    .ledger-value.pos { color: #2d5e3e; }
+    .ledger-value.neg { color: #8a3a2a; }
+
+    .winners-list {
+      padding: 14px 22px;
+      border: 1px solid var(--ink-line);
+      border-radius: 4px;
+      background: var(--cream);
+    }
+
+    .winners-list ul {
+      list-style: none;
+      padding: 0;
+      margin: 6px 0 0;
+    }
+
+    .winners-list li {
+      display: flex;
+      justify-content: space-between;
+      gap: 12px;
+      padding: 4px 0;
+      font-family: 'Inter', sans-serif;
+      font-size: 13px;
+      color: var(--ink);
+      flex-wrap: wrap;
+    }
+
+    .winners-list li + li {
+      border-top: 1px dashed var(--ink-line);
+    }
+
+    .winner-horse {
+      font-weight: 600;
+    }
+
+    .winner-meta {
+      color: var(--ink-soft);
+      font-size: 12px;
+    }
+
     .empty {
       border: 1px dashed var(--ink-line);
       padding: 24px;
@@ -368,6 +518,11 @@ const generatedLabel = generatedAt.toLocaleString('en-GB', {
         grid-template-columns: 1fr;
         gap: 14px;
       }
+      .ledger-grid {
+        grid-template-columns: repeat(3, 1fr);
+        gap: 12px;
+      }
+      .ledger-value { font-size: 22px; }
     }
   </style>
 </BaseLayout>
