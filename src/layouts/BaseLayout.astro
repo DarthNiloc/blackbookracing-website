@@ -2,11 +2,19 @@
 interface Props {
   title: string;
   description?: string;
+  ogType?: 'website' | 'article';
 }
 
-const { title, description = "The thinking punter's racing club. Data-driven UK racing picks with a public audit trail and a curated blackbook of horses worth tracking." } = Astro.props;
+const DEFAULT_DESCRIPTION = "The thinking punter's racing club. Data-driven UK racing picks with a public audit trail and a curated blackbook of horses worth tracking.";
+
+const { title, description = DEFAULT_DESCRIPTION, ogType = 'website' } = Astro.props;
 const pathname = Astro.url.pathname;
 const isActive = (href: string) => pathname === href || (href !== '/' && pathname.startsWith(href));
+
+// Canonical URL: always points to production domain regardless of where the
+// page is currently served. Astro.site is set in astro.config.mjs.
+const canonicalUrl = new URL(pathname, Astro.site).href;
+const ogImage = new URL('/logo.png', Astro.site).href;
 ---
 
 <!doctype html>
@@ -15,6 +23,10 @@ const isActive = (href: string) => pathname === href || (href !== '/' && pathnam
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="description" content={description} />
+    <!-- Pre-launch: noindex everywhere until DNS cuts over to blackbookracing.com.
+         Once the production domain is live, swap this to `index, follow`. -->
+    <meta name="robots" content="noindex, nofollow" />
+    <link rel="canonical" href={canonicalUrl} />
     <link rel="icon" type="image/png" href="/logo.png" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -22,6 +34,21 @@ const isActive = (href: string) => pathname === href || (href !== '/' && pathnam
       href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600;700&family=EB+Garamond:wght@400;500;600&family=Inter:wght@400;500;600&display=swap"
       rel="stylesheet"
     />
+
+    <!-- Open Graph -->
+    <meta property="og:type" content={ogType} />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={canonicalUrl} />
+    <meta property="og:image" content={ogImage} />
+    <meta property="og:site_name" content="Blackbook Racing Club" />
+
+    <!-- Twitter card -->
+    <meta name="twitter:card" content="summary" />
+    <meta name="twitter:title" content={title} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={ogImage} />
+
     <title>{title}</title>
   </head>
   <body>

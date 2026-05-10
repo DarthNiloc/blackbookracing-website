@@ -1,0 +1,9 @@
+# Pre-launch: disallow crawling on the temporary workers.dev domain.
+# When DNS cuts over to blackbookracing.com, replace with:
+#   User-agent: *
+#   Allow: /
+#
+#   Sitemap: https://blackbookracing.com/sitemap-index.xml
+
+User-agent: *
+Disallow: /
