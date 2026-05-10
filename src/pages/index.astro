@@ -2,20 +2,23 @@
 import BaseLayout from '../layouts/BaseLayout.astro';
 import ledgerData from '../../public/ledger.json';
 
-interface LedgerSummary {
+interface TierHead {
   n_picks: number;
-  n_wins: number;
   hit_rate_pct: number | null;
-  total_stake_pts: number;
-  total_profit_pts: number;
   roi_pct: number | null;
+}
+
+interface TierMini {
+  key: 'open' | 'club' | 'blackbook';
+  label: string;
+  n_days: number;
+  headline: TierHead;
 }
 
 interface LedgerHead {
   first_date: string | null;
   last_date: string | null;
-  n_days: number;
-  summary: LedgerSummary;
+  tiers: TierMini[];
 }
 
 const ledger = ledgerData as LedgerHead;
@@ -50,24 +53,19 @@ function fmtDate(iso: string): string {
   </figure>
 
   <section class="numbers">
-    <p class="numbers-eyebrow">Live ledger</p>
-    <div class="numbers-row">
-      <div class="num-stat">
-        <span class={"num-value " + ((ledger.summary.roi_pct ?? 0) >= 0 ? "pos" : "neg")}>
-          {fmtPct(ledger.summary.roi_pct)}
-        </span>
-        <span class="num-label">ROI</span>
-      </div>
-      <div class="divider" aria-hidden="true">▲</div>
-      <div class="num-stat">
-        <span class="num-value">{ledger.summary.n_picks}</span>
-        <span class="num-label">Picks settled</span>
-      </div>
-      <div class="divider" aria-hidden="true">▲</div>
-      <div class="num-stat">
-        <span class="num-value">{ledger.n_days}</span>
-        <span class="num-label">Race days</span>
-      </div>
+    <p class="numbers-eyebrow">Live ledger by tier</p>
+    <div class="tier-row">
+      {ledger.tiers.map(t => (
+        <article class={"tier-stat tier-stat-" + t.key}>
+          <p class="tier-stat-label">{t.label}</p>
+          <span class={"tier-stat-roi " + ((t.headline.roi_pct ?? 0) >= 0 ? "pos" : "neg")}>
+            {fmtPct(t.headline.roi_pct)}
+          </span>
+          <p class="tier-stat-meta">
+            {t.headline.n_picks} picks <span class="dot">·</span> {t.headline.hit_rate_pct?.toFixed(1)}% hit
+          </p>
+        </article>
+      ))}
     </div>
     <p class="numbers-period">
       {ledger.first_date && fmtDate(ledger.first_date)} — {ledger.last_date && fmtDate(ledger.last_date)}.
@@ -220,43 +218,56 @@ function fmtDate(iso: string): string {
       margin-bottom: 20px;
     }
 
-    .numbers-row {
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      gap: 22px;
-      margin-bottom: 18px;
-      flex-wrap: wrap;
+    .tier-row {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 16px;
+      margin-bottom: 22px;
     }
 
-    .num-stat {
+    .tier-stat {
+      text-align: center;
+      padding: 18px 14px 16px;
+      border: 1px solid var(--rule);
+      border-radius: 4px;
+      background: var(--cream);
       display: flex;
       flex-direction: column;
-      gap: 6px;
+      gap: 8px;
       font-feature-settings: 'tnum';
     }
 
-    .num-value {
+    .tier-stat-club {
+      border-color: var(--gold);
+    }
+
+    .tier-stat-label {
+      font-family: 'Inter', sans-serif;
+      font-size: 10px;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--ink-mute);
+      font-weight: 700;
+    }
+
+    .tier-stat-roi {
       font-family: 'Cormorant Garamond', serif;
-      font-size: 38px;
+      font-size: 32px;
       font-weight: 600;
-      letter-spacing: 0.02em;
+      letter-spacing: 0.01em;
       line-height: 1;
     }
 
-    .num-label {
+    .tier-stat-meta {
       font-family: 'Inter', sans-serif;
       font-size: 11px;
-      letter-spacing: 0.18em;
-      text-transform: uppercase;
+      letter-spacing: 0.04em;
       color: var(--ink-mute);
-      font-weight: 600;
     }
 
-    .divider {
+    .tier-stat-meta .dot {
       color: var(--gold);
-      font-size: 10px;
-      opacity: 0.55;
+      margin: 0 4px;
     }
 
     .pos { color: #2d5a2d; }
@@ -425,12 +436,16 @@ function fmtDate(iso: string): string {
         margin-right: auto;
       }
 
-      .num-value {
-        font-size: 30px;
+      .tier-row {
+        grid-template-columns: 1fr;
+        gap: 12px;
+        max-width: 360px;
+        margin-left: auto;
+        margin-right: auto;
       }
 
-      .numbers-row {
-        gap: 18px;
+      .tier-stat-roi {
+        font-size: 28px;
       }
     }
 
