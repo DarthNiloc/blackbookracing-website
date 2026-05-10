@@ -1,0 +1,426 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { readFileSync, existsSync } from 'node:fs';
+import { join } from 'node:path';
+
+interface Pick {
+  date: string;
+  race_time: string;
+  course: string;
+  race_code: string;
+  horse: string;
+  stake_pts: number;
+  bsp: number | null;
+  result: 'win' | 'lose' | 'void';
+  profit_pts: number;
+  logged_at: string | null;
+}
+
+interface CodeRow {
+  race_code: string;
+  n_picks: number;
+  n_wins: number;
+  hit_rate_pct: number | null;
+  total_stake_pts: number;
+  total_profit_pts: number;
+  roi_pct: number | null;
+}
+
+interface Ledger {
+  generated_at: string;
+  first_date: string | null;
+  last_date: string | null;
+  n_days: number;
+  summary: {
+    n_picks: number;
+    n_wins: number;
+    n_voided: number;
+    hit_rate_pct: number | null;
+    total_stake_pts: number;
+    total_profit_pts: number;
+    roi_pct: number | null;
+  };
+  by_race_code: CodeRow[];
+  picks: Pick[];
+}
+
+const ledgerPath = join(process.cwd(), 'public', 'ledger.json');
+const ledger: Ledger | null = existsSync(ledgerPath)
+  ? JSON.parse(readFileSync(ledgerPath, 'utf-8'))
+  : null;
+
+function fmtDate(iso: string): string {
+  const d = new Date(iso + 'T00:00:00Z');
+  return d.toLocaleDateString('en-GB', { day: '2-digit', month: 'short', timeZone: 'UTC' });
+}
+
+function fmtSign(n: number): string {
+  return (n >= 0 ? '+' : '') + n.toFixed(2);
+}
+
+function fmtPct(n: number | null): string {
+  if (n === null) return '—';
+  return (n >= 0 ? '+' : '') + n.toFixed(1) + '%';
+}
+
+const codeName: Record<string, string> = {
+  FLT: 'Flat',
+  AWF: 'All-weather',
+  HDL: 'Hurdle',
+  CHS: 'Chase',
+  NHF: 'Bumper',
+};
+---
+
+<BaseLayout
+  title="Ledger — Blackbook Racing Club"
+  description="The full public ledger. Every settled pick, every BSP, reconciled to Betfair after the race."
+>
+  <article class="page">
+    <p class="eyebrow">Public ledger</p>
+    <h1 class="page-title">The ledger.</h1>
+    <p class="lede">
+      Every settled pick from our highest-conviction streams. Timestamped pre-off. Settlements
+      reconcile to Betfair Starting Price after the race. Losers published alongside winners.
+    </p>
+
+    {ledger === null && (
+      <p class="note">Ledger publishes from 2026-05-11. Bookmark this page; first reconciled picks land tomorrow morning.</p>
+    )}
+
+    {ledger !== null && (
+      <>
+        <section class="stats">
+          <div class="stat">
+            <span class="stat-label">Picks</span>
+            <span class="stat-value">{ledger.summary.n_picks}</span>
+          </div>
+          <div class="stat">
+            <span class="stat-label">Hit rate</span>
+            <span class="stat-value">{ledger.summary.hit_rate_pct?.toFixed(1)}%</span>
+          </div>
+          <div class="stat">
+            <span class="stat-label">ROI</span>
+            <span class={"stat-value " + ((ledger.summary.roi_pct ?? 0) >= 0 ? "pos" : "neg")}>
+              {fmtPct(ledger.summary.roi_pct)}
+            </span>
+          </div>
+          <div class="stat">
+            <span class="stat-label">Profit</span>
+            <span class={"stat-value " + (ledger.summary.total_profit_pts >= 0 ? "pos" : "neg")}>
+              {fmtSign(ledger.summary.total_profit_pts)}<span class="unit">pt</span>
+            </span>
+          </div>
+        </section>
+
+        <p class="period">
+          {ledger.first_date && fmtDate(ledger.first_date)} <span class="dash">—</span>{' '}
+          {ledger.last_date && fmtDate(ledger.last_date)} <span class="dot">▲</span> {ledger.n_days} race days
+        </p>
+
+        <section class="block">
+          <h2>By race code</h2>
+          <table class="data-table">
+            <thead>
+              <tr>
+                <th>Code</th>
+                <th class="num">Picks</th>
+                <th class="num">Hit</th>
+                <th class="num">ROI</th>
+                <th class="num">P&amp;L</th>
+              </tr>
+            </thead>
+            <tbody>
+              {ledger.by_race_code.map(c => (
+                <tr>
+                  <td><strong>{c.race_code}</strong> <span class="code-name">{codeName[c.race_code] || ''}</span></td>
+                  <td class="num">{c.n_picks}</td>
+                  <td class="num">{c.hit_rate_pct?.toFixed(1)}%</td>
+                  <td class={"num " + ((c.roi_pct ?? 0) >= 0 ? "pos" : "neg")}>{fmtPct(c.roi_pct)}</td>
+                  <td class={"num " + (c.total_profit_pts >= 0 ? "pos" : "neg")}>{fmtSign(c.total_profit_pts)}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </section>
+
+        <section class="block">
+          <h2>All picks</h2>
+          <table class="data-table picks-table">
+            <thead>
+              <tr>
+                <th>Date</th>
+                <th>Off</th>
+                <th>Course</th>
+                <th>Horse</th>
+                <th class="num">BSP</th>
+                <th>Result</th>
+                <th class="num">P&amp;L</th>
+              </tr>
+            </thead>
+            <tbody>
+              {ledger.picks.map(p => (
+                <tr class={"row-" + p.result}>
+                  <td>{fmtDate(p.date)}</td>
+                  <td>{p.race_time}</td>
+                  <td>{p.course}</td>
+                  <td class="horse">{p.horse}</td>
+                  <td class="num">{p.bsp !== null ? p.bsp.toFixed(2) : '—'}</td>
+                  <td class={"result result-" + p.result}>{p.result}</td>
+                  <td class={"num " + (p.profit_pts >= 0 ? "pos" : "neg")}>{fmtSign(p.profit_pts)}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </section>
+
+        <p class="note">
+          Stakes are 1pt unit; ROI is profit on stake. BSP is Betfair Starting Price; profit assumes 2% Betfair commission on winning bets.
+        </p>
+        <p class="note generated">
+          Generated {ledger.generated_at}.
+        </p>
+      </>
+    )}
+  </article>
+
+  <style>
+    .page {
+      padding-top: 16px;
+    }
+
+    .eyebrow {
+      font-family: 'Inter', sans-serif;
+      font-size: 11px;
+      letter-spacing: 0.25em;
+      text-transform: uppercase;
+      color: var(--gold);
+      font-weight: 600;
+      text-align: center;
+      margin-bottom: 12px;
+    }
+
+    .page-title {
+      font-family: 'Cormorant Garamond', serif;
+      font-weight: 700;
+      font-size: 40px;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+      text-align: center;
+      margin-bottom: 24px;
+    }
+
+    .lede {
+      font-family: 'EB Garamond', serif;
+      font-size: 19px;
+      line-height: 1.55;
+      color: var(--ink-soft);
+      max-width: 600px;
+      margin: 0 auto 56px;
+      text-align: center;
+    }
+
+    .stats {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 16px;
+      max-width: 720px;
+      margin: 0 auto 18px;
+      padding: 28px 24px;
+      border-top: 1px solid var(--ink);
+      border-bottom: 1px solid var(--ink);
+    }
+
+    .stat {
+      text-align: center;
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+      font-feature-settings: 'tnum';
+    }
+
+    .stat-label {
+      font-family: 'Inter', sans-serif;
+      font-size: 10px;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--ink-mute);
+      font-weight: 600;
+    }
+
+    .stat-value {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 30px;
+      font-weight: 600;
+      letter-spacing: 0.02em;
+      color: var(--ink);
+    }
+
+    .stat-value .unit {
+      font-size: 14px;
+      letter-spacing: 0.04em;
+      color: var(--ink-mute);
+      margin-left: 2px;
+    }
+
+    .pos { color: #2d5a2d; }
+    .neg { color: #8b2a2a; }
+
+    .period {
+      font-family: 'Inter', sans-serif;
+      font-size: 12px;
+      letter-spacing: 0.06em;
+      color: var(--ink-mute);
+      text-align: center;
+      margin-bottom: 56px;
+      font-feature-settings: 'tnum';
+    }
+
+    .period .dash {
+      margin: 0 6px;
+    }
+
+    .period .dot {
+      color: var(--gold);
+      margin: 0 8px;
+    }
+
+    .block {
+      max-width: 920px;
+      margin: 0 auto;
+      padding-bottom: 36px;
+    }
+
+    .block + .block {
+      padding-top: 36px;
+      border-top: 1px solid var(--rule);
+    }
+
+    .block h2 {
+      font-size: 20px;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      font-weight: 600;
+      margin-bottom: 20px;
+    }
+
+    .data-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-family: 'Inter', sans-serif;
+      font-size: 14px;
+      font-feature-settings: 'tnum';
+    }
+
+    .data-table th {
+      font-family: 'Inter', sans-serif;
+      font-size: 10px;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      font-weight: 600;
+      color: var(--ink-mute);
+      text-align: left;
+      padding: 10px 12px;
+      border-bottom: 1px solid var(--ink);
+    }
+
+    .data-table th.num {
+      text-align: right;
+    }
+
+    .data-table td {
+      padding: 10px 12px;
+      border-bottom: 1px solid var(--rule);
+      vertical-align: baseline;
+    }
+
+    .data-table td.num {
+      text-align: right;
+    }
+
+    .data-table .code-name {
+      color: var(--ink-mute);
+      font-size: 12px;
+      margin-left: 4px;
+    }
+
+    .picks-table .horse {
+      font-family: 'EB Garamond', serif;
+      font-size: 16px;
+    }
+
+    .picks-table .result {
+      font-family: 'Inter', sans-serif;
+      font-size: 11px;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      font-weight: 600;
+    }
+
+    .result-win  { color: #2d5a2d; }
+    .result-lose { color: var(--ink-mute); }
+    .result-void { color: var(--ink-mute); font-style: italic; }
+
+    .row-lose td {
+      color: var(--ink-soft);
+    }
+    .row-lose .horse {
+      color: var(--ink);
+    }
+
+    .note {
+      font-family: 'Inter', sans-serif;
+      font-size: 12px;
+      letter-spacing: 0.04em;
+      color: var(--ink-mute);
+      text-align: center;
+      max-width: 600px;
+      margin: 16px auto 0;
+      line-height: 1.55;
+    }
+
+    .note.generated {
+      margin-top: 8px;
+      opacity: 0.7;
+      font-feature-settings: 'tnum';
+    }
+
+    @media (max-width: 720px) {
+      .page-title {
+        font-size: 28px;
+      }
+
+      .lede {
+        font-size: 17px;
+        margin-bottom: 40px;
+      }
+
+      .stats {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 24px 16px;
+        padding: 24px 16px;
+      }
+
+      .stat-value {
+        font-size: 26px;
+      }
+
+      .data-table {
+        font-size: 12px;
+      }
+
+      .data-table th,
+      .data-table td {
+        padding: 8px 6px;
+      }
+
+      .picks-table .horse {
+        font-size: 14px;
+      }
+
+      .data-table .code-name {
+        display: none;
+      }
+    }
+  </style>
+</BaseLayout>
