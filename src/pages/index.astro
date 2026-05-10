@@ -13,8 +13,8 @@ import BaseLayout from '../layouts/BaseLayout.astro';
     </p>
   </section>
 
-  <figure class="hero-photo">
-    <img src="/hero-racing.jpg" alt="Horses racing on turf" loading="lazy" />
+  <figure class="hero-mark">
+    <img src="/logo.png" alt="Blackbook Racing" loading="lazy" />
   </figure>
 
   <style>
@@ -57,16 +57,16 @@ import BaseLayout from '../layouts/BaseLayout.astro';
       color: var(--ink-soft);
     }
 
-    .hero-photo {
-      margin: 80px auto 0;
-      max-width: 880px;
+    .hero-mark {
+      margin: 72px auto 0;
+      max-width: 360px;
+      text-align: center;
     }
 
-    .hero-photo img {
+    .hero-mark img {
       width: 100%;
       height: auto;
       display: block;
-      border-radius: 4px;
     }
 
     @media (max-width: 640px) {
@@ -82,8 +82,9 @@ import BaseLayout from '../layouts/BaseLayout.astro';
         font-size: 17px;
       }
 
-      .hero-photo {
-        margin-top: 56px;
+      .hero-mark {
+        margin-top: 48px;
+        max-width: 280px;
       }
     }
   </style>
