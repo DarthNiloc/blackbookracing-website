@@ -1,0 +1,345 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+
+interface Tier {
+  name: string;
+  price: string;
+  pricePeriod?: string;
+  yearly?: string;
+  pitch: string;
+  bullets: string[];
+  cta: { label: string; href?: string; disabled?: boolean };
+  founderOffer?: string;
+  accent?: boolean;
+}
+
+const tiers: Tier[] = [
+  {
+    name: 'Open',
+    price: 'Free',
+    pitch: 'Lead-gen tier. The taste of what we publish, in the public Telegram channel.',
+    bullets: [
+      '1–2 of our highest-conviction picks each day',
+      'Next-morning results in channel',
+      'Weekly + monthly performance summaries',
+    ],
+    cta: { label: 'Join free on Telegram', href: 'https://t.me/BlackbookRacing' },
+  },
+  {
+    name: 'Club',
+    price: '£39',
+    pricePeriod: '/mo',
+    yearly: 'or £349/yr · ~25% off',
+    pitch: 'The headline slate. Daily picks across our validated streams, timestamped pre-off.',
+    bullets: [
+      'Our headline daily slate',
+      'Pre-off timestamped, delivered to Telegram',
+      'Public ledger access',
+      'Next-morning results email',
+    ],
+    cta: { label: 'Founding offer launches Q3 2026', disabled: true },
+    founderOffer: 'First 100 members at £29/mo (or £249/yr) — permanently locked.',
+    accent: true,
+  },
+  {
+    name: 'Blackbook',
+    price: '£99',
+    pricePeriod: '/mo',
+    yearly: 'or £899/yr · ~25% off',
+    pitch: 'The fullest slate, plus the seasonal blackbook of horses worth tracking.',
+    bullets: [
+      'Our fullest daily slate',
+      'The seasonal blackbook of horses to track',
+      'Pre-off drift alerts + recommended staking',
+      'Members-only weekly editorial',
+    ],
+    cta: { label: 'Founding offer launches Q3 2026', disabled: true },
+    founderOffer: 'First 50 members at £69/mo (or £599/yr) — permanently locked.',
+  },
+];
+---
+
+<BaseLayout
+  title="Subscribe — Blackbook Racing Club"
+  description="Three tiers, one methodology. Join the free Open channel today, or sign up for Club and Blackbook tiers when paid signup opens."
+>
+  <article class="page">
+    <p class="eyebrow">Subscribe</p>
+    <h1 class="page-title">Three tiers. One ledger.</h1>
+    <p class="lede">
+      Open is live in Telegram today. Club and Blackbook open for paid signup at launch — with a
+      one-time founding offer for the first members in.
+    </p>
+
+    <section class="tiers">
+      {tiers.map(t => (
+        <div class={"tier" + (t.accent ? " tier-accent" : "")}>
+          <div class="tier-head">
+            <h2 class="tier-name">{t.name}</h2>
+            <div class="tier-price">
+              <span class="amount">{t.price}</span>
+              {t.pricePeriod && <span class="period">{t.pricePeriod}</span>}
+            </div>
+            {t.yearly && <p class="yearly">{t.yearly}</p>}
+            <p class="pitch">{t.pitch}</p>
+          </div>
+          <ul class="bullets">
+            {t.bullets.map(b => (
+              <li><span class="mark">▲</span><span>{b}</span></li>
+            ))}
+          </ul>
+          {t.founderOffer && (
+            <p class="founder">{t.founderOffer}</p>
+          )}
+          <div class="cta-wrap">
+            {t.cta.disabled ? (
+              <span class="cta cta-disabled" aria-disabled="true">{t.cta.label}</span>
+            ) : (
+              <a class="cta" href={t.cta.href} rel="noopener">{t.cta.label}</a>
+            )}
+          </div>
+        </div>
+      ))}
+    </section>
+
+    <section class="note-section">
+      <h2>How it works</h2>
+      <p>
+        We sell information. You place your own bets at your own broker — we don't pool funds,
+        manage stakes for anyone else, or operate a syndicate. Selections post to Telegram before
+        the off and reconcile to Betfair Starting Price after the race.
+      </p>
+      <p>
+        Past performance does not guarantee future returns. UK racing is a 18+ activity; please
+        bet responsibly. If you need help with gambling, contact <a href="https://www.begambleaware.org" rel="noopener">BeGambleAware</a>.
+      </p>
+    </section>
+  </article>
+
+  <style>
+    .page {
+      padding-top: 16px;
+    }
+
+    .eyebrow {
+      font-family: 'Inter', sans-serif;
+      font-size: 11px;
+      letter-spacing: 0.25em;
+      text-transform: uppercase;
+      color: var(--gold);
+      font-weight: 600;
+      text-align: center;
+      margin-bottom: 12px;
+    }
+
+    .page-title {
+      font-family: 'Cormorant Garamond', serif;
+      font-weight: 700;
+      font-size: 40px;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+      text-align: center;
+      margin-bottom: 24px;
+    }
+
+    .lede {
+      font-family: 'EB Garamond', serif;
+      font-size: 19px;
+      line-height: 1.55;
+      color: var(--ink-soft);
+      max-width: 600px;
+      margin: 0 auto 56px;
+      text-align: center;
+    }
+
+    .tiers {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 24px;
+      max-width: 1080px;
+      margin: 0 auto 72px;
+    }
+
+    .tier {
+      background: var(--cream);
+      border: 1px solid var(--rule);
+      border-radius: 4px;
+      padding: 32px 28px;
+      display: flex;
+      flex-direction: column;
+      gap: 22px;
+    }
+
+    .tier-accent {
+      border-color: var(--gold);
+      box-shadow: inset 0 0 0 1px var(--gold);
+    }
+
+    .tier-name {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 26px;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      margin-bottom: 12px;
+    }
+
+    .tier-price {
+      font-family: 'Cormorant Garamond', serif;
+      display: flex;
+      align-items: baseline;
+      gap: 4px;
+      margin-bottom: 6px;
+    }
+
+    .tier-price .amount {
+      font-size: 42px;
+      font-weight: 600;
+      letter-spacing: 0.02em;
+    }
+
+    .tier-price .period {
+      font-size: 18px;
+      color: var(--ink-mute);
+      font-weight: 500;
+    }
+
+    .yearly {
+      font-family: 'Inter', sans-serif;
+      font-size: 11px;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--ink-mute);
+      margin-bottom: 14px;
+    }
+
+    .pitch {
+      font-family: 'EB Garamond', serif;
+      font-size: 16px;
+      line-height: 1.5;
+      color: var(--ink);
+    }
+
+    .bullets {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .bullets li {
+      font-family: 'EB Garamond', serif;
+      font-size: 16px;
+      line-height: 1.45;
+      display: flex;
+      gap: 10px;
+    }
+
+    .bullets .mark {
+      color: var(--gold);
+      font-size: 11px;
+      line-height: 1.6;
+      flex-shrink: 0;
+    }
+
+    .founder {
+      font-family: 'Inter', sans-serif;
+      font-size: 12px;
+      letter-spacing: 0.04em;
+      line-height: 1.55;
+      color: var(--ink-mute);
+      padding: 12px 14px;
+      border-top: 1px solid var(--rule);
+      border-bottom: 1px solid var(--rule);
+    }
+
+    .cta-wrap {
+      margin-top: auto;
+      padding-top: 4px;
+    }
+
+    .cta {
+      display: block;
+      width: 100%;
+      text-align: center;
+      padding: 14px 18px;
+      font-family: 'Inter', sans-serif;
+      font-size: 12px;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      font-weight: 600;
+      background: var(--ink);
+      color: var(--cream);
+      text-decoration: none;
+      border-radius: 4px;
+    }
+
+    .cta:hover {
+      background: #1a1a1a;
+    }
+
+    .cta-disabled {
+      background: transparent;
+      color: var(--ink-mute);
+      border: 1px solid var(--rule);
+      cursor: default;
+    }
+
+    .note-section {
+      max-width: 680px;
+      margin: 0 auto;
+      padding-top: 48px;
+      border-top: 1px solid var(--rule);
+    }
+
+    .note-section h2 {
+      font-size: 18px;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      font-weight: 600;
+      margin-bottom: 18px;
+      text-align: center;
+    }
+
+    .note-section p {
+      font-family: 'EB Garamond', serif;
+      font-size: 17px;
+      line-height: 1.6;
+      color: var(--ink-soft);
+      margin-bottom: 14px;
+    }
+
+    .note-section a {
+      color: var(--ink);
+    }
+
+    @media (max-width: 900px) {
+      .tiers {
+        grid-template-columns: 1fr;
+        gap: 18px;
+        max-width: 480px;
+      }
+    }
+
+    @media (max-width: 640px) {
+      .page-title {
+        font-size: 28px;
+      }
+
+      .lede {
+        font-size: 17px;
+        margin-bottom: 40px;
+      }
+
+      .tier {
+        padding: 28px 22px;
+      }
+
+      .tier-price .amount {
+        font-size: 36px;
+      }
+    }
+  </style>
+</BaseLayout>
