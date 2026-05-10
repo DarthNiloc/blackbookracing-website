@@ -10,15 +10,18 @@ interface TierHead {
 }
 
 interface TierMini {
-  key: 'open' | 'club' | 'blackbook';
+  key: 'free' | 'club' | 'blackbook';
   label: string;
   n_days: number;
   headline: TierHead;
+  headline_30d: TierHead;
 }
 
 interface LedgerHead {
   first_date: string | null;
   last_date: string | null;
+  window_30d_first: string | null;
+  window_30d_last: string | null;
   tiers: TierMini[];
 }
 
@@ -47,55 +50,68 @@ function fmtDate(iso: string): string {
 ---
 
 <BaseLayout
-  title="Blackbook Racing Club — The thinking punter's racing club"
-  description="A small UK team. Decades of racing data. Every pick logged before the off, every result reconciled to Betfair Starting Price. Data-driven UK racing picks with a public audit trail."
+  title="Blackbook Racing Club — Pre-off selections, public ledger, UK flat racing"
+  description="UK flat racing selections — turf and all-weather. Published pre-off each morning, reconciled to Betfair SP. Public ledger. Hurdle add-on for Blackbook members."
 >
+  <figure class="hero-mark">
+    <img src="/logo.png" alt="Blackbook Racing" />
+  </figure>
+
   <section class="hero">
-    <p class="eyebrow">Every pick logged <span class="sep">·</span> Every result reconciled</p>
+    <p class="eyebrow">Pre-off picks. Public ledger. UK flat racing.</p>
     <h1 class="brand-line">The thinking punter's racing club.</h1>
     <p class="substance">
-      A small UK team of horse racing enthusiasts. Decades of UK racing data behind every selection.
-      Hand-reviewed selections delivered each morning, logged before the off, reconciled after — and
-      a curated blackbook of horses worth tracking.
+      Hand-reviewed selections published every morning of UK racing, logged before the off and
+      reconciled to Betfair Starting Price after the race. Flat and all-weather are the focus;
+      Blackbook members also get our hurdles add-on plus a curated list of horses worth tracking.
     </p>
   </section>
 
-  <figure class="hero-mark">
-    <img src="/logo.png" alt="Blackbook Racing" loading="lazy" />
-  </figure>
-
   <section class="numbers">
-    <p class="numbers-eyebrow">Live ledger by tier</p>
+    <p class="numbers-eyebrow">Live ledger by tier <span class="eyebrow-sub">· last 30 days</span></p>
     <div class="tier-row">
       {ledger.tiers.map(t => (
         <article class={"tier-stat tier-stat-" + t.key}>
           <p class="tier-stat-label">{t.label}</p>
-          <span class={"tier-stat-roi " + ((t.headline.roi_pct ?? 0) >= 0 ? "pos" : "neg")}>
-            {fmtPct(t.headline.roi_pct)}
+          <span class={"tier-stat-roi " + ((t.headline_30d.roi_pct ?? 0) >= 0 ? "pos" : "neg")}>
+            {fmtPct(t.headline_30d.roi_pct)}
           </span>
           <p class="tier-stat-roi-label">Return on stake</p>
-          <p class="tier-stat-meta">
-            {t.headline.n_picks} picks <span class="dot">·</span> {t.headline.hit_rate_pct?.toFixed(1)}% hit
-          </p>
-          <p class={"tier-stat-pl " + (t.headline.total_profit_pts >= 0 ? "pos" : "neg")}>
-            {fmtPts(t.headline.total_profit_pts)} <span class="pl-sub">P&amp;L</span>
+          <div class="tier-stat-meta">
+            <p class="meta-line">
+              <span class="meta-num">{t.headline_30d.n_picks}</span>
+              <span class="meta-lab">Selections</span>
+            </p>
+            <p class="meta-line">
+              <span class="meta-num">{t.headline_30d.hit_rate_pct?.toFixed(1) ?? '—'}%</span>
+              <span class="meta-lab">Strike rate</span>
+            </p>
+          </div>
+          <p class={"tier-stat-pl " + (t.headline_30d.total_profit_pts >= 0 ? "pos" : "neg")}>
+            {fmtPts(t.headline_30d.total_profit_pts)} <span class="pl-sub">P&amp;L</span>
           </p>
         </article>
       ))}
     </div>
-    <p class="numbers-explainer">
-      <strong>ROI</strong> is profit per unit staked (each pick stakes 1pt).
-      At £10 per point, P&amp;L totals are{' '}
-      {ledger.tiers.map((t, i) => (
-        <>
-          {i > 0 && ' · '}
-          <span class={t.headline.total_profit_pts >= 0 ? 'pos' : 'neg'}>{fmtPound(t.headline.total_profit_pts)}</span> {t.label}
-        </>
-      ))}.
-    </p>
+    <div class="numbers-explainer">
+      <p class="explainer-lead">
+        <strong>ROI</strong> is profit per unit staked (each selection stakes 1pt).
+      </p>
+      <p class="explainer-lead">At £10 per point, P&amp;L totals are:</p>
+      <ul class="explainer-list">
+        {ledger.tiers.map(t => (
+          <li>
+            <span class={t.headline_30d.total_profit_pts >= 0 ? 'pos pound' : 'neg pound'}>
+              {fmtPound(t.headline_30d.total_profit_pts)}
+            </span>
+            <span class="explainer-tier">{t.label}</span>
+          </li>
+        ))}
+      </ul>
+    </div>
     <p class="numbers-period">
-      {ledger.first_date && fmtDate(ledger.first_date)} — {ledger.last_date && fmtDate(ledger.last_date)}.
-      <a href="/ledger">See the full ledger →</a>
+      Rolling 30 days to {ledger.window_30d_last && fmtDate(ledger.window_30d_last)}.
+      <a href="/ledger">See the full all-time ledger →</a>
     </p>
   </section>
 
@@ -103,20 +119,20 @@ function fmtDate(iso: string): string {
     <p class="essay-eyebrow">Why we exist</p>
     <div class="essay-body">
       <p>
-        Most racing tipsters publish their winners and stay quiet about the rest. We do the opposite. Every
-        selection lands on a public ledger before the off, every result reconciles to Betfair Starting Price
-        after the race, and every losing month sits on the page next to the wins.
+        Most racing tipsters publish their winners and stay quiet about the rest. We do the opposite.
+        Every selection lands on the public ledger before the off, every result reconciles to Betfair
+        Starting Price after the race, and every losing day sits on the page next to the wins.
       </p>
       <p>
-        We started because we wanted somewhere to bet that we'd actually trust ourselves. Decades of UK
-        racing data went into the methodology long before any of it was published — and we still pull
-        every runner through the same gauntlet each morning. What clears the bar gets put on the slate.
-        What doesn't, doesn't.
+        UK flat racing is the focus — turf and all-weather. Decades of UK racing data shaped the
+        methodology, and every runner goes through the same gauntlet each morning. What clears the bar
+        gets put on the slate. What doesn't, doesn't. Blackbook members also get our hurdles add-on
+        plus a curated list of horses worth tracking through the season.
       </p>
       <p>
-        The brief is narrow on purpose. We don't sell systems. We don't pool money. We don't claim
-        guaranteed returns. We tell you what we'd bet, log it before the off, and show you whether it
-        worked. The rest is up to you.
+        The brief is narrow on purpose. We don't sell systems, pool money, or claim guaranteed returns.
+        We tell you what we'd bet, log it before the off, and show you whether it worked. The rest is
+        up to you.
       </p>
     </div>
   </section>
@@ -127,8 +143,9 @@ function fmtDate(iso: string): string {
       <div class="value">
         <h3>Pre-off timestamps</h3>
         <p>
-          Every selection is published before the race goes off. The ledger records the timestamp,
-          the price, and the stake — no retroactive edits, no "we said it the night before, trust us."
+          Every selection is published the morning of the race — long before the off. The ledger
+          records the timestamp, the price, and the stake. No retroactive edits, no "we said it the
+          night before, trust us."
         </p>
       </div>
       <div class="value">
@@ -141,30 +158,39 @@ function fmtDate(iso: string): string {
       <div class="value">
         <h3>Losers published</h3>
         <p>
-          Bad days sit alongside good ones. The ledger breaks performance down by race code, including
-          the courses where we don't have an edge. The whole record is the proof, not the highlight reel.
+          Bad days sit alongside good ones. The ledger breaks performance down by race code and
+          signal, including the streams where we don't have an edge yet. The whole record is the
+          proof, not the highlight reel.
         </p>
       </div>
     </div>
   </section>
 
   <section class="tiers-teaser">
-    <p class="teaser-eyebrow">Three tiers, one ledger</p>
+    <p class="teaser-eyebrow">Pick your tier</p>
     <div class="tier-grid">
       <div class="teaser-card">
-        <h3>Open</h3>
-        <p class="teaser-price">Free</p>
-        <p class="teaser-pitch">1–2 daily picks · next-morning results · in Telegram.</p>
-      </div>
-      <div class="teaser-card teaser-accent">
-        <h3>Club</h3>
-        <p class="teaser-price">£39<span class="period">/mo</span></p>
-        <p class="teaser-pitch">Headline daily slate · pre-off Telegram · public ledger.</p>
+        <h3>Free</h3>
+        <p class="teaser-price">£0</p>
+        <p class="teaser-pitch">
+          1 top-conviction selection each race day, posted in the public Telegram.
+        </p>
       </div>
       <div class="teaser-card">
+        <h3>Club</h3>
+        <p class="teaser-price">£39<span class="period">/mo</span></p>
+        <p class="teaser-pitch">
+          The full top-conviction layer across UK flat racing — turf and all-weather, pre-off.
+        </p>
+      </div>
+      <div class="teaser-card teaser-accent">
+        <p class="teaser-flag">Full package</p>
         <h3>Blackbook</h3>
         <p class="teaser-price">£99<span class="period">/mo</span></p>
-        <p class="teaser-pitch">Fullest slate · horses to track · drift alerts · staking.</p>
+        <p class="teaser-pitch">
+          Everything in Club, plus form picks, hurdles, horses to track, drift alerts and a
+          weekly editorial.
+        </p>
       </div>
     </div>
     <p class="teaser-cta">
@@ -173,24 +199,31 @@ function fmtDate(iso: string): string {
   </section>
 
   <style>
+    .hero-mark {
+      margin: 8px auto 28px;
+      max-width: 280px;
+      text-align: center;
+    }
+
+    .hero-mark img {
+      width: 100%;
+      height: auto;
+      display: block;
+    }
+
     .hero {
       text-align: center;
-      padding: 32px 0 24px;
+      padding: 0 0 24px;
     }
 
     .eyebrow {
       font-family: 'Inter', sans-serif;
-      font-size: 11px;
-      letter-spacing: 0.25em;
+      font-size: 13px;
+      letter-spacing: 0.22em;
       text-transform: uppercase;
       color: var(--gold);
       font-weight: 600;
-      margin-bottom: 28px;
-    }
-
-    .eyebrow .sep {
-      margin: 0 6px;
-      opacity: 0.7;
+      margin-bottom: 22px;
     }
 
     .brand-line {
@@ -200,28 +233,16 @@ function fmtDate(iso: string): string {
       letter-spacing: 0.01em;
       line-height: 1.15;
       max-width: 720px;
-      margin: 0 auto 32px;
+      margin: 0 auto 28px;
     }
 
     .substance {
       font-family: 'EB Garamond', serif;
       font-size: 20px;
       line-height: 1.55;
-      max-width: 600px;
+      max-width: 640px;
       margin: 0 auto;
       color: var(--ink-soft);
-    }
-
-    .hero-mark {
-      margin: 72px auto 0;
-      max-width: 360px;
-      text-align: center;
-    }
-
-    .hero-mark img {
-      width: 100%;
-      height: auto;
-      display: block;
     }
 
     /* === Live ledger numbers band === */
@@ -242,6 +263,12 @@ function fmtDate(iso: string): string {
       color: var(--gold);
       font-weight: 600;
       margin-bottom: 20px;
+    }
+
+    .numbers-eyebrow .eyebrow-sub {
+      color: var(--ink-mute);
+      font-weight: 500;
+      margin-left: 4px;
     }
 
     .tier-row {
@@ -295,15 +322,35 @@ function fmtDate(iso: string): string {
     }
 
     .tier-stat-meta {
-      font-family: 'Inter', sans-serif;
-      font-size: 11px;
-      letter-spacing: 0.04em;
-      color: var(--ink-mute);
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+      align-items: center;
+      padding: 4px 0;
     }
 
-    .tier-stat-meta .dot {
-      color: var(--gold);
-      margin: 0 4px;
+    .tier-stat-meta .meta-line {
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+      align-items: center;
+    }
+
+    .tier-stat-meta .meta-num {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 18px;
+      font-weight: 600;
+      line-height: 1;
+      color: var(--ink);
+    }
+
+    .tier-stat-meta .meta-lab {
+      font-family: 'Inter', sans-serif;
+      font-size: 9px;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--ink-mute);
+      font-weight: 600;
     }
 
     .tier-stat-pl {
@@ -327,20 +374,59 @@ function fmtDate(iso: string): string {
     }
 
     .numbers-explainer {
-      font-family: 'EB Garamond', serif;
-      font-size: 14px;
-      line-height: 1.55;
-      color: var(--ink-soft);
       max-width: 620px;
-      margin: 18px auto 14px;
+      margin: 22px auto 16px;
       text-align: center;
       font-feature-settings: 'tnum';
     }
 
-    .numbers-explainer strong {
+    .explainer-lead {
+      font-family: 'EB Garamond', serif;
+      font-size: 14px;
+      line-height: 1.55;
+      color: var(--ink-soft);
+      margin-bottom: 4px;
+    }
+
+    .explainer-lead strong {
       font-weight: 600;
       color: var(--ink);
       letter-spacing: 0.02em;
+    }
+
+    .explainer-list {
+      list-style: none;
+      padding: 0;
+      margin: 10px 0 0;
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+      align-items: center;
+    }
+
+    .explainer-list li {
+      font-family: 'EB Garamond', serif;
+      font-size: 16px;
+      line-height: 1.4;
+      display: flex;
+      align-items: baseline;
+      gap: 12px;
+      min-width: 220px;
+      justify-content: space-between;
+    }
+
+    .explainer-list .pound {
+      font-weight: 600;
+      font-feature-settings: 'tnum';
+    }
+
+    .explainer-list .explainer-tier {
+      font-family: 'Inter', sans-serif;
+      font-size: 11px;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--ink-mute);
+      font-weight: 700;
     }
 
     .pos { color: #2d5a2d; }
@@ -441,6 +527,26 @@ function fmtDate(iso: string): string {
 
     .teaser-accent {
       border-color: var(--gold);
+      box-shadow: inset 0 0 0 1px var(--gold), 0 8px 24px -16px rgba(193, 164, 103, 0.45);
+      background: linear-gradient(180deg, var(--cream) 0%, rgba(193, 164, 103, 0.08) 100%);
+      position: relative;
+    }
+
+    .teaser-flag {
+      position: absolute;
+      top: -10px;
+      left: 50%;
+      transform: translateX(-50%);
+      font-family: 'Inter', sans-serif;
+      font-size: 10px;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      font-weight: 700;
+      color: var(--cream);
+      background: var(--gold);
+      padding: 4px 12px;
+      border-radius: 3px;
+      white-space: nowrap;
     }
 
     .teaser-card h3 {
@@ -524,7 +630,7 @@ function fmtDate(iso: string): string {
 
     @media (max-width: 640px) {
       .hero {
-        padding: 16px 0 8px;
+        padding: 0 0 8px;
       }
 
       .brand-line {
@@ -535,9 +641,13 @@ function fmtDate(iso: string): string {
         font-size: 17px;
       }
 
+      .eyebrow {
+        font-size: 11px;
+      }
+
       .hero-mark {
-        margin-top: 48px;
-        max-width: 280px;
+        margin: 4px auto 20px;
+        max-width: 210px;
       }
 
       .numbers {

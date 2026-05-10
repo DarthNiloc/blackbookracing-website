@@ -15,13 +15,15 @@ interface Tier {
 
 const tiers: Tier[] = [
   {
-    name: 'Open',
-    price: 'Free',
-    pitch: 'Lead-gen tier. The taste of what we publish, in the public Telegram channel.',
+    name: 'Free',
+    price: '£0',
+    pitch: 'One top-conviction selection each race day, in our public Telegram channel.',
     bullets: [
-      '1–2 of our highest-conviction picks each day',
-      'Next-morning results in channel',
-      'Weekly + monthly performance summaries',
+      '1 top-conviction selection each UK race day',
+      'UK flat racing — turf and all-weather',
+      'Public Telegram channel',
+      'Free articles',
+      'Full public ledger access',
     ],
     cta: { label: 'Join free on Telegram', href: 'https://t.me/BlackbookRacing' },
   },
@@ -30,45 +32,54 @@ const tiers: Tier[] = [
     price: '£39',
     pricePeriod: '/mo',
     yearly: 'or £349/yr · ~25% off',
-    pitch: 'The headline slate. Daily picks across our validated streams, timestamped pre-off.',
+    pitch: 'The complete top-conviction slate across UK flat racing, pre-off each morning.',
     bullets: [
-      'Our headline daily slate',
-      'Pre-off timestamped, delivered to Telegram',
-      'Public ledger access',
-      'Next-morning results email',
+      'The complete top-conviction slate (multiple picks per race day)',
+      'UK flat racing — turf and all-weather (hurdles excluded)',
+      'Private Club Telegram channel',
+      'Pre-off timestamps, reconciled to Betfair SP',
+      'Club-tier articles',
+      'Morning summary email',
+      'Next-morning results in channel',
     ],
     cta: { label: 'Founding offer launches Q3 2026', disabled: true },
     founderOffer: 'First 100 members at £29/mo (or £249/yr) — permanently locked.',
-    accent: true,
   },
   {
     name: 'Blackbook',
     price: '£99',
     pricePeriod: '/mo',
     yearly: 'or £899/yr · ~25% off',
-    pitch: 'The fullest slate, plus the seasonal blackbook of horses worth tracking.',
+    pitch: 'The full package — every signal we run, every code we cover, plus the seasonal blackbook of horses to track.',
     bullets: [
-      'Our fullest daily slate',
-      'The seasonal blackbook of horses to track',
-      'Pre-off drift alerts + recommended staking',
+      'Everything in Club, plus —',
+      'Value picks (market-edge model)',
+      'Form picks (long-term form signals)',
+      'Hurdle racing included (Club is flat-only)',
+      'The seasonal Blackbook of horses to track',
+      'Pre-off drift alerts on every selection',
+      'Recommended staking plans',
       'Members-only weekly editorial',
+      'Full team support',
     ],
     cta: { label: 'Founding offer launches Q3 2026', disabled: true },
     founderOffer: 'First 50 members at £69/mo (or £599/yr) — permanently locked.',
+    accent: true,
   },
 ];
 ---
 
 <BaseLayout
   title="Subscribe — Blackbook Racing Club"
-  description="Three tiers, one methodology. Join the free Open channel today, or sign up for Club and Blackbook tiers when paid signup opens."
+  description="Free, Club, Blackbook. Three tiers across UK flat racing. Join the free Telegram channel today, or sign up for Club and Blackbook when paid signup opens."
 >
   <article class="page">
     <p class="eyebrow">Subscribe</p>
-    <h1 class="page-title">Three tiers. One ledger.</h1>
+    <h1 class="page-title">Free. Club. Blackbook.</h1>
     <p class="lede">
-      Open is live in Telegram today. Club and Blackbook open for paid signup at launch — with a
-      one-time founding offer for the first members in.
+      The Free tier is live in Telegram today — one top-conviction selection each race day. Club
+      and Blackbook open for paid signup at launch, with a one-time founding offer for the first
+      members in. Blackbook is the full package: every signal, every code, every horse on the list.
     </p>
 
     <section class="tiers">
@@ -103,31 +114,31 @@ const tiers: Tier[] = [
     </section>
 
     <section class="member-preview">
-      <p class="preview-eyebrow">What members see</p>
+      <p class="preview-eyebrow">What you get</p>
       <h2 class="preview-title">A taste of each tier</h2>
       <div class="preview-grid">
         <div class="preview-card">
+          <span class="preview-tier preview-tier-free">Free</span>
+          <h3>The daily top pick</h3>
+          <p class="preview-snip">▲ BLACKBOOK FREE <span class="bar">|</span> Today <span class="dot">·</span> 1 selection</p>
+          <p class="preview-snip-small">17:25 LEICESTER · SKY SECRET</p>
+          <p class="preview-snip-small quiet">Logged 08:14 BST · pre-off</p>
+        </div>
+        <div class="preview-card">
           <span class="preview-tier preview-tier-club">Club</span>
-          <h3>The daily slate</h3>
-          <p class="preview-snip">▲ BLACKBOOK CLUB SLATE <span class="bar">|</span> Tomorrow <span class="dot">·</span> 5 picks</p>
-          <p class="preview-snip-small">14:30 KEMPTON · DAWN HORIZON</p>
-          <p class="preview-snip-small">15:25 BEVERLEY · NORTHERN SCRIBE</p>
-          <p class="preview-snip-small quiet">…three more, logged 18:42 BST</p>
+          <h3>The full top-conviction slate</h3>
+          <p class="preview-snip">▲ BLACKBOOK CLUB <span class="bar">|</span> Today <span class="dot">·</span> 4 selections</p>
+          <p class="preview-snip-small">13:55 PONTEFRACT · SILVER ARROW</p>
+          <p class="preview-snip-small">14:30 KEMPTON (AW) · DAWN HORIZON</p>
+          <p class="preview-snip-small quiet">…two more, logged 08:14 BST</p>
         </div>
         <div class="preview-card">
           <span class="preview-tier preview-tier-blackbook">Blackbook</span>
-          <h3>Horses to track</h3>
-          <p class="preview-snip"><strong>ATLANTIC CROSSING</strong></p>
-          <p class="preview-snip-small">4yo · A.B. Smith</p>
-          <p class="preview-snip-small">Flagged twice in 12 days. Want 12-13f, soft.</p>
-          <p class="preview-snip-small quiet">Status: pending third flag</p>
-        </div>
-        <div class="preview-card">
-          <span class="preview-tier preview-tier-blackbook">Blackbook</span>
-          <h3>Weekly editorial</h3>
-          <p class="preview-snip"><em>The week's verdict — 2026-05-04 → 2026-05-10</em></p>
-          <p class="preview-snip-small">14 picks at +12.4pt. Headline a 14.0 winner at Lingfield.</p>
-          <p class="preview-snip-small quiet">Long-form, members only, every Monday.</p>
+          <h3>The full package</h3>
+          <p class="preview-snip">▲ BLACKBOOK <span class="bar">|</span> Today <span class="dot">·</span> 9 selections + 1 hurdle</p>
+          <p class="preview-snip-small">+ value picks, form picks, hurdles</p>
+          <p class="preview-snip-small">+ horses to track, drift alerts</p>
+          <p class="preview-snip-small quiet">+ weekly editorial, team support</p>
         </div>
       </div>
       <p class="preview-cta">
@@ -138,13 +149,19 @@ const tiers: Tier[] = [
     <section class="note-section">
       <h2>How it works</h2>
       <p>
-        We sell information. You place your own bets at your own broker — we don't pool funds,
-        manage stakes for anyone else, or operate a syndicate. Selections post to Telegram before
-        the off and reconcile to Betfair Starting Price after the race.
+        We sell information. You place your own bets at your own broker. We don't pool funds,
+        accept stakes, manage money on your behalf, or operate as a syndicate. Selections post to
+        Telegram pre-off and reconcile to Betfair Starting Price after the race.
       </p>
       <p>
-        Past performance does not guarantee future returns. UK racing is a 18+ activity; please
-        bet responsibly. If you need help with gambling, contact <a href="https://www.begambleaware.org" rel="noopener">BeGambleAware</a>.
+        Cancel any time. No long-term contract, no minimum commitment beyond the current billing
+        period. Members keep full ledger and editorial access for the period they've paid for.
+      </p>
+      <p>
+        Past performance does not guarantee future returns. Betting carries the risk of losing
+        money. UK racing is an 18+ activity; please bet responsibly. If gambling is affecting you
+        or someone you know, contact <a href="https://www.begambleaware.org" rel="noopener" target="_blank">BeGambleAware</a>
+        or call the National Gambling Helpline on 0808 8020 133.
       </p>
     </section>
   </article>
@@ -375,6 +392,12 @@ const tiers: Tier[] = [
       border-radius: 3px;
       text-transform: uppercase;
       align-self: flex-start;
+    }
+
+    .preview-tier-free {
+      background: var(--cream);
+      color: var(--ink);
+      border: 1px solid var(--rule);
     }
 
     .preview-tier-club {

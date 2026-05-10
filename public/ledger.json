@@ -1,48 +1,59 @@
 {
-  "generated_at": "2026-05-10T19:00:34Z",
+  "generated_at": "2026-05-10T21:05:30Z",
   "first_date": "2026-04-20",
   "last_date": "2026-05-09",
+  "window_30d_first": "2026-04-10",
+  "window_30d_last": "2026-05-10",
   "tiers": [
     {
-      "key": "open",
-      "label": "Open",
-      "blurb": "Free tier teaser \u2014 our top-conviction pick (or two) each race day.",
+      "key": "free",
+      "label": "Free",
+      "blurb": "One top-conviction selection each race day. UK flat racing \u2014 turf and all-weather.",
       "first_date": "2026-04-20",
       "last_date": "2026-05-09",
       "n_days": 19,
       "headline": {
-        "n_picks": 37,
-        "n_wins": 19,
+        "n_picks": 19,
+        "n_wins": 9,
         "n_voided": 0,
-        "hit_rate_pct": 51.4,
-        "total_stake_pts": 37.0,
-        "total_profit_pts": 116.89,
-        "roi_pct": 315.92
+        "hit_rate_pct": 47.4,
+        "total_stake_pts": 19.0,
+        "total_profit_pts": 64.24,
+        "roi_pct": 338.11
+      },
+      "headline_30d": {
+        "n_picks": 19,
+        "n_wins": 9,
+        "n_voided": 0,
+        "hit_rate_pct": 47.4,
+        "total_stake_pts": 19.0,
+        "total_profit_pts": 64.24,
+        "roi_pct": 338.11
       },
       "by_code": [
         {
           "race_code": "FLT",
           "label": "Flat",
           "total": {
-            "n_picks": 29,
-            "n_wins": 14,
+            "n_picks": 17,
+            "n_wins": 9,
             "n_voided": 0,
-            "hit_rate_pct": 48.3,
-            "total_stake_pts": 29.0,
-            "total_profit_pts": 93.81,
-            "roi_pct": 323.48
+            "hit_rate_pct": 52.9,
+            "total_stake_pts": 17.0,
+            "total_profit_pts": 66.24,
+            "roi_pct": 389.65
           },
           "banks": [
             {
               "bank_key": "top",
               "bank_label": "Top Conviction",
-              "n_picks": 29,
-              "n_wins": 14,
+              "n_picks": 17,
+              "n_wins": 9,
               "n_voided": 0,
-              "hit_rate_pct": 48.3,
-              "total_stake_pts": 29.0,
-              "total_profit_pts": 93.81,
-              "roi_pct": 323.48
+              "hit_rate_pct": 52.9,
+              "total_stake_pts": 17.0,
+              "total_profit_pts": 66.24,
+              "roi_pct": 389.65
             }
           ]
         },
@@ -50,51 +61,25 @@
           "race_code": "AWF",
           "label": "All-Weather",
           "total": {
-            "n_picks": 6,
-            "n_wins": 3,
-            "n_voided": 0,
-            "hit_rate_pct": 50.0,
-            "total_stake_pts": 6.0,
-            "total_profit_pts": 16.76,
-            "roi_pct": 279.33
-          },
-          "banks": [
-            {
-              "bank_key": "top",
-              "bank_label": "Top Conviction",
-              "n_picks": 6,
-              "n_wins": 3,
-              "n_voided": 0,
-              "hit_rate_pct": 50.0,
-              "total_stake_pts": 6.0,
-              "total_profit_pts": 16.76,
-              "roi_pct": 279.33
-            }
-          ]
-        },
-        {
-          "race_code": "HDL",
-          "label": "Hurdle",
-          "total": {
             "n_picks": 2,
-            "n_wins": 2,
+            "n_wins": 0,
             "n_voided": 0,
-            "hit_rate_pct": 100.0,
+            "hit_rate_pct": 0.0,
             "total_stake_pts": 2.0,
-            "total_profit_pts": 6.32,
-            "roi_pct": 316.0
+            "total_profit_pts": -2.0,
+            "roi_pct": -100.0
           },
           "banks": [
             {
               "bank_key": "top",
               "bank_label": "Top Conviction",
               "n_picks": 2,
-              "n_wins": 2,
+              "n_wins": 0,
               "n_voided": 0,
-              "hit_rate_pct": 100.0,
+              "hit_rate_pct": 0.0,
               "total_stake_pts": 2.0,
-              "total_profit_pts": 6.32,
-              "roi_pct": 316.0
+              "total_profit_pts": -2.0,
+              "roi_pct": -100.0
             }
           ]
         }
@@ -114,18 +99,6 @@
         },
         {
           "date": "2026-05-08",
-          "race_time": "19:15",
-          "course": "RIPON",
-          "race_code": "FLT",
-          "horse": "U Sure Do",
-          "stake_pts": 1.0,
-          "bsp": 7.5,
-          "result": "win",
-          "profit_pts": 6.37,
-          "logged_at": "2026-05-07T22:53:03.918365"
-        },
-        {
-          "date": "2026-05-08",
           "race_time": "16:10",
           "course": "CHESTER",
           "race_code": "FLT",
@@ -135,30 +108,6 @@
           "result": "win",
           "profit_pts": 8.82,
           "logged_at": "2026-05-07T22:53:03.918365"
-        },
-        {
-          "date": "2026-05-07",
-          "race_time": "18:30",
-          "course": "SOUTHWELL (A.W)",
-          "race_code": "AWF",
-          "horse": "Military Leader",
-          "stake_pts": 1.0,
-          "bsp": 11.19,
-          "result": "win",
-          "profit_pts": 9.98,
-          "logged_at": "2026-05-06T21:30:21.254424"
-        },
-        {
-          "date": "2026-05-06",
-          "race_time": "16:00",
-          "course": "KELSO",
-          "race_code": "HDL",
-          "horse": "Thorneylands",
-          "stake_pts": 1.0,
-          "bsp": 3.55,
-          "result": "win",
-          "profit_pts": 2.5,
-          "logged_at": "2026-05-06T00:59:54.441321"
         },
         {
           "date": "2026-05-06",
@@ -171,18 +120,6 @@
           "result": "win",
           "profit_pts": 4.02,
           "logged_at": "2026-05-06T00:59:54.441321"
-        },
-        {
-          "date": "2026-05-05",
-          "race_time": "21:00",
-          "course": "WOLVERHAMPTON (A.W)",
-          "race_code": "FLT",
-          "horse": "Magna",
-          "stake_pts": 1.0,
-          "bsp": 5.55,
-          "result": "win",
-          "profit_pts": 4.46,
-          "logged_at": "2026-05-04T21:04:37.341006"
         },
         {
           "date": "2026-05-03",
@@ -221,30 +158,6 @@
           "logged_at": "2026-04-30T21:09:32.149709"
         },
         {
-          "date": "2026-04-27",
-          "race_time": "19:00",
-          "course": "WOLVERHAMPTON (A.W)",
-          "race_code": "FLT",
-          "horse": "Cotai Eye Joe",
-          "stake_pts": 1.0,
-          "bsp": 6.27,
-          "result": "win",
-          "profit_pts": 5.16,
-          "logged_at": "2026-04-27T00:42:45.045839"
-        },
-        {
-          "date": "2026-04-26",
-          "race_time": "16:35",
-          "course": "WETHERBY",
-          "race_code": "FLT",
-          "horse": "Hale End",
-          "stake_pts": 1.0,
-          "bsp": 18.0,
-          "result": "win",
-          "profit_pts": 16.66,
-          "logged_at": "2026-04-25T20:40:05.217770"
-        },
-        {
           "date": "2026-04-25",
           "race_time": "14:05",
           "course": "LEICESTER",
@@ -269,42 +182,6 @@
           "logged_at": "2026-04-24T21:25:13.177647"
         },
         {
-          "date": "2026-04-23",
-          "race_time": "19:00",
-          "course": "SOUTHWELL (A.W)",
-          "race_code": "AWF",
-          "horse": "Lexington Express",
-          "stake_pts": 1.0,
-          "bsp": 7.6,
-          "result": "win",
-          "profit_pts": 6.47,
-          "logged_at": "2026-04-22T20:50:27.014613"
-        },
-        {
-          "date": "2026-04-22",
-          "race_time": "15:00",
-          "course": "LUDLOW",
-          "race_code": "HDL",
-          "horse": "The Egyptian Ginge",
-          "stake_pts": 1.0,
-          "bsp": 4.9,
-          "result": "win",
-          "profit_pts": 3.82,
-          "logged_at": "2026-04-21T22:54:52.663850"
-        },
-        {
-          "date": "2026-04-21",
-          "race_time": "19:00",
-          "course": "WOLVERHAMPTON (A.W)",
-          "race_code": "FLT",
-          "horse": "Daytona Lady",
-          "stake_pts": 1.0,
-          "bsp": 2.96,
-          "result": "win",
-          "profit_pts": 1.92,
-          "logged_at": "2026-04-20T22:27:51.976795"
-        },
-        {
           "date": "2026-04-21",
           "race_time": "15:27",
           "course": "PONTEFRACT",
@@ -315,49 +192,46 @@
           "result": "win",
           "profit_pts": 4.18,
           "logged_at": "2026-04-20T22:27:51.976795"
-        },
-        {
-          "date": "2026-04-20",
-          "race_time": "15:21",
-          "course": "LINGFIELD (A.W)",
-          "race_code": "AWF",
-          "horse": "Twilight Moon",
-          "stake_pts": 1.0,
-          "bsp": 4.37,
-          "result": "win",
-          "profit_pts": 3.31,
-          "logged_at": "2026-04-20T01:19:59.910610"
         }
       ]
     },
     {
       "key": "club",
       "label": "Club",
-      "blurb": "Headline daily slate \u2014 top-conviction and value picks across our OPEN streams.",
+      "blurb": "The full top-conviction slate across UK flat racing \u2014 turf and all-weather.",
       "first_date": "2026-04-20",
       "last_date": "2026-05-09",
       "n_days": 19,
       "headline": {
-        "n_picks": 300,
-        "n_wins": 86,
+        "n_picks": 243,
+        "n_wins": 68,
         "n_voided": 0,
-        "hit_rate_pct": 28.7,
-        "total_stake_pts": 300.0,
-        "total_profit_pts": 106.67,
-        "roi_pct": 35.56
+        "hit_rate_pct": 28.0,
+        "total_stake_pts": 243.0,
+        "total_profit_pts": 80.65,
+        "roi_pct": 33.19
+      },
+      "headline_30d": {
+        "n_picks": 243,
+        "n_wins": 68,
+        "n_voided": 0,
+        "hit_rate_pct": 28.0,
+        "total_stake_pts": 243.0,
+        "total_profit_pts": 80.65,
+        "roi_pct": 33.19
       },
       "by_code": [
         {
           "race_code": "FLT",
           "label": "Flat",
           "total": {
-            "n_picks": 207,
-            "n_wins": 56,
+            "n_picks": 199,
+            "n_wins": 54,
             "n_voided": 0,
             "hit_rate_pct": 27.1,
-            "total_stake_pts": 207.0,
-            "total_profit_pts": 69.58,
-            "roi_pct": 33.61
+            "total_stake_pts": 199.0,
+            "total_profit_pts": 65.01,
+            "roi_pct": 32.67
           },
           "banks": [
             {
@@ -370,17 +244,6 @@
               "total_stake_pts": 199.0,
               "total_profit_pts": 65.01,
               "roi_pct": 32.67
-            },
-            {
-              "bank_key": "value",
-              "bank_label": "Value Pick",
-              "n_picks": 8,
-              "n_wins": 2,
-              "n_voided": 0,
-              "hit_rate_pct": 25.0,
-              "total_stake_pts": 8.0,
-              "total_profit_pts": 4.57,
-              "roi_pct": 57.12
             }
           ]
         },
@@ -388,13 +251,13 @@
           "race_code": "AWF",
           "label": "All-Weather",
           "total": {
-            "n_picks": 45,
-            "n_wins": 15,
+            "n_picks": 44,
+            "n_wins": 14,
             "n_voided": 0,
-            "hit_rate_pct": 33.3,
-            "total_stake_pts": 45.0,
-            "total_profit_pts": 23.48,
-            "roi_pct": 52.18
+            "hit_rate_pct": 31.8,
+            "total_stake_pts": 44.0,
+            "total_profit_pts": 15.64,
+            "roi_pct": 35.55
           },
           "banks": [
             {
@@ -407,54 +270,6 @@
               "total_stake_pts": 44.0,
               "total_profit_pts": 15.64,
               "roi_pct": 35.55
-            },
-            {
-              "bank_key": "value",
-              "bank_label": "Value Pick",
-              "n_picks": 1,
-              "n_wins": 1,
-              "n_voided": 0,
-              "hit_rate_pct": 100.0,
-              "total_stake_pts": 1.0,
-              "total_profit_pts": 7.84,
-              "roi_pct": 784.0
-            }
-          ]
-        },
-        {
-          "race_code": "HDL",
-          "label": "Hurdle",
-          "total": {
-            "n_picks": 48,
-            "n_wins": 15,
-            "n_voided": 0,
-            "hit_rate_pct": 31.2,
-            "total_stake_pts": 48.0,
-            "total_profit_pts": 13.61,
-            "roi_pct": 28.35
-          },
-          "banks": [
-            {
-              "bank_key": "top",
-              "bank_label": "Top Conviction",
-              "n_picks": 33,
-              "n_wins": 12,
-              "n_voided": 0,
-              "hit_rate_pct": 36.4,
-              "total_stake_pts": 33.0,
-              "total_profit_pts": 14.87,
-              "roi_pct": 45.06
-            },
-            {
-              "bank_key": "value",
-              "bank_label": "Value Pick",
-              "n_picks": 15,
-              "n_wins": 3,
-              "n_voided": 0,
-              "hit_rate_pct": 20.0,
-              "total_stake_pts": 15.0,
-              "total_profit_pts": -1.26,
-              "roi_pct": -8.4
             }
           ]
         }
@@ -463,11 +278,20 @@
     {
       "key": "blackbook",
       "label": "Blackbook",
-      "blurb": "Fullest validated slate \u2014 adds form-read picks to the Club cohort.",
+      "blurb": "The full package \u2014 every signal, every code, including hurdles.",
       "first_date": "2026-04-20",
       "last_date": "2026-05-09",
       "n_days": 19,
       "headline": {
+        "n_picks": 724,
+        "n_wins": 238,
+        "n_voided": 0,
+        "hit_rate_pct": 32.9,
+        "total_stake_pts": 724.0,
+        "total_profit_pts": 237.24,
+        "roi_pct": 32.77
+      },
+      "headline_30d": {
         "n_picks": 724,
         "n_wins": 238,
         "n_voided": 0,
@@ -611,388 +435,6 @@
           ]
         }
       ]
-    }
-  ],
-  "by_course": [
-    {
-      "course": "SOUTHWELL (A.W)",
-      "n_picks": 66,
-      "n_wins": 23,
-      "n_voided": 0,
-      "hit_rate_pct": 34.8,
-      "total_stake_pts": 66.0,
-      "total_profit_pts": 29.0,
-      "roi_pct": 43.94
-    },
-    {
-      "course": "WOLVERHAMPTON (A.W)",
-      "n_picks": 46,
-      "n_wins": 18,
-      "n_voided": 0,
-      "hit_rate_pct": 39.1,
-      "total_stake_pts": 46.0,
-      "total_profit_pts": 18.55,
-      "roi_pct": 40.33
-    },
-    {
-      "course": "LINGFIELD (A.W)",
-      "n_picks": 41,
-      "n_wins": 17,
-      "n_voided": 0,
-      "hit_rate_pct": 41.5,
-      "total_stake_pts": 41.0,
-      "total_profit_pts": 11.85,
-      "roi_pct": 28.9
-    },
-    {
-      "course": "CHESTER",
-      "n_picks": 36,
-      "n_wins": 18,
-      "n_voided": 0,
-      "hit_rate_pct": 50.0,
-      "total_stake_pts": 36.0,
-      "total_profit_pts": 38.66,
-      "roi_pct": 107.39
-    },
-    {
-      "course": "NEWMARKET",
-      "n_picks": 35,
-      "n_wins": 5,
-      "n_voided": 0,
-      "hit_rate_pct": 14.3,
-      "total_stake_pts": 35.0,
-      "total_profit_pts": -18.68,
-      "roi_pct": -53.37
-    },
-    {
-      "course": "REDCAR",
-      "n_picks": 34,
-      "n_wins": 12,
-      "n_voided": 0,
-      "hit_rate_pct": 35.3,
-      "total_stake_pts": 34.0,
-      "total_profit_pts": -0.87,
-      "roi_pct": -2.56
-    },
-    {
-      "course": "ASCOT",
-      "n_picks": 32,
-      "n_wins": 4,
-      "n_voided": 0,
-      "hit_rate_pct": 12.5,
-      "total_stake_pts": 32.0,
-      "total_profit_pts": -22.91,
-      "roi_pct": -71.59
-    },
-    {
-      "course": "YARMOUTH",
-      "n_picks": 27,
-      "n_wins": 9,
-      "n_voided": 0,
-      "hit_rate_pct": 33.3,
-      "total_stake_pts": 27.0,
-      "total_profit_pts": -0.88,
-      "roi_pct": -3.26
-    },
-    {
-      "course": "LEICESTER",
-      "n_picks": 26,
-      "n_wins": 6,
-      "n_voided": 0,
-      "hit_rate_pct": 23.1,
-      "total_stake_pts": 26.0,
-      "total_profit_pts": 31.75,
-      "roi_pct": 122.12
-    },
-    {
-      "course": "DONCASTER",
-      "n_picks": 25,
-      "n_wins": 6,
-      "n_voided": 0,
-      "hit_rate_pct": 24.0,
-      "total_stake_pts": 25.0,
-      "total_profit_pts": -2.06,
-      "roi_pct": -8.24
-    },
-    {
-      "course": "NOTTINGHAM",
-      "n_picks": 25,
-      "n_wins": 6,
-      "n_voided": 0,
-      "hit_rate_pct": 24.0,
-      "total_stake_pts": 25.0,
-      "total_profit_pts": -10.45,
-      "roi_pct": -41.8
-    },
-    {
-      "course": "BATH",
-      "n_picks": 24,
-      "n_wins": 10,
-      "n_voided": 0,
-      "hit_rate_pct": 41.7,
-      "total_stake_pts": 24.0,
-      "total_profit_pts": 16.06,
-      "roi_pct": 66.92
-    },
-    {
-      "course": "KEMPTON (A.W)",
-      "n_picks": 22,
-      "n_wins": 7,
-      "n_voided": 0,
-      "hit_rate_pct": 31.8,
-      "total_stake_pts": 22.0,
-      "total_profit_pts": -1.54,
-      "roi_pct": -7.0
-    },
-    {
-      "course": "PONTEFRACT",
-      "n_picks": 22,
-      "n_wins": 14,
-      "n_voided": 0,
-      "hit_rate_pct": 63.6,
-      "total_stake_pts": 22.0,
-      "total_profit_pts": 33.6,
-      "roi_pct": 152.73
-    },
-    {
-      "course": "RIPON",
-      "n_picks": 22,
-      "n_wins": 7,
-      "n_voided": 0,
-      "hit_rate_pct": 31.8,
-      "total_stake_pts": 22.0,
-      "total_profit_pts": 10.98,
-      "roi_pct": 49.91
-    },
-    {
-      "course": "GOODWOOD",
-      "n_picks": 21,
-      "n_wins": 6,
-      "n_voided": 0,
-      "hit_rate_pct": 28.6,
-      "total_stake_pts": 21.0,
-      "total_profit_pts": -2.43,
-      "roi_pct": -11.57
-    },
-    {
-      "course": "NEWCASTLE (A.W)",
-      "n_picks": 21,
-      "n_wins": 7,
-      "n_voided": 0,
-      "hit_rate_pct": 33.3,
-      "total_stake_pts": 21.0,
-      "total_profit_pts": 13.62,
-      "roi_pct": 64.86
-    },
-    {
-      "course": "MUSSELBURGH",
-      "n_picks": 20,
-      "n_wins": 5,
-      "n_voided": 0,
-      "hit_rate_pct": 25.0,
-      "total_stake_pts": 20.0,
-      "total_profit_pts": -3.36,
-      "roi_pct": -16.8
-    },
-    {
-      "course": "HAYDOCK",
-      "n_picks": 19,
-      "n_wins": 6,
-      "n_voided": 0,
-      "hit_rate_pct": 31.6,
-      "total_stake_pts": 19.0,
-      "total_profit_pts": 24.6,
-      "roi_pct": 129.47
-    },
-    {
-      "course": "BEVERLEY",
-      "n_picks": 13,
-      "n_wins": 1,
-      "n_voided": 0,
-      "hit_rate_pct": 7.7,
-      "total_stake_pts": 13.0,
-      "total_profit_pts": -4.36,
-      "roi_pct": -33.54
-    },
-    {
-      "course": "LINGFIELD",
-      "n_picks": 12,
-      "n_wins": 4,
-      "n_voided": 0,
-      "hit_rate_pct": 33.3,
-      "total_stake_pts": 12.0,
-      "total_profit_pts": -0.14,
-      "roi_pct": -1.17
-    },
-    {
-      "course": "SANDOWN",
-      "n_picks": 12,
-      "n_wins": 4,
-      "n_voided": 0,
-      "hit_rate_pct": 33.3,
-      "total_stake_pts": 12.0,
-      "total_profit_pts": 20.28,
-      "roi_pct": 169.0
-    },
-    {
-      "course": "WETHERBY",
-      "n_picks": 11,
-      "n_wins": 4,
-      "n_voided": 0,
-      "hit_rate_pct": 36.4,
-      "total_stake_pts": 11.0,
-      "total_profit_pts": 27.06,
-      "roi_pct": 246.0
-    },
-    {
-      "course": "AYR",
-      "n_picks": 10,
-      "n_wins": 2,
-      "n_voided": 0,
-      "hit_rate_pct": 20.0,
-      "total_stake_pts": 10.0,
-      "total_profit_pts": -7.44,
-      "roi_pct": -74.4
-    },
-    {
-      "course": "EPSOM",
-      "n_picks": 10,
-      "n_wins": 1,
-      "n_voided": 0,
-      "hit_rate_pct": 10.0,
-      "total_stake_pts": 10.0,
-      "total_profit_pts": -8.92,
-      "roi_pct": -89.2
-    },
-    {
-      "course": "HAMILTON",
-      "n_picks": 10,
-      "n_wins": 6,
-      "n_voided": 0,
-      "hit_rate_pct": 60.0,
-      "total_stake_pts": 10.0,
-      "total_profit_pts": 2.32,
-      "roi_pct": 23.2
-    },
-    {
-      "course": "THIRSK",
-      "n_picks": 10,
-      "n_wins": 1,
-      "n_voided": 0,
-      "hit_rate_pct": 10.0,
-      "total_stake_pts": 10.0,
-      "total_profit_pts": 1.29,
-      "roi_pct": 12.9
-    },
-    {
-      "course": "WINDSOR",
-      "n_picks": 10,
-      "n_wins": 5,
-      "n_voided": 0,
-      "hit_rate_pct": 50.0,
-      "total_stake_pts": 10.0,
-      "total_profit_pts": 8.88,
-      "roi_pct": 88.8
-    },
-    {
-      "course": "CATTERICK",
-      "n_picks": 9,
-      "n_wins": 3,
-      "n_voided": 0,
-      "hit_rate_pct": 33.3,
-      "total_stake_pts": 9.0,
-      "total_profit_pts": -0.25,
-      "roi_pct": -2.78
-    },
-    {
-      "course": "SALISBURY",
-      "n_picks": 7,
-      "n_wins": 6,
-      "n_voided": 0,
-      "hit_rate_pct": 85.7,
-      "total_stake_pts": 7.0,
-      "total_profit_pts": 17.42,
-      "roi_pct": 248.86
-    },
-    {
-      "course": "HEXHAM",
-      "n_picks": 6,
-      "n_wins": 1,
-      "n_voided": 0,
-      "hit_rate_pct": 16.7,
-      "total_stake_pts": 6.0,
-      "total_profit_pts": -4.94,
-      "roi_pct": -82.33
-    },
-    {
-      "course": "KELSO",
-      "n_picks": 6,
-      "n_wins": 3,
-      "n_voided": 0,
-      "hit_rate_pct": 50.0,
-      "total_stake_pts": 6.0,
-      "total_profit_pts": 9.47,
-      "roi_pct": 157.83
-    },
-    {
-      "course": "FFOS LAS",
-      "n_picks": 4,
-      "n_wins": 0,
-      "n_voided": 0,
-      "hit_rate_pct": 0.0,
-      "total_stake_pts": 4.0,
-      "total_profit_pts": -4.0,
-      "roi_pct": -100.0
-    },
-    {
-      "course": "FONTWELL",
-      "n_picks": 4,
-      "n_wins": 1,
-      "n_voided": 0,
-      "hit_rate_pct": 25.0,
-      "total_stake_pts": 4.0,
-      "total_profit_pts": 0.73,
-      "roi_pct": 18.25
-    },
-    {
-      "course": "PERTH",
-      "n_picks": 4,
-      "n_wins": 1,
-      "n_voided": 0,
-      "hit_rate_pct": 25.0,
-      "total_stake_pts": 4.0,
-      "total_profit_pts": -2.49,
-      "roi_pct": -62.25
-    },
-    {
-      "course": "WARWICK",
-      "n_picks": 4,
-      "n_wins": 1,
-      "n_voided": 0,
-      "hit_rate_pct": 25.0,
-      "total_stake_pts": 4.0,
-      "total_profit_pts": 5.82,
-      "roi_pct": 145.5
-    },
-    {
-      "course": "HUNTINGDON",
-      "n_picks": 3,
-      "n_wins": 1,
-      "n_voided": 0,
-      "hit_rate_pct": 33.3,
-      "total_stake_pts": 3.0,
-      "total_profit_pts": 0.05,
-      "roi_pct": 1.67
-    },
-    {
-      "course": "MARKET RASEN",
-      "n_picks": 3,
-      "n_wins": 1,
-      "n_voided": 0,
-      "hit_rate_pct": 33.3,
-      "total_stake_pts": 3.0,
-      "total_profit_pts": 2.29,
-      "roi_pct": 76.33
     }
   ]
 }

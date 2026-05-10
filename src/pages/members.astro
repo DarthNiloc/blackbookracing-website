@@ -4,7 +4,7 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 
 <BaseLayout
   title="Preview — Blackbook Racing Club"
-  description="A preview of what Club and Blackbook subscribers see. The daily slate, the seasonal blackbook of horses to track, and the weekly editorial — illustrated with sample content."
+  description="A preview of what Free, Club and Blackbook members see. Daily top pick, full top-conviction slate, the seasonal blackbook of horses to track, and the weekly editorial."
 >
   <article class="page">
     <p class="eyebrow">Preview</p>
@@ -15,32 +15,53 @@ import BaseLayout from '../layouts/BaseLayout.astro';
       live ledger has the real ones.
     </p>
 
-    <!-- ====== Club: daily slate ====== -->
+    <!-- ====== Free: daily top pick ====== -->
     <section class="preview-section">
       <header class="section-head">
-        <span class="tier-badge tier-badge-club">Club</span>
-        <h2>The daily slate</h2>
+        <span class="tier-badge tier-badge-free">Free</span>
+        <h2>The daily top pick</h2>
         <p class="section-pitch">
-          Pre-off picks delivered to a private Telegram channel each evening, then reconciled
-          to Betfair Starting Price the next morning. Same format every day.
+          One top-conviction selection each race day, posted in the public Telegram channel.
+          Same format every day — pre-off, reconciled to Betfair SP the next morning.
         </p>
       </header>
 
       <div class="telegram-mock">
-        <div class="tg-head">▲ BLACKBOOK CLUB SLATE <span class="bar">|</span> 2026-05-04</div>
-        <div class="tg-meta">Tomorrow <span class="dot">·</span> 5 picks <span class="dot">·</span> 1pt @ Betfair SP</div>
+        <div class="tg-head">▲ BLACKBOOK FREE <span class="bar">|</span> 2026-05-04</div>
+        <div class="tg-meta">Today <span class="dot">·</span> 1 selection <span class="dot">·</span> 1pt @ Betfair SP</div>
+        <div class="tg-list">
+          <div class="tg-pick">
+            <div class="tg-when">15:25 BEVERLEY <span class="code">FLT</span></div>
+            <div class="tg-horse">NORTHERN SCRIBE</div>
+          </div>
+        </div>
+        <div class="tg-foot">Logged 08:14 BST <span class="dot">·</span> pre-off</div>
+        <div class="tg-foot quiet">Reconciled later today at BSP.</div>
+      </div>
+    </section>
+
+    <!-- ====== Club: daily slate ====== -->
+    <section class="preview-section">
+      <header class="section-head">
+        <span class="tier-badge tier-badge-club">Club</span>
+        <h2>The full top-conviction slate</h2>
+        <p class="section-pitch">
+          Every top-conviction selection across UK flat racing — turf and all-weather — delivered
+          pre-off to a private Telegram channel. Reconciled to Betfair SP after the race.
+        </p>
+      </header>
+
+      <div class="telegram-mock">
+        <div class="tg-head">▲ BLACKBOOK CLUB <span class="bar">|</span> 2026-05-04</div>
+        <div class="tg-meta">Today <span class="dot">·</span> 4 selections <span class="dot">·</span> 1pt @ Betfair SP</div>
         <div class="tg-list">
           <div class="tg-pick">
             <div class="tg-when">13:55 PONTEFRACT <span class="code">FLT</span></div>
             <div class="tg-horse">SILVER ARROW</div>
           </div>
           <div class="tg-pick">
-            <div class="tg-when">14:30 KEMPTON (A.W) <span class="code">AWF</span></div>
+            <div class="tg-when">14:30 KEMPTON (AW) <span class="code">AWF</span></div>
             <div class="tg-horse">DAWN HORIZON</div>
-          </div>
-          <div class="tg-pick">
-            <div class="tg-when">15:05 UTTOXETER <span class="code">CHS</span></div>
-            <div class="tg-horse">GLENMORE</div>
           </div>
           <div class="tg-pick">
             <div class="tg-when">15:25 BEVERLEY <span class="code">FLT</span></div>
@@ -51,8 +72,8 @@ import BaseLayout from '../layouts/BaseLayout.astro';
             <div class="tg-horse">EMERALD ISLE</div>
           </div>
         </div>
-        <div class="tg-foot">Logged 18:42 BST <span class="dot">·</span> pre-off <span class="dot">·</span> team-reviewed</div>
-        <div class="tg-foot quiet">Reconciled tomorrow morning at BSP.</div>
+        <div class="tg-foot">Logged 08:14 BST <span class="dot">·</span> pre-off <span class="dot">·</span> team-reviewed</div>
+        <div class="tg-foot quiet">Reconciled later today at BSP.</div>
       </div>
     </section>
 
@@ -135,7 +156,7 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 
     <section class="cta-section">
       <p class="cta-text">
-        Open is free in Telegram. Club and Blackbook open for paid signup at launch.
+        The Free tier is live in Telegram today. Club and Blackbook open for paid signup at launch.
       </p>
       <a class="cta-btn" href="/subscribe">Compare tiers →</a>
     </section>
@@ -223,6 +244,12 @@ import BaseLayout from '../layouts/BaseLayout.astro';
       border-radius: 3px;
       font-size: 10px;
       text-transform: uppercase;
+    }
+
+    .tier-badge-free {
+      background: var(--cream);
+      color: var(--ink);
+      border: 1px solid var(--rule);
     }
 
     .tier-badge-club {

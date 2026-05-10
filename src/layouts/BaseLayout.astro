@@ -5,7 +5,7 @@ interface Props {
   ogType?: 'website' | 'article';
 }
 
-const DEFAULT_DESCRIPTION = "The thinking punter's racing club. Data-driven UK racing picks with a public audit trail and a curated blackbook of horses worth tracking.";
+const DEFAULT_DESCRIPTION = "Pre-off selections. Public ledger. UK flat racing — turf and all-weather, with a hurdle add-on for Blackbook members.";
 
 const { title, description = DEFAULT_DESCRIPTION, ogType = 'website' } = Astro.props;
 const pathname = Astro.url.pathname;
@@ -61,9 +61,13 @@ const ogImage = new URL('/logo.png', Astro.site).href;
           <a href="/" class={isActive('/') ? 'is-active' : ''}>Home</a>
           <a href="/how-we-work" class={isActive('/how-we-work') ? 'is-active' : ''}>How we work</a>
           <a href="/ledger" class={isActive('/ledger') ? 'is-active' : ''}>Ledger</a>
+          <a href="/stats" class={isActive('/stats') ? 'is-active' : ''}>Stats</a>
           <a href="/articles" class={isActive('/articles') ? 'is-active' : ''}>Articles</a>
           <a href="/sample" class={isActive('/sample') ? 'is-active' : ''}>Sample</a>
           <a href="/subscribe" class={isActive('/subscribe') ? 'is-active' : ''}>Subscribe</a>
+          <span class="nav-sep" aria-hidden="true"></span>
+          <a href="/login" class={"nav-utility " + (isActive('/login') ? 'is-active' : '')}>Login</a>
+          <a href="/blackbook" class={"nav-utility " + (isActive('/blackbook') ? 'is-active' : '')}>Blackbook</a>
         </nav>
       </div>
     </header>
@@ -72,8 +76,17 @@ const ogImage = new URL('/logo.png', Astro.site).href;
 
     <footer class="site-footer">
       <div class="footer-inner">
-        <p>Past performance does not guarantee future returns.</p>
-        <p>18+ <span class="dot">▲</span> BeGambleAware</p>
+        <p class="footer-disclaimer">
+          Information service only. We don't pool funds, accept stakes, or operate as a syndicate.
+          Selections are published pre-off; you place your own bets at your own broker, at your own
+          risk. Past performance does not guarantee future returns.
+        </p>
+        <p class="footer-respo">
+          <span class="age">18+</span><span class="dot">▲</span>
+          <a href="https://www.begambleaware.org" rel="noopener" target="_blank">BeGambleAware</a><span class="dot">▲</span>
+          Bet responsibly. National Gambling Helpline: <span class="hl">0808 8020 133</span>.
+        </p>
+        <p class="footer-copy">© Blackbook Racing Club</p>
       </div>
     </footer>
 
@@ -140,7 +153,7 @@ const ogImage = new URL('/logo.png', Astro.site).href;
       }
 
       .header-inner {
-        max-width: 980px;
+        max-width: 1180px;
         margin: 0 auto;
         padding: 20px 40px;
         display: flex;
@@ -164,7 +177,7 @@ const ogImage = new URL('/logo.png', Astro.site).href;
 
       .site-nav {
         display: flex;
-        gap: 28px;
+        gap: 22px;
         align-items: center;
         flex-wrap: wrap;
         justify-content: flex-end;
@@ -173,7 +186,7 @@ const ogImage = new URL('/logo.png', Astro.site).href;
       .site-nav a {
         font-family: 'Inter', sans-serif;
         font-size: 12px;
-        letter-spacing: 0.18em;
+        letter-spacing: 0.14em;
         text-transform: uppercase;
         color: var(--ink);
         text-decoration: none;
@@ -190,6 +203,24 @@ const ogImage = new URL('/logo.png', Astro.site).href;
       .site-nav a.is-active {
         border-bottom-color: var(--gold);
         color: var(--ink);
+      }
+
+      .site-nav .nav-sep {
+        display: inline-block;
+        width: 1px;
+        height: 14px;
+        background: var(--rule);
+        margin: 0 4px;
+      }
+
+      .site-nav a.nav-utility {
+        color: var(--ink-mute);
+      }
+
+      .site-nav a.nav-utility:hover,
+      .site-nav a.nav-utility.is-active {
+        color: var(--ink);
+        border-bottom-color: var(--gold);
       }
 
       .site-footer {
@@ -211,12 +242,55 @@ const ogImage = new URL('/logo.png', Astro.site).href;
       }
 
       .footer-inner p + p {
-        margin-top: 6px;
+        margin-top: 10px;
       }
 
       .footer-inner .dot {
         color: var(--gold);
         margin: 0 6px;
+      }
+
+      .footer-disclaimer {
+        font-family: 'EB Garamond', serif;
+        font-size: 13px;
+        line-height: 1.55;
+        color: var(--ink-soft);
+        letter-spacing: 0;
+        max-width: 680px;
+        margin: 0 auto;
+      }
+
+      .footer-respo {
+        font-family: 'Inter', sans-serif;
+        font-size: 11px;
+        letter-spacing: 0.06em;
+        color: var(--ink);
+      }
+
+      .footer-respo .age {
+        font-weight: 700;
+        letter-spacing: 0.08em;
+      }
+
+      .footer-respo .hl {
+        font-feature-settings: 'tnum';
+        font-weight: 600;
+      }
+
+      .footer-respo a {
+        color: var(--ink);
+        text-decoration: underline;
+        text-decoration-color: var(--gold);
+        text-underline-offset: 3px;
+      }
+
+      .footer-copy {
+        font-family: 'Inter', sans-serif;
+        font-size: 10px;
+        letter-spacing: 0.12em;
+        text-transform: uppercase;
+        color: var(--ink-mute);
+        margin-top: 18px !important;
       }
 
       @media (max-width: 640px) {
@@ -237,6 +311,10 @@ const ogImage = new URL('/logo.png', Astro.site).href;
         .site-nav a {
           font-size: 11px;
           letter-spacing: 0.14em;
+        }
+
+        .site-nav .nav-sep {
+          display: none;
         }
 
         main {

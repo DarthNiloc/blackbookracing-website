@@ -1,0 +1,289 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import statsData from '../../public/stats.json';
+
+interface Row {
+  name: string;
+  n_runs: number;
+  n_wins: number;
+  strike_rate_pct: number;
+  profit_pts: number;
+  roi_pct: number;
+}
+
+interface Stats {
+  generated_at: string;
+  window_start: string;
+  window_end: string;
+  window_days: number;
+  min_runs: number;
+  commission: number;
+  trainers: Row[];
+  jockeys: Row[];
+}
+
+const stats = statsData as Stats;
+
+function fmtDate(iso: string): string {
+  const d = new Date(iso + 'T00:00:00Z');
+  return d.toLocaleDateString('en-GB', { day: '2-digit', month: 'short', timeZone: 'UTC' });
+}
+
+function fmtSign(n: number): string {
+  return (n >= 0 ? '+' : '') + n.toFixed(2);
+}
+
+function fmtPct(n: number): string {
+  return (n >= 0 ? '+' : '') + n.toFixed(1) + '%';
+}
+---
+
+<BaseLayout
+  title="Stats — Blackbook Racing Club"
+  description="Rolling 14-day UK racing leaderboards — top trainers and top jockeys by strike rate, with profit and ROI at Betfair Starting Price."
+>
+  <article class="page">
+    <p class="eyebrow">Stats</p>
+    <h1 class="page-title">Rolling 14-day stats</h1>
+    <p class="lede">
+      UK trainer and jockey leaderboards over the last {stats.window_days} days. Strike rate is
+      the primary sort; profit and ROI are at Betfair Starting Price with {(stats.commission * 100).toFixed(0)}%
+      commission. Minimum {stats.min_runs} runs to qualify.
+    </p>
+
+    <section class="board">
+      <h2 class="board-title">Top trainers</h2>
+      <p class="board-sub">By strike rate &middot; min {stats.min_runs} runs</p>
+      <div class="table-wrap">
+        <table class="stats-table">
+          <thead>
+            <tr>
+              <th class="rank">#</th>
+              <th>Trainer</th>
+              <th class="num">Runs</th>
+              <th class="num">Wins</th>
+              <th class="num">Strike rate</th>
+              <th class="num">P&amp;L</th>
+              <th class="num">ROI</th>
+            </tr>
+          </thead>
+          <tbody>
+            {stats.trainers.map((r, i) => (
+              <tr>
+                <td class="rank">{i + 1}</td>
+                <td class="name">{r.name}</td>
+                <td class="num">{r.n_runs}</td>
+                <td class="num">{r.n_wins}</td>
+                <td class="num strong">{r.strike_rate_pct.toFixed(1)}%</td>
+                <td class={"num " + (r.profit_pts >= 0 ? "pos" : "neg")}>{fmtSign(r.profit_pts)}</td>
+                <td class={"num " + (r.roi_pct >= 0 ? "pos" : "neg")}>{fmtPct(r.roi_pct)}</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <section class="board">
+      <h2 class="board-title">Top jockeys</h2>
+      <p class="board-sub">By strike rate &middot; min {stats.min_runs} runs</p>
+      <div class="table-wrap">
+        <table class="stats-table">
+          <thead>
+            <tr>
+              <th class="rank">#</th>
+              <th>Jockey</th>
+              <th class="num">Runs</th>
+              <th class="num">Wins</th>
+              <th class="num">Strike rate</th>
+              <th class="num">P&amp;L</th>
+              <th class="num">ROI</th>
+            </tr>
+          </thead>
+          <tbody>
+            {stats.jockeys.map((r, i) => (
+              <tr>
+                <td class="rank">{i + 1}</td>
+                <td class="name">{r.name}</td>
+                <td class="num">{r.n_runs}</td>
+                <td class="num">{r.n_wins}</td>
+                <td class="num strong">{r.strike_rate_pct.toFixed(1)}%</td>
+                <td class={"num " + (r.profit_pts >= 0 ? "pos" : "neg")}>{fmtSign(r.profit_pts)}</td>
+                <td class={"num " + (r.roi_pct >= 0 ? "pos" : "neg")}>{fmtPct(r.roi_pct)}</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <p class="footnote">
+      Window: {fmtDate(stats.window_start)} &mdash; {fmtDate(stats.window_end)}.
+      P&amp;L is points profit at 1pt unit stakes at Betfair SP, with {(stats.commission * 100).toFixed(0)}% commission on winnings.
+      ROI = P&amp;L / runs.
+    </p>
+  </article>
+
+  <style>
+    .page {
+      padding-top: 16px;
+      max-width: 980px;
+      margin: 0 auto;
+    }
+
+    .eyebrow {
+      font-family: 'Inter', sans-serif;
+      font-size: 11px;
+      letter-spacing: 0.25em;
+      text-transform: uppercase;
+      color: var(--gold);
+      font-weight: 600;
+      text-align: center;
+      margin-bottom: 12px;
+    }
+
+    .page-title {
+      font-family: 'Cormorant Garamond', serif;
+      font-weight: 700;
+      font-size: 40px;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+      text-align: center;
+      margin-bottom: 24px;
+    }
+
+    .lede {
+      font-family: 'EB Garamond', serif;
+      font-size: 19px;
+      line-height: 1.55;
+      color: var(--ink-soft);
+      max-width: 640px;
+      margin: 0 auto 48px;
+      text-align: center;
+    }
+
+    .board {
+      margin-bottom: 56px;
+    }
+
+    .board-title {
+      font-family: 'Cormorant Garamond', serif;
+      font-weight: 700;
+      font-size: 26px;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+      margin-bottom: 4px;
+      text-align: center;
+    }
+
+    .board-sub {
+      font-family: 'Inter', sans-serif;
+      font-size: 11px;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--ink-mute);
+      font-weight: 500;
+      text-align: center;
+      margin-bottom: 22px;
+    }
+
+    .table-wrap {
+      overflow-x: auto;
+    }
+
+    .stats-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-family: 'Inter', sans-serif;
+      font-size: 14px;
+      font-feature-settings: 'tnum';
+    }
+
+    .stats-table th {
+      font-family: 'Inter', sans-serif;
+      font-size: 10px;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      font-weight: 600;
+      color: var(--ink-mute);
+      text-align: left;
+      padding: 10px 12px;
+      border-bottom: 1px solid var(--ink);
+    }
+
+    .stats-table th.num,
+    .stats-table th.rank {
+      text-align: right;
+    }
+
+    .stats-table th.rank {
+      text-align: center;
+    }
+
+    .stats-table td {
+      padding: 10px 12px;
+      border-bottom: 1px solid var(--rule);
+      vertical-align: baseline;
+    }
+
+    .stats-table td.num {
+      text-align: right;
+    }
+
+    .stats-table td.rank {
+      text-align: center;
+      color: var(--ink-mute);
+      font-weight: 600;
+      font-size: 12px;
+      width: 40px;
+    }
+
+    .stats-table td.name {
+      font-family: 'EB Garamond', serif;
+      font-size: 16px;
+    }
+
+    .stats-table td.strong {
+      font-weight: 700;
+      color: var(--ink);
+    }
+
+    .pos { color: #2d5a2d; }
+    .neg { color: #8b2a2a; }
+
+    .footnote {
+      font-family: 'Inter', sans-serif;
+      font-size: 12px;
+      letter-spacing: 0.04em;
+      color: var(--ink-mute);
+      text-align: center;
+      max-width: 640px;
+      margin: 16px auto 0;
+      line-height: 1.55;
+    }
+
+    @media (max-width: 640px) {
+      .page-title {
+        font-size: 28px;
+      }
+
+      .lede {
+        font-size: 17px;
+        margin-bottom: 32px;
+      }
+
+      .stats-table {
+        font-size: 12px;
+      }
+
+      .stats-table th,
+      .stats-table td {
+        padding: 8px 6px;
+      }
+
+      .stats-table td.name {
+        font-size: 14px;
+      }
+    }
+  </style>
+</BaseLayout>

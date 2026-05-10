@@ -1,0 +1,124 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+---
+
+<BaseLayout
+  title="Login — Blackbook Racing Club"
+  description="Member login for Blackbook Racing Club. Paid tiers open for signup at launch."
+>
+  <article class="page">
+    <p class="eyebrow">Member access</p>
+    <h1 class="page-title">Login</h1>
+    <div class="stub-card">
+      <p class="stub-lede">
+        Member login lands when paid signup opens. For now, the Free tier is available in
+        Telegram — no account needed.
+      </p>
+      <div class="stub-ctas">
+        <a class="cta cta-primary" href="/subscribe">View tiers</a>
+        <a class="cta" href="https://t.me/BlackbookRacing" rel="noopener">Join the free Telegram</a>
+      </div>
+      <p class="stub-foot">
+        Founding-member offers go live at launch — first 100 in Club, first 50 in Blackbook,
+        permanently locked.
+      </p>
+    </div>
+  </article>
+
+  <style>
+    .page {
+      padding-top: 16px;
+      max-width: 640px;
+      margin: 0 auto;
+    }
+
+    .eyebrow {
+      font-family: 'Inter', sans-serif;
+      font-size: 11px;
+      letter-spacing: 0.25em;
+      text-transform: uppercase;
+      color: var(--gold);
+      font-weight: 600;
+      text-align: center;
+      margin-bottom: 12px;
+    }
+
+    .page-title {
+      font-family: 'Cormorant Garamond', serif;
+      font-weight: 700;
+      font-size: 40px;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+      text-align: center;
+      margin-bottom: 40px;
+    }
+
+    .stub-card {
+      border: 1px solid var(--rule);
+      border-radius: 4px;
+      padding: 40px 36px;
+      background: var(--cream);
+      text-align: center;
+    }
+
+    .stub-lede {
+      font-family: 'EB Garamond', serif;
+      font-size: 19px;
+      line-height: 1.55;
+      color: var(--ink);
+      margin-bottom: 28px;
+    }
+
+    .stub-ctas {
+      display: flex;
+      gap: 14px;
+      justify-content: center;
+      flex-wrap: wrap;
+      margin-bottom: 28px;
+    }
+
+    .cta {
+      display: inline-block;
+      padding: 12px 22px;
+      font-family: 'Inter', sans-serif;
+      font-size: 12px;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      font-weight: 600;
+      text-decoration: none;
+      border-radius: 4px;
+      border: 1px solid var(--ink);
+      color: var(--ink);
+      background: var(--cream);
+    }
+
+    .cta-primary {
+      background: var(--ink);
+      color: var(--cream);
+    }
+
+    .stub-foot {
+      font-family: 'Inter', sans-serif;
+      font-size: 12px;
+      letter-spacing: 0.04em;
+      color: var(--ink-mute);
+      max-width: 440px;
+      margin: 0 auto;
+      line-height: 1.55;
+    }
+
+    @media (max-width: 640px) {
+      .page-title {
+        font-size: 28px;
+      }
+
+      .stub-card {
+        padding: 32px 22px;
+      }
+
+      .stub-lede {
+        font-size: 17px;
+      }
+    }
+  </style>
+</BaseLayout>
