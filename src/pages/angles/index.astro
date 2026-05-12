@@ -1,0 +1,362 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { TIER1_ANGLES, CODE_LABEL, type RaceCode } from '../../data/angles.ts';
+
+// Eagerly glob every bb_*_alerts.json under public/. Files for angles with
+// zero matches today are still written by build_bb_angle.py, so this gives
+// us "live alert count" per angle. Missing files (e.g. before the first
+// nightly cron run) gracefully resolve to zero.
+const alertGlob = import.meta.glob<{ bb_angle_id: string; n_alerts: number; target_date: string }>(
+  '../../../public/bb_*_alerts.json',
+  { eager: true, import: 'default' }
+);
+
+const alertsByAngle = new Map<string, { n_alerts: number; target_date: string }>();
+for (const payload of Object.values(alertGlob)) {
+  if (payload?.bb_angle_id) {
+    alertsByAngle.set(payload.bb_angle_id, { n_alerts: payload.n_alerts ?? 0, target_date: payload.target_date });
+  }
+}
+
+const fmtPct = (n: number): string => (n >= 0 ? '+' : '') + n.toFixed(1) + '%';
+const fmtLift = (pp: number): string => (pp >= 0 ? '+' : '') + pp.toFixed(1) + 'pp';
+const fmtN = (n: number): string => n.toLocaleString('en-GB');
+
+// Order: group by code, then by lift descending within code
+const codeOrder: RaceCode[] = ['FLT', 'AWF', 'HDL', 'CHS', 'NHF'];
+const rows = [...TIER1_ANGLES].sort((a, b) => {
+  const ci = codeOrder.indexOf(a.code) - codeOrder.indexOf(b.code);
+  if (ci !== 0) return ci;
+  return b.lift_pp - a.lift_pp;
+});
+
+// Latest target_date across alerts (for the live-snapshot timestamp)
+const latestTarget = [...alertsByAngle.values()]
+  .map((v) => v.target_date)
+  .filter(Boolean)
+  .sort()
+  .pop();
+const liveLabel = latestTarget
+  ? new Date(latestTarget + 'T12:00:00Z').toLocaleDateString('en-GB', {
+      weekday: 'long', day: 'numeric', month: 'long',
+    })
+  : null;
+---
+
+<BaseLayout
+  title="Tier-1 angles — Blackbook Racing"
+  description="Ten Tier-1 angles, each backed by four years of historical proof. Daily live alerts when tomorrow's runners match an angle predicate."
+>
+  <article class="page">
+    <p class="eyebrow">Blackbook angles</p>
+    <h1 class="page-title">Tier-1 angles.</h1>
+    <p class="lede">
+      Ten betting angles, each backed by four years of historical proof.
+      Every one shows a positive lift over its race-code baseline in
+      every yearly cut from 2022 to 2025. We rebuild the alerts overnight
+      from tomorrow's Betfair card.
+    </p>
+
+    <section class="legend">
+      <div>
+        <span class="legend-label">ROI</span>
+        Profit per unit staked at BSP.
+      </div>
+      <div>
+        <span class="legend-label">Baseline</span>
+        What you'd make backing every runner in that code blindly at BSP.
+      </div>
+      <div>
+        <span class="legend-label">Lift</span>
+        Angle ROI minus baseline — the actual edge.
+      </div>
+    </section>
+
+    <section class="catalogue">
+      <header class="catalogue-head">
+        <p class="section-eyebrow">The ten</p>
+        {liveLabel && <p class="meta">Live alerts shown for {liveLabel}</p>}
+      </header>
+      <div class="table-wrap">
+        <table class="catalogue-table">
+          <thead>
+            <tr>
+              <th class="th-code">Code</th>
+              <th class="th-angle">Angle</th>
+              <th class="th-num">Hit rate</th>
+              <th class="th-num">ROI</th>
+              <th class="th-num">Lift</th>
+              <th class="th-num">Picks /yr</th>
+              <th class="th-num">Today</th>
+            </tr>
+          </thead>
+          <tbody>
+            {rows.map((a) => {
+              const live = alertsByAngle.get(a.id);
+              const todayN = live?.n_alerts ?? null;
+              return (
+                <tr>
+                  <td class="td-code">{a.code}</td>
+                  <td class="td-angle">
+                    <a href={`/angles/${a.id}`}>{a.label}</a>
+                    <p class="td-signal">{a.signal}</p>
+                  </td>
+                  <td class="td-num">{a.hit_pct.toFixed(1)}%</td>
+                  <td class={'td-num ' + (a.roi_pct >= 0 ? 'pos' : 'neg')}>{fmtPct(a.roi_pct)}</td>
+                  <td class={'td-num ' + (a.lift_pp >= 0 ? 'pos' : 'neg')}>{fmtLift(a.lift_pp)}</td>
+                  <td class="td-num td-soft">{fmtN(a.alerts_per_year)}</td>
+                  <td class="td-num">
+                    {todayN === null ? <span class="td-soft">—</span> : (todayN > 0 ? <strong>{todayN}</strong> : <span class="td-soft">0</span>)}
+                  </td>
+                </tr>
+              );
+            })}
+          </tbody>
+        </table>
+      </div>
+      <p class="meta meta-foot">
+        Backtest sample {fmtN(rows.reduce((s, a) => s + a.n, 0))} matches across 2022-2025. Each angle's
+        full proof — including per-code baseline and exact predicate in plain English — is on its own page.
+      </p>
+    </section>
+
+    <section class="under-review-link">
+      <h2>Under review</h2>
+      <p>
+        Sixteen further angles cleared three of four yearly cuts but missed at least one year.
+        We track them as paper angles — visible, but not surfaced as alerts until the stability bar is met.
+      </p>
+      <a href="/angles/under-review" class="cta">See the paper angles</a>
+    </section>
+  </article>
+
+  <style>
+    .page {
+      padding-top: 16px;
+      max-width: 880px;
+      margin: 0 auto;
+    }
+
+    .eyebrow {
+      font-family: 'Inter', sans-serif;
+      font-size: 11px;
+      letter-spacing: 0.25em;
+      text-transform: uppercase;
+      color: var(--gold);
+      font-weight: 600;
+      text-align: center;
+      margin-bottom: 12px;
+    }
+
+    .page-title {
+      font-family: 'Cormorant Garamond', serif;
+      font-weight: 700;
+      font-size: 44px;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+      text-align: center;
+      margin-bottom: 18px;
+    }
+
+    .lede {
+      font-family: 'EB Garamond', serif;
+      font-size: 18px;
+      line-height: 1.6;
+      color: var(--ink-soft);
+      text-align: center;
+      max-width: 640px;
+      margin: 0 auto 36px;
+    }
+
+    .legend {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 18px;
+      padding: 16px 22px;
+      border: 1px solid var(--ink-line);
+      border-radius: 4px;
+      margin-bottom: 32px;
+      background: var(--cream);
+      font-family: 'EB Garamond', serif;
+      font-size: 14px;
+      color: var(--ink-soft);
+      line-height: 1.4;
+    }
+
+    .legend-label {
+      display: block;
+      font-family: 'Inter', sans-serif;
+      font-size: 10px;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--ink);
+      font-weight: 600;
+      margin-bottom: 4px;
+    }
+
+    .section-eyebrow {
+      font-family: 'Inter', sans-serif;
+      font-size: 11px;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--ink);
+      font-weight: 600;
+      margin: 0;
+    }
+
+    .catalogue-head {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      gap: 12px;
+      flex-wrap: wrap;
+      border-bottom: 1px solid var(--ink-line);
+      padding-bottom: 10px;
+      margin-bottom: 14px;
+    }
+
+    .meta {
+      font-family: 'Inter', sans-serif;
+      font-size: 12px;
+      color: var(--ink-soft);
+      margin: 0;
+    }
+
+    .meta-foot {
+      margin-top: 14px;
+      text-align: center;
+    }
+
+    .table-wrap {
+      border: 1px solid var(--ink-line);
+      border-radius: 4px;
+      overflow-x: auto;
+    }
+
+    .catalogue-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-family: 'Inter', sans-serif;
+      font-size: 13px;
+    }
+
+    .catalogue-table th {
+      text-align: left;
+      font-size: 10px;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--ink-soft);
+      font-weight: 600;
+      padding: 12px 14px;
+      border-bottom: 1px solid var(--ink-line);
+      background: var(--cream);
+    }
+
+    .catalogue-table th.th-num {
+      text-align: right;
+    }
+
+    .catalogue-table td {
+      padding: 14px;
+      border-bottom: 1px solid var(--ink-line);
+      vertical-align: top;
+    }
+
+    .catalogue-table tbody tr:last-child td {
+      border-bottom: none;
+    }
+
+    .td-code {
+      font-weight: 600;
+      color: var(--gold);
+      letter-spacing: 0.08em;
+      font-size: 12px;
+      white-space: nowrap;
+    }
+
+    .td-angle a {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 17px;
+      font-weight: 700;
+      color: var(--ink);
+      text-decoration: underline;
+      text-decoration-color: var(--gold);
+      text-underline-offset: 4px;
+      text-decoration-thickness: 1px;
+      display: inline-block;
+    }
+
+    .td-angle a:hover {
+      text-decoration-thickness: 2px;
+    }
+
+    .td-signal {
+      font-family: 'EB Garamond', serif;
+      font-style: italic;
+      font-size: 13px;
+      color: var(--ink-soft);
+      margin: 4px 0 0;
+      line-height: 1.4;
+    }
+
+    .td-num {
+      text-align: right;
+      font-feature-settings: 'tnum';
+      font-weight: 500;
+      color: var(--ink);
+      white-space: nowrap;
+    }
+
+    .td-num.pos { color: #2d5e3e; font-weight: 600; }
+    .td-num.neg { color: #8a3a2a; }
+    .td-soft   { color: var(--ink-mute); font-weight: 400; }
+
+    .under-review-link {
+      margin-top: 48px;
+      padding: 24px 26px;
+      border: 1px dashed var(--ink-line);
+      border-radius: 4px;
+      text-align: center;
+    }
+
+    .under-review-link h2 {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 22px;
+      font-weight: 700;
+      margin: 0 0 8px;
+    }
+
+    .under-review-link p {
+      font-family: 'EB Garamond', serif;
+      color: var(--ink-soft);
+      margin: 0 auto 16px;
+      max-width: 560px;
+      font-size: 16px;
+      line-height: 1.5;
+    }
+
+    .cta {
+      display: inline-block;
+      padding: 10px 22px;
+      font-family: 'Inter', sans-serif;
+      font-size: 12px;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      font-weight: 600;
+      text-decoration: none;
+      border-radius: 4px;
+      border: 1px solid var(--ink);
+      color: var(--ink);
+      background: var(--cream);
+    }
+
+    @media (max-width: 720px) {
+      .page-title { font-size: 32px; }
+      .legend { grid-template-columns: 1fr; gap: 12px; }
+      .catalogue-table { font-size: 12px; }
+      .catalogue-table th, .catalogue-table td { padding: 10px; }
+      .td-angle a { font-size: 15px; }
+      .td-signal { font-size: 12px; }
+    }
+  </style>
+</BaseLayout>

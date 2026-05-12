@@ -9,7 +9,6 @@ interface Tier {
   pitch: string;
   bullets: string[];
   cta: { label: string; href?: string; disabled?: boolean };
-  founderOffer?: string;
   accent?: boolean;
 }
 
@@ -28,58 +27,40 @@ const tiers: Tier[] = [
     cta: { label: 'Join free on Telegram', href: 'https://t.me/BlackbookRacing' },
   },
   {
-    name: 'Club',
-    price: '£39',
-    pricePeriod: '/mo',
-    yearly: 'or £349/yr · ~25% off',
-    pitch: 'The complete top-conviction slate across UK flat racing, pre-off each morning.',
-    bullets: [
-      'The complete top-conviction slate (multiple picks per race day)',
-      'UK flat racing — turf and all-weather (hurdles excluded)',
-      'Private Club Telegram channel',
-      'Pre-off timestamps, reconciled to Betfair SP',
-      'Club-tier articles',
-      'Morning summary email',
-      'Next-morning results in channel',
-    ],
-    cta: { label: 'Founding offer launches Q3 2026', disabled: true },
-    founderOffer: 'First 100 members at £29/mo (or £249/yr) — permanently locked.',
-  },
-  {
     name: 'Blackbook',
-    price: '£99',
+    price: '£39.99',
     pricePeriod: '/mo',
-    yearly: 'or £899/yr · ~25% off',
+    yearly: 'or £359/yr · ~25% off',
     pitch: 'The full package — every signal we run, every code we cover, plus the seasonal blackbook of horses to track.',
     bullets: [
-      'Everything in Club, plus —',
+      'The complete top-conviction slate (multiple picks per race day)',
       'Value picks (market-edge model)',
       'Form picks (long-term form signals)',
-      'Hurdle racing included (Club is flat-only)',
+      'UK flat, all-weather and hurdle racing',
       'The seasonal Blackbook of horses to track',
       'Pre-off drift alerts on every selection',
       'Recommended staking plans',
       'Members-only weekly editorial',
-      'Full team support',
+      'Pre-off timestamps, reconciled to Betfair SP',
+      'Next-morning results in channel',
     ],
-    cta: { label: 'Founding offer launches Q3 2026', disabled: true },
-    founderOffer: 'First 50 members at £69/mo (or £599/yr) — permanently locked.',
+    cta: { label: 'Paid signup launches Q3 2026', disabled: true },
     accent: true,
   },
 ];
 ---
 
 <BaseLayout
-  title="Subscribe — Blackbook Racing Club"
-  description="Free, Club, Blackbook. Three tiers across UK flat racing. Join the free Telegram channel today, or sign up for Club and Blackbook when paid signup opens."
+  title="Subscribe — Blackbook Racing"
+  description="Free or Blackbook. Two tiers, one step. Join the free Telegram channel today, or sign up for Blackbook when paid signup opens."
 >
   <article class="page">
     <p class="eyebrow">Subscribe</p>
-    <h1 class="page-title">Free. Club. Blackbook.</h1>
+    <h1 class="page-title">Free. Or Blackbook.</h1>
     <p class="lede">
-      The Free tier is live in Telegram today — one top-conviction selection each race day. Club
-      and Blackbook open for paid signup at launch, with a one-time founding offer for the first
-      members in. Blackbook is the full package: every signal, every code, every horse on the list.
+      The Free tier is live in Telegram today — one top-conviction selection each race day.
+      Blackbook is the full package: every signal, every code, every horse on the list. No
+      middle tier, no upsell — one paid step.
     </p>
 
     <section class="tiers">
@@ -99,9 +80,6 @@ const tiers: Tier[] = [
               <li><span class="mark">▲</span><span>{b}</span></li>
             ))}
           </ul>
-          {t.founderOffer && (
-            <p class="founder">{t.founderOffer}</p>
-          )}
           <div class="cta-wrap">
             {t.cta.disabled ? (
               <span class="cta cta-disabled" aria-disabled="true">{t.cta.label}</span>
@@ -123,14 +101,6 @@ const tiers: Tier[] = [
           <p class="preview-snip">▲ BLACKBOOK FREE <span class="bar">|</span> Today <span class="dot">·</span> 1 selection</p>
           <p class="preview-snip-small">17:25 LEICESTER · SKY SECRET</p>
           <p class="preview-snip-small quiet">Logged 08:14 BST · pre-off</p>
-        </div>
-        <div class="preview-card">
-          <span class="preview-tier preview-tier-club">Club</span>
-          <h3>The full top-conviction slate</h3>
-          <p class="preview-snip">▲ BLACKBOOK CLUB <span class="bar">|</span> Today <span class="dot">·</span> 4 selections</p>
-          <p class="preview-snip-small">13:55 PONTEFRACT · SILVER ARROW</p>
-          <p class="preview-snip-small">14:30 KEMPTON (AW) · DAWN HORIZON</p>
-          <p class="preview-snip-small quiet">…two more, logged 08:14 BST</p>
         </div>
         <div class="preview-card">
           <span class="preview-tier preview-tier-blackbook">Blackbook</span>
@@ -204,9 +174,9 @@ const tiers: Tier[] = [
 
     .tiers {
       display: grid;
-      grid-template-columns: repeat(3, 1fr);
+      grid-template-columns: repeat(2, 1fr);
       gap: 24px;
-      max-width: 1080px;
+      max-width: 760px;
       margin: 0 auto 72px;
     }
 
@@ -294,17 +264,6 @@ const tiers: Tier[] = [
       flex-shrink: 0;
     }
 
-    .founder {
-      font-family: 'Inter', sans-serif;
-      font-size: 12px;
-      letter-spacing: 0.04em;
-      line-height: 1.55;
-      color: var(--ink-mute);
-      padding: 12px 14px;
-      border-top: 1px solid var(--rule);
-      border-bottom: 1px solid var(--rule);
-    }
-
     .cta-wrap {
       margin-top: auto;
       padding-top: 4px;
@@ -367,9 +326,10 @@ const tiers: Tier[] = [
 
     .preview-grid {
       display: grid;
-      grid-template-columns: repeat(3, 1fr);
+      grid-template-columns: repeat(2, 1fr);
       gap: 18px;
-      margin-bottom: 28px;
+      max-width: 760px;
+      margin: 0 auto 28px;
       text-align: left;
     }
 
@@ -398,11 +358,6 @@ const tiers: Tier[] = [
       background: var(--cream);
       color: var(--ink);
       border: 1px solid var(--rule);
-    }
-
-    .preview-tier-club {
-      background: var(--ink);
-      color: var(--cream);
     }
 
     .preview-tier-blackbook {

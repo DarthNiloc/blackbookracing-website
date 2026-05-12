@@ -38,6 +38,9 @@ interface Pick {
 }
 
 interface Tier {
+  // 'club' kept in the union transitionally: public/ledger.json still emits
+  // the legacy 3-tier shape until Phase 3 publisher-move ships. We filter
+  // out club rows at render time below.
   key: 'free' | 'club' | 'blackbook';
   label: string;
   blurb: string;
@@ -60,6 +63,7 @@ interface Ledger {
 }
 
 const ledger = ledgerData as Ledger;
+const visibleTiers = ledger.tiers.filter(t => t.key !== 'club');
 const freeTier = ledger.tiers.find(t => t.key === 'free')!;
 
 function fmtDate(iso: string): string {
@@ -78,14 +82,14 @@ function fmtPct(n: number | null): string {
 ---
 
 <BaseLayout
-  title="Ledger — Blackbook Racing Club"
-  description="Public performance ledger across Free, Club and Blackbook tiers. Aggregate ROI, strike rate, and per-race-code breakdown reconciled to Betfair Starting Price."
+  title="Ledger — Blackbook Racing"
+  description="Public performance ledger across Free and Blackbook tiers. Aggregate ROI, strike rate, and per-race-code breakdown reconciled to Betfair Starting Price."
 >
   <article class="page">
     <p class="eyebrow">Public ledger</p>
     <h1 class="page-title">The ledger.</h1>
     <p class="lede">
-      Headline performance across Free, Club and Blackbook tiers, broken down by race code and
+      Headline performance across Free and Blackbook tiers, broken down by race code and
       signal. Every selection timestamped pre-off. Every result reconciled to Betfair Starting
       Price after the race. Full pick-by-pick audit trail (winners and losers) lives in the
       members area.
@@ -94,12 +98,12 @@ function fmtPct(n: number | null): string {
     <section class="tier-band">
       <p class="tier-band-eyebrow">Live performance by tier</p>
       <div class="tier-grid">
-        {ledger.tiers.map(t => (
+        {visibleTiers.map(t => (
           <article class={"tier-card tier-card-" + t.key + (t.key === 'blackbook' ? ' tier-card-accent' : '')}>
             <header class="tier-head">
               <h2 class="tier-label">{t.label}</h2>
               <span class="tier-pill">
-                {t.key === 'free' ? '£0' : t.key === 'club' ? '£39/mo' : '£99/mo'}
+                {t.key === 'free' ? '£0' : '£39.99/mo'}
               </span>
             </header>
             <p class="tier-blurb">{t.blurb}</p>
@@ -270,8 +274,10 @@ function fmtPct(n: number | null): string {
 
     .tier-grid {
       display: grid;
-      grid-template-columns: repeat(3, 1fr);
+      grid-template-columns: repeat(2, 1fr);
       gap: 18px;
+      max-width: 760px;
+      margin: 0 auto;
     }
 
     .tier-card {

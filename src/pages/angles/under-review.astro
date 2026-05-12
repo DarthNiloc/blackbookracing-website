@@ -1,0 +1,278 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { TIER2_ANGLES, CODE_LABEL, type RaceCode } from '../../data/angles.ts';
+
+const fmtPct = (n: number): string => (n >= 0 ? '+' : '') + n.toFixed(1) + '%';
+const fmtLift = (pp: number): string => (pp >= 0 ? '+' : '') + pp.toFixed(1) + 'pp';
+const fmtN = (n: number): string => n.toLocaleString('en-GB');
+
+const codeOrder: RaceCode[] = ['FLT', 'AWF', 'HDL', 'CHS', 'NHF'];
+const rows = [...TIER2_ANGLES].sort((a, b) => {
+  const ci = codeOrder.indexOf(a.code) - codeOrder.indexOf(b.code);
+  if (ci !== 0) return ci;
+  return b.lift_pp - a.lift_pp;
+});
+---
+
+<BaseLayout
+  title="Under review — Blackbook angles"
+  description="Sixteen paper-tracked angles that cleared three of four yearly cuts but missed at least one year. Visible, but not surfaced as alerts until the stability bar is met."
+>
+  <article class="page">
+    <p class="eyebrow">Blackbook angles · paper-tracked</p>
+    <h1 class="page-title">Under review.</h1>
+    <p class="lede">
+      Sixteen angles that look attractive in aggregate but missed one of the
+      four yearly stability cuts. We paper-track them — visible for transparency,
+      not yet surfaced as live alerts. If another year of data clears the bar,
+      they graduate to Tier 1.
+    </p>
+
+    <section class="why">
+      <h2>Why a four-year bar?</h2>
+      <p>
+        A backtested angle with a single bad year can still show a strong headline ROI
+        if the other three years were good enough. That's not edge — it's variance.
+        Our Tier-1 set is everything that paid positively over baseline in
+        <strong>every</strong> yearly cut from 2022 through 2025. Anything that
+        missed even one year lives here until it builds the track record back.
+      </p>
+    </section>
+
+    <section class="catalogue">
+      <header class="catalogue-head">
+        <p class="section-eyebrow">The sixteen</p>
+        <p class="meta">Paper-tracked · not yet alerted</p>
+      </header>
+      <div class="table-wrap">
+        <table class="catalogue-table">
+          <thead>
+            <tr>
+              <th class="th-code">Code</th>
+              <th class="th-angle">Angle</th>
+              <th class="th-num">Hit rate</th>
+              <th class="th-num">ROI</th>
+              <th class="th-num">Lift</th>
+              <th class="th-caveat">Why Tier 2</th>
+            </tr>
+          </thead>
+          <tbody>
+            {rows.map((a) => (
+              <tr>
+                <td class="td-code">{a.code}</td>
+                <td class="td-angle">{a.label}<p class="td-meta">{fmtN(a.n)} backtest matches</p></td>
+                <td class="td-num">{a.hit_pct.toFixed(1)}%</td>
+                <td class={'td-num ' + (a.roi_pct >= 0 ? 'pos' : 'neg')}>{fmtPct(a.roi_pct)}</td>
+                <td class={'td-num ' + (a.lift_pp >= 0 ? 'pos' : 'neg')}>{fmtLift(a.lift_pp)}</td>
+                <td class="td-caveat">{a.caveat}</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <section class="back-link">
+      <a href="/angles">← Tier-1 angles</a>
+    </section>
+  </article>
+
+  <style>
+    .page {
+      padding-top: 16px;
+      max-width: 920px;
+      margin: 0 auto;
+    }
+
+    .eyebrow {
+      font-family: 'Inter', sans-serif;
+      font-size: 11px;
+      letter-spacing: 0.25em;
+      text-transform: uppercase;
+      color: var(--gold);
+      font-weight: 600;
+      text-align: center;
+      margin-bottom: 12px;
+    }
+
+    .page-title {
+      font-family: 'Cormorant Garamond', serif;
+      font-weight: 700;
+      font-size: 40px;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+      text-align: center;
+      margin-bottom: 16px;
+    }
+
+    .lede {
+      font-family: 'EB Garamond', serif;
+      font-size: 18px;
+      line-height: 1.6;
+      color: var(--ink-soft);
+      text-align: center;
+      max-width: 640px;
+      margin: 0 auto 36px;
+    }
+
+    .why {
+      border: 1px solid var(--ink-line);
+      border-radius: 4px;
+      padding: 22px 26px;
+      margin-bottom: 36px;
+      background: var(--cream);
+    }
+
+    .why h2 {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 22px;
+      font-weight: 700;
+      margin: 0 0 8px;
+    }
+
+    .why p {
+      font-family: 'EB Garamond', serif;
+      font-size: 16px;
+      line-height: 1.55;
+      color: var(--ink-soft);
+      margin: 0;
+    }
+
+    .why strong {
+      color: var(--ink);
+    }
+
+    .section-eyebrow {
+      font-family: 'Inter', sans-serif;
+      font-size: 11px;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--ink);
+      font-weight: 600;
+      margin: 0;
+    }
+
+    .catalogue-head {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      gap: 12px;
+      flex-wrap: wrap;
+      border-bottom: 1px solid var(--ink-line);
+      padding-bottom: 10px;
+      margin-bottom: 14px;
+    }
+
+    .meta {
+      font-family: 'Inter', sans-serif;
+      font-size: 12px;
+      color: var(--ink-soft);
+      margin: 0;
+    }
+
+    .table-wrap {
+      border: 1px solid var(--ink-line);
+      border-radius: 4px;
+      overflow-x: auto;
+    }
+
+    .catalogue-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-family: 'Inter', sans-serif;
+      font-size: 13px;
+    }
+
+    .catalogue-table th {
+      text-align: left;
+      font-size: 10px;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--ink-soft);
+      font-weight: 600;
+      padding: 12px 14px;
+      border-bottom: 1px solid var(--ink-line);
+      background: var(--cream);
+    }
+
+    .catalogue-table th.th-num {
+      text-align: right;
+    }
+
+    .catalogue-table td {
+      padding: 14px;
+      border-bottom: 1px solid var(--ink-line);
+      vertical-align: top;
+    }
+
+    .catalogue-table tbody tr:last-child td {
+      border-bottom: none;
+    }
+
+    .td-code {
+      font-weight: 600;
+      color: var(--gold);
+      letter-spacing: 0.08em;
+      font-size: 12px;
+      white-space: nowrap;
+    }
+
+    .td-angle {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 16px;
+      font-weight: 600;
+      color: var(--ink);
+    }
+
+    .td-meta {
+      font-family: 'Inter', sans-serif;
+      font-size: 11px;
+      color: var(--ink-mute);
+      font-weight: 400;
+      margin: 4px 0 0;
+    }
+
+    .td-num {
+      text-align: right;
+      font-feature-settings: 'tnum';
+      font-weight: 500;
+      color: var(--ink);
+      white-space: nowrap;
+    }
+
+    .td-num.pos { color: #2d5e3e; font-weight: 600; }
+    .td-num.neg { color: #8a3a2a; }
+
+    .td-caveat {
+      font-family: 'EB Garamond', serif;
+      font-size: 13px;
+      font-style: italic;
+      color: var(--ink-soft);
+      line-height: 1.4;
+    }
+
+    .back-link {
+      text-align: center;
+      margin-top: 36px;
+    }
+
+    .back-link a {
+      font-family: 'Inter', sans-serif;
+      font-size: 12px;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--ink);
+      text-decoration: underline;
+      text-decoration-color: var(--gold);
+      text-underline-offset: 4px;
+    }
+
+    @media (max-width: 720px) {
+      .page-title { font-size: 30px; }
+      .catalogue-table { font-size: 12px; }
+      .catalogue-table th, .catalogue-table td { padding: 10px; }
+      .td-angle { font-size: 14px; }
+      .td-caveat { font-size: 12px; }
+    }
+  </style>
+</BaseLayout>

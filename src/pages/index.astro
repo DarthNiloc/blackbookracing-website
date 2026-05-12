@@ -10,6 +10,9 @@ interface TierHead {
 }
 
 interface TierMini {
+  // 'club' kept in the union transitionally: the public/ledger.json source
+  // still emits the legacy 3-tier shape until Phase 3 publisher-move ships,
+  // so we filter it out at render time rather than at the type level.
   key: 'free' | 'club' | 'blackbook';
   label: string;
   n_days: number;
@@ -26,6 +29,7 @@ interface LedgerHead {
 }
 
 const ledger = ledgerData as LedgerHead;
+const visibleTiers = ledger.tiers.filter(t => t.key !== 'club');
 
 const POUND_PER_POINT = 10;
 
@@ -50,7 +54,7 @@ function fmtDate(iso: string): string {
 ---
 
 <BaseLayout
-  title="Blackbook Racing Club — Pre-off selections, public ledger, UK flat racing"
+  title="Blackbook Racing — Pre-off selections, public ledger, UK flat racing"
   description="UK flat racing selections — turf and all-weather. Published pre-off each morning, reconciled to Betfair SP. Public ledger. Hurdle add-on for Blackbook members."
 >
   <figure class="hero-mark">
@@ -59,7 +63,7 @@ function fmtDate(iso: string): string {
 
   <section class="hero">
     <p class="eyebrow">Pre-off picks. Public ledger. UK flat racing.</p>
-    <h1 class="brand-line">The thinking punter's racing club.</h1>
+    <h1 class="brand-line">The thinking punter's edge.</h1>
     <p class="substance">
       Hand-reviewed selections published every morning of UK racing, logged before the off and
       reconciled to Betfair Starting Price after the race. Flat and all-weather are the focus;
@@ -70,7 +74,7 @@ function fmtDate(iso: string): string {
   <section class="numbers">
     <p class="numbers-eyebrow">Live ledger by tier <span class="eyebrow-sub">· last 30 days</span></p>
     <div class="tier-row">
-      {ledger.tiers.map(t => (
+      {visibleTiers.map(t => (
         <article class={"tier-stat tier-stat-" + t.key}>
           <p class="tier-stat-label">{t.label}</p>
           <span class={"tier-stat-roi " + ((t.headline_30d.roi_pct ?? 0) >= 0 ? "pos" : "neg")}>
@@ -99,7 +103,7 @@ function fmtDate(iso: string): string {
       </p>
       <p class="explainer-lead">At £10 per point, P&amp;L totals are:</p>
       <ul class="explainer-list">
-        {ledger.tiers.map(t => (
+        {visibleTiers.map(t => (
           <li>
             <span class={t.headline_30d.total_profit_pts >= 0 ? 'pos pound' : 'neg pound'}>
               {fmtPound(t.headline_30d.total_profit_pts)}
@@ -176,25 +180,18 @@ function fmtDate(iso: string): string {
           1 top-conviction selection each race day, posted in the public Telegram.
         </p>
       </div>
-      <div class="teaser-card">
-        <h3>Club</h3>
-        <p class="teaser-price">£39<span class="period">/mo</span></p>
-        <p class="teaser-pitch">
-          The full top-conviction layer across UK flat racing — turf and all-weather, pre-off.
-        </p>
-      </div>
       <div class="teaser-card teaser-accent">
         <p class="teaser-flag">Full package</p>
         <h3>Blackbook</h3>
-        <p class="teaser-price">£99<span class="period">/mo</span></p>
+        <p class="teaser-price">£39.99<span class="period">/mo</span></p>
         <p class="teaser-pitch">
-          Everything in Club, plus form picks, hurdles, horses to track, drift alerts and a
-          weekly editorial.
+          The full top-conviction slate, plus value picks, form picks, hurdles, horses to track,
+          drift alerts and weekly editorial.
         </p>
       </div>
     </div>
     <p class="teaser-cta">
-      <a href="/subscribe">Compare all tiers →</a>
+      <a href="/subscribe">Compare tiers →</a>
     </p>
   </section>
 
@@ -273,9 +270,10 @@ function fmtDate(iso: string): string {
 
     .tier-row {
       display: grid;
-      grid-template-columns: repeat(3, 1fr);
+      grid-template-columns: repeat(2, 1fr);
       gap: 16px;
-      margin-bottom: 22px;
+      max-width: 520px;
+      margin: 0 auto 22px;
     }
 
     .tier-stat {
@@ -288,10 +286,6 @@ function fmtDate(iso: string): string {
       flex-direction: column;
       gap: 8px;
       font-feature-settings: 'tnum';
-    }
-
-    .tier-stat-club {
-      border-color: var(--gold);
     }
 
     .tier-stat-label {
@@ -512,9 +506,10 @@ function fmtDate(iso: string): string {
 
     .tier-grid {
       display: grid;
-      grid-template-columns: repeat(3, 1fr);
+      grid-template-columns: repeat(2, 1fr);
       gap: 18px;
-      margin-bottom: 28px;
+      max-width: 640px;
+      margin: 0 auto 28px;
     }
 
     .teaser-card {

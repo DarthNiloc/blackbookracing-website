@@ -3,14 +3,14 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 ---
 
 <BaseLayout
-  title="Preview — Blackbook Racing Club"
-  description="A preview of what Free, Club and Blackbook members see. Daily top pick, full top-conviction slate, the seasonal blackbook of horses to track, and the weekly editorial."
+  title="Preview — Blackbook Racing"
+  description="A preview of what Free and Blackbook members see. Daily top pick, the seasonal blackbook of horses to track, and the weekly editorial."
 >
   <article class="page">
     <p class="eyebrow">Preview</p>
     <h1 class="page-title">What members see</h1>
     <p class="lede">
-      Club and Blackbook tiers don't open for paid signup until launch. These samples show the
+      The Blackbook tier doesn't open for paid signup until launch. These samples show the
       format and substance of each deliverable. Numbers and horses below are illustrative — the
       live ledger has the real ones.
     </p>
@@ -40,19 +40,20 @@ import BaseLayout from '../layouts/BaseLayout.astro';
       </div>
     </section>
 
-    <!-- ====== Club: daily slate ====== -->
+    <!-- ====== Blackbook: full daily slate ====== -->
     <section class="preview-section">
       <header class="section-head">
-        <span class="tier-badge tier-badge-club">Club</span>
-        <h2>The full top-conviction slate</h2>
+        <span class="tier-badge tier-badge-blackbook">Blackbook</span>
+        <h2>The full daily slate</h2>
         <p class="section-pitch">
-          Every top-conviction selection across UK flat racing — turf and all-weather — delivered
-          pre-off to a private Telegram channel. Reconciled to Betfair SP after the race.
+          Every selection — top conviction, value, form — across UK flat, all-weather and
+          hurdles, delivered pre-off to the private Blackbook Telegram channel. Reconciled to
+          Betfair SP after the race.
         </p>
       </header>
 
       <div class="telegram-mock">
-        <div class="tg-head">▲ BLACKBOOK CLUB <span class="bar">|</span> 2026-05-04</div>
+        <div class="tg-head">▲ BLACKBOOK <span class="bar">|</span> 2026-05-04</div>
         <div class="tg-meta">Today <span class="dot">·</span> 4 selections <span class="dot">·</span> 1pt @ Betfair SP</div>
         <div class="tg-list">
           <div class="tg-pick">
@@ -156,7 +157,7 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 
     <section class="cta-section">
       <p class="cta-text">
-        The Free tier is live in Telegram today. Club and Blackbook open for paid signup at launch.
+        The Free tier is live in Telegram today. Blackbook opens for paid signup at launch.
       </p>
       <a class="cta-btn" href="/subscribe">Compare tiers →</a>
     </section>
@@ -252,17 +253,12 @@ import BaseLayout from '../layouts/BaseLayout.astro';
       border: 1px solid var(--rule);
     }
 
-    .tier-badge-club {
-      background: var(--ink);
-      color: var(--cream);
-    }
-
     .tier-badge-blackbook {
       background: var(--gold);
       color: var(--ink);
     }
 
-    /* === Club: telegram-style daily slate mock === */
+    /* === Telegram-style daily slate mock === */
     .telegram-mock {
       background: var(--ink);
       color: var(--cream);

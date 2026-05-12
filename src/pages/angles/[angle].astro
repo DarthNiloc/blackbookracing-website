@@ -1,0 +1,491 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { TIER1_ANGLES, CODE_LABEL, type AngleEntry } from '../../data/angles.ts';
+
+interface Alert {
+  horse: string;
+  trainer: string;
+  label: string;
+  signal_summary: string;
+  next_run: {
+    race_date: string;
+    race_time: string;
+    course: string;
+    race_code: string;
+    bf_back_decimal: number | null;
+  };
+  last_run?: {
+    date: string;
+    course: string;
+    race_code: string | null;
+    bsp: number | null;
+    finish_pos_int: number;
+  };
+  last_run_narrative?: string;
+}
+
+interface AlertFile {
+  generated_at: string;
+  target_date: string;
+  bb_angle_id: string;
+  label: string;
+  n_alerts: number;
+  alerts: Alert[];
+}
+
+const alertGlob = import.meta.glob<AlertFile>(
+  '../../../public/bb_*_alerts.json',
+  { eager: true, import: 'default' }
+);
+const alertsByAngle = new Map<string, AlertFile>();
+for (const payload of Object.values(alertGlob)) {
+  if (payload?.bb_angle_id) alertsByAngle.set(payload.bb_angle_id, payload);
+}
+
+export async function getStaticPaths() {
+  const { TIER1_ANGLES } = await import('../../data/angles.ts');
+  return TIER1_ANGLES.map((a) => ({ params: { angle: a.id }, props: { angle: a } }));
+}
+
+interface Props { angle: AngleEntry }
+const { angle } = Astro.props;
+const live = alertsByAngle.get(angle.id);
+
+const fmtPct = (n: number): string => (n >= 0 ? '+' : '') + n.toFixed(1) + '%';
+const fmtLift = (pp: number): string => (pp >= 0 ? '+' : '') + pp.toFixed(1) + 'pp';
+const fmtN = (n: number): string => n.toLocaleString('en-GB');
+const titleCase = (s: string): string =>
+  s.toLowerCase().replace(/\b\w/g, (c) => c.toUpperCase());
+const formatPrice = (d: number | null): string => {
+  if (d == null) return '—';
+  if (d < 4) return d.toFixed(2);
+  return d.toFixed(1);
+};
+const formatBack = (d: number | null): string => (d == null ? 'price n/a' : formatPrice(d) + ' Betfair');
+
+const targetLabel = live
+  ? new Date(live.target_date + 'T12:00:00Z').toLocaleDateString('en-GB', {
+      weekday: 'long', day: 'numeric', month: 'long',
+    })
+  : null;
+const generatedLabel = live
+  ? new Date(live.generated_at).toLocaleString('en-GB', {
+      day: 'numeric', month: 'short', hour: '2-digit', minute: '2-digit', timeZone: 'Europe/London',
+    }) + ' BST'
+  : null;
+
+const kindLabel = angle.kind === 'lookback'
+  ? 'Lookback angle — fires on a recent qualifying race when the horse re-enters tomorrow'
+  : 'Forward angle — fires when tomorrow\'s field contains a horse matching the predicate';
+---
+
+<BaseLayout
+  title={angle.label + ' — Blackbook Racing'}
+  description={angle.signal + '. ' + fmtPct(angle.roi_pct) + ' ROI across ' + fmtN(angle.n) + ' backtest matches.'}
+>
+  <article class="page">
+    <p class="eyebrow">{CODE_LABEL[angle.code]} · Tier 1</p>
+    <h1 class="page-title">{angle.label}</h1>
+    <p class="lede">{angle.signal}.</p>
+
+    <section class="proof-block">
+      <header class="block-head">
+        <p class="section-eyebrow">Historical proof · 2022 – 2025</p>
+        <p class="meta">{fmtN(angle.n)} backtest matches · ~{fmtN(angle.alerts_per_year)} alerts per year</p>
+      </header>
+      <div class="proof-grid">
+        <div class="proof-cell">
+          <p class="cell-label">Hit rate</p>
+          <p class="cell-value">{angle.hit_pct.toFixed(1)}%</p>
+        </div>
+        <div class="proof-cell">
+          <p class="cell-label">ROI</p>
+          <p class={'cell-value ' + (angle.roi_pct >= 0 ? 'pos' : 'neg')}>{fmtPct(angle.roi_pct)}</p>
+        </div>
+        <div class="proof-cell">
+          <p class="cell-label">Code baseline</p>
+          <p class={'cell-value cell-sub-value ' + (angle.baseline_pct >= 0 ? 'pos' : 'neg')}>{fmtPct(angle.baseline_pct)}</p>
+        </div>
+        <div class="proof-cell">
+          <p class="cell-label">Lift over baseline</p>
+          <p class={'cell-value ' + (angle.lift_pp >= 0 ? 'pos' : 'neg')}>{fmtLift(angle.lift_pp)}</p>
+        </div>
+      </div>
+      <p class="stability">
+        Positive lift over baseline in <strong>every yearly cut</strong> from 2022 through 2025.
+        Tier-1 status requires four-of-four years above the baseline; this angle clears that bar.
+      </p>
+    </section>
+
+    <section class="picks-block">
+      <header class="block-head">
+        <p class="section-eyebrow">Today's picks{targetLabel ? ' · ' + targetLabel : ''}</p>
+        {generatedLabel && <p class="meta">Updated {generatedLabel}</p>}
+      </header>
+
+      {!live && (
+        <div class="empty">
+          <p>
+            No live data yet for this angle. The overnight build writes a fresh
+            snapshot from tomorrow's Betfair card around 22:05 BST — check back in
+            the morning.
+          </p>
+        </div>
+      )}
+
+      {live && live.alerts.length === 0 && (
+        <div class="empty">
+          <p>
+            No qualifying runners in {targetLabel}'s field. The angle is
+            re-evaluated every night.
+          </p>
+        </div>
+      )}
+
+      {live && live.alerts.length > 0 && (
+        <ol class="alerts">
+          {live.alerts.map((a) => (
+            <li class="alert-card">
+              <div class="alert-head">
+                <h2 class="horse">{a.horse}</h2>
+                <p class="trainer">Trainer: {a.trainer}</p>
+              </div>
+
+              <div class="alert-grid">
+                <div class="cell cell-next">
+                  <p class="cell-label">Runs</p>
+                  <p class="cell-main">{titleCase(a.next_run.course)} — {a.next_run.race_time}</p>
+                  <p class="cell-sub">{formatBack(a.next_run.bf_back_decimal)}</p>
+                </div>
+                {a.last_run_narrative && a.last_run && (
+                  <div class="cell cell-last">
+                    <p class="cell-label">Last out</p>
+                    <p class="cell-main">{a.last_run_narrative}</p>
+                    <p class="cell-sub">BSP {a.last_run.bsp != null ? a.last_run.bsp.toFixed(2) : '—'}</p>
+                  </div>
+                )}
+              </div>
+
+              <p class="signal">{a.signal_summary}</p>
+            </li>
+          ))}
+        </ol>
+      )}
+    </section>
+
+    <section class="explainer">
+      <h2 class="explainer-title">What this angle is</h2>
+      <p>{angle.definition}</p>
+      <p class="kind-note">{kindLabel}.</p>
+    </section>
+
+    <section class="caveat">
+      <h3>How to read the numbers</h3>
+      <p>
+        ROI is profit per unit staked, settled at Betfair Starting Price after the race.
+        Code baseline is what you'd make backing <em>every</em> runner in {CODE_LABEL[angle.code].toLowerCase()} races
+        blindly at BSP — some codes naturally pay positive yields, others don't. Lift is the
+        difference: it's the angle's actual edge, after stripping out whatever the code pays for free.
+      </p>
+    </section>
+
+    <section class="back-link">
+      <a href="/angles">← All Tier-1 angles</a>
+    </section>
+  </article>
+
+  <style>
+    .page {
+      padding-top: 16px;
+      max-width: 760px;
+      margin: 0 auto;
+    }
+
+    .eyebrow {
+      font-family: 'Inter', sans-serif;
+      font-size: 11px;
+      letter-spacing: 0.25em;
+      text-transform: uppercase;
+      color: var(--gold);
+      font-weight: 600;
+      text-align: center;
+      margin-bottom: 12px;
+    }
+
+    .page-title {
+      font-family: 'Cormorant Garamond', serif;
+      font-weight: 700;
+      font-size: 38px;
+      letter-spacing: 0.03em;
+      text-align: center;
+      margin-bottom: 14px;
+    }
+
+    .lede {
+      font-family: 'EB Garamond', serif;
+      font-size: 19px;
+      font-style: italic;
+      line-height: 1.5;
+      color: var(--ink);
+      text-align: center;
+      max-width: 600px;
+      margin: 0 auto 36px;
+    }
+
+    .section-eyebrow {
+      font-family: 'Inter', sans-serif;
+      font-size: 11px;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--ink);
+      font-weight: 600;
+      margin: 0;
+    }
+
+    .block-head {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      gap: 12px;
+      flex-wrap: wrap;
+      border-bottom: 1px solid var(--ink-line);
+      padding-bottom: 10px;
+      margin-bottom: 18px;
+    }
+
+    .meta {
+      font-family: 'Inter', sans-serif;
+      font-size: 12px;
+      color: var(--ink-soft);
+      margin: 0;
+    }
+
+    .proof-block {
+      margin-bottom: 40px;
+    }
+
+    .proof-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 16px;
+      padding: 22px;
+      border: 1px solid var(--ink-line);
+      border-radius: 4px;
+      background: var(--cream);
+      margin-bottom: 14px;
+    }
+
+    .proof-cell {
+      text-align: center;
+    }
+
+    .cell-label {
+      font-family: 'Inter', sans-serif;
+      font-size: 10px;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--ink-soft);
+      margin: 0 0 4px;
+    }
+
+    .cell-value {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 30px;
+      font-weight: 700;
+      color: var(--ink);
+      margin: 4px 0 0;
+      letter-spacing: 0.02em;
+    }
+
+    .cell-sub-value {
+      font-size: 24px;
+      opacity: 0.85;
+    }
+
+    .cell-value.pos { color: #2d5e3e; }
+    .cell-value.neg { color: #8a3a2a; }
+
+    .stability {
+      font-family: 'EB Garamond', serif;
+      font-size: 15px;
+      color: var(--ink-soft);
+      text-align: center;
+      margin: 14px auto 0;
+      max-width: 580px;
+      line-height: 1.5;
+    }
+
+    .stability strong {
+      color: var(--ink);
+    }
+
+    .picks-block {
+      margin-bottom: 40px;
+    }
+
+    .alerts {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+    }
+
+    .alert-card {
+      border: 1px solid var(--ink-line);
+      border-left: 3px solid var(--gold);
+      background: var(--cream);
+      border-radius: 4px;
+      padding: 20px 22px;
+    }
+
+    .alert-head {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      gap: 12px;
+      flex-wrap: wrap;
+      margin-bottom: 12px;
+    }
+
+    .horse {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 26px;
+      font-weight: 700;
+      letter-spacing: 0.02em;
+      margin: 0;
+      color: var(--ink);
+    }
+
+    .trainer {
+      font-family: 'Inter', sans-serif;
+      font-size: 12px;
+      color: var(--ink-soft);
+      margin: 0;
+    }
+
+    .alert-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 18px;
+      margin-bottom: 12px;
+    }
+
+    .cell-main {
+      font-family: 'Inter', sans-serif;
+      font-size: 14px;
+      font-weight: 600;
+      color: var(--ink);
+      margin: 0 0 2px;
+    }
+
+    .cell-sub {
+      font-family: 'Inter', sans-serif;
+      font-size: 12px;
+      color: var(--ink-soft);
+      margin: 0;
+    }
+
+    .signal {
+      font-family: 'EB Garamond', serif;
+      font-style: italic;
+      font-size: 15px;
+      color: var(--ink);
+      margin: 0;
+      padding-top: 10px;
+      border-top: 1px dashed var(--ink-line);
+    }
+
+    .empty {
+      border: 1px dashed var(--ink-line);
+      padding: 24px;
+      text-align: center;
+      border-radius: 4px;
+    }
+
+    .empty p {
+      font-family: 'EB Garamond', serif;
+      color: var(--ink-soft);
+      margin: 0;
+      max-width: 500px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    .explainer {
+      border-top: 1px solid var(--ink-line);
+      padding-top: 26px;
+      margin-bottom: 32px;
+    }
+
+    .explainer-title {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 22px;
+      font-weight: 700;
+      letter-spacing: 0.03em;
+      margin: 0 0 12px;
+    }
+
+    .explainer p {
+      font-family: 'EB Garamond', serif;
+      font-size: 17px;
+      line-height: 1.6;
+      color: var(--ink-soft);
+      margin: 0 0 10px;
+    }
+
+    .kind-note {
+      font-size: 14px !important;
+      font-style: italic;
+      color: var(--ink-mute) !important;
+    }
+
+    .caveat {
+      border-top: 1px solid var(--ink-line);
+      padding-top: 22px;
+      margin-bottom: 32px;
+    }
+
+    .caveat h3 {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 18px;
+      font-weight: 700;
+      margin: 0 0 10px;
+    }
+
+    .caveat p {
+      font-family: 'EB Garamond', serif;
+      font-size: 15px;
+      line-height: 1.55;
+      color: var(--ink-soft);
+      margin: 0;
+    }
+
+    .back-link {
+      text-align: center;
+      margin-top: 8px;
+    }
+
+    .back-link a {
+      font-family: 'Inter', sans-serif;
+      font-size: 12px;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--ink);
+      text-decoration: underline;
+      text-decoration-color: var(--gold);
+      text-underline-offset: 4px;
+    }
+
+    @media (max-width: 640px) {
+      .page-title { font-size: 28px; }
+      .lede { font-size: 17px; }
+      .proof-grid { grid-template-columns: repeat(2, 1fr); }
+      .cell-value { font-size: 26px; }
+      .cell-sub-value { font-size: 22px; }
+      .alert-grid { grid-template-columns: 1fr; }
+      .horse { font-size: 22px; }
+    }
+  </style>
+</BaseLayout>

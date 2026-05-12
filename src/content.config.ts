@@ -7,7 +7,7 @@ const articles = defineCollection({
     title: z.string(),
     summary: z.string(),
     date: z.coerce.date(),
-    tier: z.enum(['open', 'club', 'blackbook']),
+    tier: z.enum(['open', 'blackbook']),
     author: z.string().default('The team'),
     readMinutes: z.number().optional(),
   }),
