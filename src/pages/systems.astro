@@ -125,16 +125,59 @@ streams.sort((a, b) => {
   }
   return a.id.localeCompare(b.id);
 });
+watchlists.sort((a, b) => (a.tier ?? 99) - (b.tier ?? 99));
+longshots.sort((a, b) => b.historical_roi_pct - a.historical_roi_pct);
 
 const CODE_ORDER = ['FLT', 'AWF', 'HDL', 'CHS', 'NHF'];
-watchlists.sort((a, b) => {
-  const ci = CODE_ORDER.indexOf(a.race_code) - CODE_ORDER.indexOf(b.race_code);
-  if (ci !== 0) return ci;
-  return (a.tier ?? 99) - (b.tier ?? 99);
+const CODE_LABEL: Record<string, string> = {
+  FLT: 'Flat',
+  AWF: 'All-Weather',
+  HDL: 'Hurdle',
+  CHS: 'Chase',
+  NHF: 'NH Flat',
+};
+
+const byCode = CODE_ORDER.map((code) => {
+  const cStreams = streams.filter((s) => s.race_code === code);
+  const cWatchlists = watchlists.filter((w) => w.race_code === code);
+  const cBbAngles = bbAngles.filter((a) => a.race_code === code);
+  const cLongshots = longshots.filter((l) => l.race_code === code);
+  const cBaselines = baselines.filter((b) => b.race_code === code);
+  return {
+    code,
+    label: CODE_LABEL[code],
+    streams: cStreams,
+    watchlists: cWatchlists,
+    bbAngles: cBbAngles,
+    longshots: cLongshots,
+    baselines: cBaselines,
+    total: cStreams.length + cWatchlists.length + cBbAngles.length + cLongshots.length + cBaselines.length,
+  };
 });
-bbAngles.sort((a, b) => CODE_ORDER.indexOf(a.race_code) - CODE_ORDER.indexOf(b.race_code));
-longshots.sort((a, b) => b.historical_roi_pct - a.historical_roi_pct);
-baselines.sort((a, b) => CODE_ORDER.indexOf(a.race_code) - CODE_ORDER.indexOf(b.race_code));
+
+// Catch any systems whose race_code is null or outside CODE_ORDER (e.g. the
+// LGBM universe-wide `core` stream), so they don't silently disappear.
+const noCode = (() => {
+  const cStreams = streams.filter((s) => !CODE_ORDER.includes(s.race_code));
+  const cWatchlists = watchlists.filter((w) => !CODE_ORDER.includes(w.race_code));
+  const cBbAngles = bbAngles.filter((a) => !CODE_ORDER.includes(a.race_code));
+  const cLongshots = longshots.filter((l) => !CODE_ORDER.includes(l.race_code));
+  const cBaselines = baselines.filter((b) => !CODE_ORDER.includes(b.race_code));
+  const total = cStreams.length + cWatchlists.length + cBbAngles.length + cLongshots.length + cBaselines.length;
+  if (total === 0) return null;
+  return {
+    code: '__nocode',
+    label: 'All Codes',
+    streams: cStreams,
+    watchlists: cWatchlists,
+    bbAngles: cBbAngles,
+    longshots: cLongshots,
+    baselines: cBaselines,
+    total,
+  };
+})();
+
+const groups = noCode ? [noCode, ...byCode] : byCode;
 
 const generatedLabel = new Date(data.generated_at).toLocaleString('en-GB', {
   day: 'numeric', month: 'short', hour: '2-digit', minute: '2-digit', timeZone: 'Europe/London',
@@ -161,203 +204,202 @@ const generatedLabel = new Date(data.generated_at).toLocaleString('en-GB', {
       updated {generatedLabel}
     </p>
 
-    <!-- ===== Streams ===== -->
-    <section class="system-section">
-      <header class="section-head">
-        <p class="section-eyebrow">Streams · {streams.length}</p>
-        <p class="meta">Per-code · per-pool selection cohorts. Live aggregates from settled picks.</p>
-      </header>
-      <div class="table-wrap">
-        <table class="systems-table">
-          <thead>
-            <tr>
-              <th class="th-name">Stream</th>
-              <th class="th-tag">Code</th>
-              <th class="th-tag">Status</th>
-              <th class="th-num">Bets</th>
-              <th class="th-num">Wins</th>
-              <th class="th-num">Hit</th>
-              <th class="th-num">P&amp;L</th>
-              <th class="th-num">ROI</th>
-              <th class="th-num">30d ROI</th>
-            </tr>
-          </thead>
-          <tbody>
-            {streams.map((s) => {
-              const lt = s.windows.lifetime;
-              const d30 = s.windows['30d'];
-              const pill = statusPill(s.status);
-              return (
-                <tr class={lt.n === 0 ? 'row-empty' : ''}>
-                  <td class="td-name">{streamLabel(s)}</td>
-                  <td class="td-code">{s.race_code}</td>
-                  <td><span class={'pill ' + pill.cls}>{pill.label}</span></td>
-                  <td class="td-num">{fmtInt(lt.n)}</td>
-                  <td class="td-num">{fmtInt(lt.wins)}</td>
-                  <td class="td-num">{lt.hit_rate_pct == null ? '—' : lt.hit_rate_pct.toFixed(1) + '%'}</td>
-                  <td class={'td-num ' + signClass(lt.total_profit_pts)}>{lt.n === 0 ? '—' : fmtPL(lt.total_profit_pts)}</td>
-                  <td class={'td-num ' + signClass(lt.roi_pct)}>{fmtPct(lt.roi_pct)}</td>
-                  <td class={'td-num td-soft ' + signClass(d30.roi_pct)}>{fmtPct(d30.roi_pct)}</td>
-                </tr>
-              );
-            })}
-          </tbody>
-        </table>
-      </div>
-    </section>
+    {groups.map((g) => g.total === 0 ? null : (
+      <section class="code-section">
+        <header class="code-head">
+          <h2 class="code-title">{g.label}</h2>
+          <p class="code-meta">{g.total} {g.total === 1 ? 'system' : 'systems'}</p>
+        </header>
 
-    <!-- ===== Watchlists ===== -->
-    <section class="system-section">
-      <header class="section-head">
-        <p class="section-eyebrow">Watchlists · {watchlists.length}</p>
-        <p class="meta">Trending + horses-to-track. Paper-tracked — alert-vs-outcome ledger pending; backtest numbers below are research-validated.</p>
-      </header>
-      <div class="table-wrap">
-        <table class="systems-table">
-          <thead>
-            <tr>
-              <th class="th-name">Watchlist</th>
-              <th class="th-tag">Code</th>
-              <th class="th-tag">Status</th>
-              <th class="th-num">Backtest bets</th>
-              <th class="th-num">Backtest ROI</th>
-              <th class="th-num">Baseline</th>
-              <th class="th-num">Lift</th>
-            </tr>
-          </thead>
-          <tbody>
-            {watchlists.map((w) => {
-              const pill = statusPill(w.status);
-              const hasHistorical = w.historical_backtest_n != null;
-              return (
-                <tr>
-                  <td class="td-name">{w.display_name}</td>
-                  <td class="td-code">{w.race_code}</td>
-                  <td><span class={'pill ' + pill.cls}>{pill.label}</span></td>
-                  <td class="td-num">{hasHistorical ? fmtN(w.historical_backtest_n!) : '—'}</td>
-                  <td class={'td-num ' + signClass(w.historical_backtest_roi_pct)}>{w.historical_backtest_roi_pct == null ? '—' : fmtPct(w.historical_backtest_roi_pct)}</td>
-                  <td class={'td-num td-soft ' + signClass(w.baseline_used)}>{fmtPct(w.baseline_used)}</td>
-                  <td class={'td-num ' + signClass(w.historical_lift_pp)}>{w.historical_lift_pp == null ? '—' : (w.historical_lift_pp >= 0 ? '+' : '') + w.historical_lift_pp.toFixed(1) + 'pp'}</td>
-                </tr>
-              );
-            })}
-          </tbody>
-        </table>
-      </div>
-    </section>
+        {g.streams.length > 0 && (
+          <section class="system-section">
+            <header class="section-head">
+              <p class="section-eyebrow">Streams · {g.streams.length}</p>
+            </header>
+            <div class="table-wrap">
+              <table class="systems-table">
+                <thead>
+                  <tr>
+                    <th class="th-name">Stream</th>
+                    <th class="th-tag">Status</th>
+                    <th class="th-num">Bets</th>
+                    <th class="th-num">Wins</th>
+                    <th class="th-num">Hit</th>
+                    <th class="th-num">P&amp;L</th>
+                    <th class="th-num">ROI</th>
+                    <th class="th-num">30d ROI</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {g.streams.map((s) => {
+                    const lt = s.windows.lifetime;
+                    const d30 = s.windows['30d'];
+                    const pill = statusPill(s.status);
+                    return (
+                      <tr class={lt.n === 0 ? 'row-empty' : ''}>
+                        <td class="td-name">{streamLabel(s)}</td>
+                        <td><span class={'pill ' + pill.cls}>{pill.label}</span></td>
+                        <td class="td-num">{fmtInt(lt.n)}</td>
+                        <td class="td-num">{fmtInt(lt.wins)}</td>
+                        <td class="td-num">{lt.hit_rate_pct == null ? '—' : lt.hit_rate_pct.toFixed(1) + '%'}</td>
+                        <td class={'td-num ' + signClass(lt.total_profit_pts)}>{lt.n === 0 ? '—' : fmtPL(lt.total_profit_pts)}</td>
+                        <td class={'td-num ' + signClass(lt.roi_pct)}>{fmtPct(lt.roi_pct)}</td>
+                        <td class={'td-num td-soft ' + signClass(d30.roi_pct)}>{fmtPct(d30.roi_pct)}</td>
+                      </tr>
+                    );
+                  })}
+                </tbody>
+              </table>
+            </div>
+          </section>
+        )}
 
-    <!-- ===== Blackbook angles ===== -->
-    <section class="system-section">
-      <header class="section-head">
-        <p class="section-eyebrow">Blackbook angles · {bbAngles.length} Tier-1</p>
-        <p class="meta">10 angles, each with four years of historical proof. Live alert-vs-outcome ledger ships in a follow-up — historical numbers shown from the 2022–2025 research.</p>
-      </header>
-      <div class="table-wrap">
-        <table class="systems-table">
-          <thead>
-            <tr>
-              <th class="th-name">Angle</th>
-              <th class="th-tag">Code</th>
-              <th class="th-tag">Status</th>
-              <th class="th-num">Backtest bets</th>
-              <th class="th-num">Backtest ROI</th>
-              <th class="th-num">Baseline</th>
-              <th class="th-num">Lift</th>
-            </tr>
-          </thead>
-          <tbody>
-            {bbAngles.map((a) => {
-              const meta = TIER1_BY_ID[a.id];
-              const pill = statusPill(a.status);
-              const href = meta ? `/angles/${a.id}` : null;
-              const label = meta ? meta.label : a.display_name;
-              return (
-                <tr>
-                  <td class="td-name">{href ? <a href={href}>{label}</a> : label}</td>
-                  <td class="td-code">{a.race_code}</td>
-                  <td><span class={'pill ' + pill.cls}>{pill.label}</span></td>
-                  <td class="td-num">{meta ? fmtN(meta.n) : '—'}</td>
-                  <td class={'td-num ' + (meta ? signClass(meta.roi_pct) : '')}>{meta ? fmtPct(meta.roi_pct) : '—'}</td>
-                  <td class={'td-num td-soft ' + signClass(a.baseline_used)}>{fmtPct(a.baseline_used)}</td>
-                  <td class={'td-num ' + (meta ? signClass(meta.lift_pp) : '')}>{meta ? (meta.lift_pp >= 0 ? '+' : '') + meta.lift_pp.toFixed(1) + 'pp' : '—'}</td>
-                </tr>
-              );
-            })}
-          </tbody>
-        </table>
-      </div>
-    </section>
+        {g.watchlists.length > 0 && (
+          <section class="system-section">
+            <header class="section-head">
+              <p class="section-eyebrow">Watchlists · {g.watchlists.length}</p>
+            </header>
+            <div class="table-wrap">
+              <table class="systems-table">
+                <thead>
+                  <tr>
+                    <th class="th-name">Watchlist</th>
+                    <th class="th-tag">Status</th>
+                    <th class="th-num">Backtest bets</th>
+                    <th class="th-num">Backtest ROI</th>
+                    <th class="th-num">Baseline</th>
+                    <th class="th-num">Lift</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {g.watchlists.map((w) => {
+                    const pill = statusPill(w.status);
+                    const hasHistorical = w.historical_backtest_n != null;
+                    return (
+                      <tr>
+                        <td class="td-name">{w.display_name}</td>
+                        <td><span class={'pill ' + pill.cls}>{pill.label}</span></td>
+                        <td class="td-num">{hasHistorical ? fmtN(w.historical_backtest_n!) : '—'}</td>
+                        <td class={'td-num ' + signClass(w.historical_backtest_roi_pct)}>{w.historical_backtest_roi_pct == null ? '—' : fmtPct(w.historical_backtest_roi_pct)}</td>
+                        <td class={'td-num td-soft ' + signClass(w.baseline_used)}>{fmtPct(w.baseline_used)}</td>
+                        <td class={'td-num ' + signClass(w.historical_lift_pp)}>{w.historical_lift_pp == null ? '—' : (w.historical_lift_pp >= 0 ? '+' : '') + w.historical_lift_pp.toFixed(1) + 'pp'}</td>
+                      </tr>
+                    );
+                  })}
+                </tbody>
+              </table>
+            </div>
+          </section>
+        )}
 
-    <!-- ===== Longshots ===== -->
-    <section class="system-section">
-      <header class="section-head">
-        <p class="section-eyebrow">Longshots · {longshots.length}</p>
-        <p class="meta">Proposed big-field NH back-the-field cohorts. Awaiting Lab validation; not yet live.</p>
-      </header>
-      <div class="table-wrap">
-        <table class="systems-table">
-          <thead>
-            <tr>
-              <th class="th-name">Longshot</th>
-              <th class="th-tag">Code</th>
-              <th class="th-tag">Status</th>
-              <th class="th-num">Backtest ROI</th>
-              <th class="th-num">Baseline</th>
-              <th class="th-num">Lift</th>
-            </tr>
-          </thead>
-          <tbody>
-            {longshots.map((l) => {
-              const pill = statusPill(l.status);
-              const lift = l.historical_roi_pct - l.baseline_used;
-              return (
-                <tr>
-                  <td class="td-name">{l.display_name}</td>
-                  <td class="td-code">{l.race_code}</td>
-                  <td><span class={'pill ' + pill.cls}>{pill.label}</span></td>
-                  <td class={'td-num ' + signClass(l.historical_roi_pct)}>{fmtPct(l.historical_roi_pct)}</td>
-                  <td class={'td-num td-soft ' + signClass(l.baseline_used)}>{fmtPct(l.baseline_used)}</td>
-                  <td class={'td-num ' + signClass(lift)}>{(lift >= 0 ? '+' : '') + lift.toFixed(1) + 'pp'}</td>
-                </tr>
-              );
-            })}
-          </tbody>
-        </table>
-      </div>
-    </section>
+        {g.bbAngles.length > 0 && (
+          <section class="system-section">
+            <header class="section-head">
+              <p class="section-eyebrow">Blackbook angles · {g.bbAngles.length}</p>
+            </header>
+            <div class="table-wrap">
+              <table class="systems-table">
+                <thead>
+                  <tr>
+                    <th class="th-name">Angle</th>
+                    <th class="th-tag">Status</th>
+                    <th class="th-num">Backtest bets</th>
+                    <th class="th-num">Backtest ROI</th>
+                    <th class="th-num">Baseline</th>
+                    <th class="th-num">Lift</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {g.bbAngles.map((a) => {
+                    const meta = TIER1_BY_ID[a.id];
+                    const pill = statusPill(a.status);
+                    const href = meta ? `/angles/${a.id}` : null;
+                    const label = meta ? meta.label : a.display_name;
+                    return (
+                      <tr>
+                        <td class="td-name">{href ? <a href={href}>{label}</a> : label}</td>
+                        <td><span class={'pill ' + pill.cls}>{pill.label}</span></td>
+                        <td class="td-num">{meta ? fmtN(meta.n) : '—'}</td>
+                        <td class={'td-num ' + (meta ? signClass(meta.roi_pct) : '')}>{meta ? fmtPct(meta.roi_pct) : '—'}</td>
+                        <td class={'td-num td-soft ' + signClass(a.baseline_used)}>{fmtPct(a.baseline_used)}</td>
+                        <td class={'td-num ' + (meta ? signClass(meta.lift_pp) : '')}>{meta ? (meta.lift_pp >= 0 ? '+' : '') + meta.lift_pp.toFixed(1) + 'pp' : '—'}</td>
+                      </tr>
+                    );
+                  })}
+                </tbody>
+              </table>
+            </div>
+          </section>
+        )}
 
-    <!-- ===== Baselines ===== -->
-    <section class="system-section">
-      <header class="section-head">
-        <p class="section-eyebrow">Reference baselines · {baselines.length}</p>
-        <p class="meta">What you'd make backing every runner in a code blindly at BSP. Used to compute lift over baseline for every system above.</p>
-      </header>
-      <div class="table-wrap">
-        <table class="systems-table">
-          <thead>
-            <tr>
-              <th class="th-name">Baseline</th>
-              <th class="th-tag">Code</th>
-              <th class="th-tag">Status</th>
-              <th class="th-num">Yield (2023–2026)</th>
-            </tr>
-          </thead>
-          <tbody>
-            {baselines.map((b) => {
-              const pill = statusPill(b.status);
-              return (
-                <tr>
-                  <td class="td-name">{b.display_name}</td>
-                  <td class="td-code">{b.race_code}</td>
-                  <td><span class={'pill ' + pill.cls}>{pill.label}</span></td>
-                  <td class={'td-num ' + signClass(b.historical_roi_pct)}>{fmtPct(b.historical_roi_pct)}</td>
-                </tr>
-              );
-            })}
-          </tbody>
-        </table>
-      </div>
-    </section>
+        {g.longshots.length > 0 && (
+          <section class="system-section">
+            <header class="section-head">
+              <p class="section-eyebrow">Longshots · {g.longshots.length}</p>
+            </header>
+            <div class="table-wrap">
+              <table class="systems-table">
+                <thead>
+                  <tr>
+                    <th class="th-name">Longshot</th>
+                    <th class="th-tag">Status</th>
+                    <th class="th-num">Backtest ROI</th>
+                    <th class="th-num">Baseline</th>
+                    <th class="th-num">Lift</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {g.longshots.map((l) => {
+                    const pill = statusPill(l.status);
+                    const lift = l.historical_roi_pct - l.baseline_used;
+                    return (
+                      <tr>
+                        <td class="td-name">{l.display_name}</td>
+                        <td><span class={'pill ' + pill.cls}>{pill.label}</span></td>
+                        <td class={'td-num ' + signClass(l.historical_roi_pct)}>{fmtPct(l.historical_roi_pct)}</td>
+                        <td class={'td-num td-soft ' + signClass(l.baseline_used)}>{fmtPct(l.baseline_used)}</td>
+                        <td class={'td-num ' + signClass(lift)}>{(lift >= 0 ? '+' : '') + lift.toFixed(1) + 'pp'}</td>
+                      </tr>
+                    );
+                  })}
+                </tbody>
+              </table>
+            </div>
+          </section>
+        )}
+
+        {g.baselines.length > 0 && (
+          <section class="system-section">
+            <header class="section-head">
+              <p class="section-eyebrow">Reference baseline · {g.baselines.length}</p>
+            </header>
+            <div class="table-wrap">
+              <table class="systems-table">
+                <thead>
+                  <tr>
+                    <th class="th-name">Baseline</th>
+                    <th class="th-tag">Status</th>
+                    <th class="th-num">Yield (2023–2026)</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {g.baselines.map((b) => {
+                    const pill = statusPill(b.status);
+                    return (
+                      <tr>
+                        <td class="td-name">{b.display_name}</td>
+                        <td><span class={'pill ' + pill.cls}>{pill.label}</span></td>
+                        <td class={'td-num ' + signClass(b.historical_roi_pct)}>{fmtPct(b.historical_roi_pct)}</td>
+                      </tr>
+                    );
+                  })}
+                </tbody>
+              </table>
+            </div>
+          </section>
+        )}
+      </section>
+    ))}
 
     <section class="legend">
       <h2>How to read</h2>
@@ -425,8 +467,46 @@ const generatedLabel = new Date(data.generated_at).toLocaleString('en-GB', {
       color: var(--ink-mute);
     }
 
+    .code-section {
+      margin-bottom: 64px;
+    }
+
+    .code-head {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      gap: 12px;
+      flex-wrap: wrap;
+      border-bottom: 2px solid var(--ink);
+      padding-bottom: 12px;
+      margin-bottom: 24px;
+    }
+
+    .code-title {
+      font-family: 'Cormorant Garamond', serif;
+      font-weight: 700;
+      font-size: 32px;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+      margin: 0;
+    }
+
+    .code-meta {
+      font-family: 'Inter', sans-serif;
+      font-size: 11px;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: var(--ink-soft);
+      font-weight: 600;
+      margin: 0;
+    }
+
     .system-section {
-      margin-bottom: 48px;
+      margin-bottom: 32px;
+    }
+
+    .system-section:last-child {
+      margin-bottom: 0;
     }
 
     .section-head {
