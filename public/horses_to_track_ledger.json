@@ -1,26 +1,26 @@
 {
-  "generated_at": "2026-05-10T22:40:00Z",
+  "generated_at": "2026-05-12T08:07:51Z",
   "stake_per_alert_pts": 10.0,
   "rolling_window_days": 30,
   "first_race_date": "2026-04-27",
-  "last_race_date": "2026-05-09",
+  "last_race_date": "2026-05-11",
   "all_time": {
-    "n_alerts": 28,
+    "n_alerts": 31,
     "n_wins": 6,
     "n_no_runs": 0,
-    "hit_rate_pct": 21.4,
-    "total_stake_pts": 280.0,
-    "total_profit_pts": -18.77,
-    "roi_pct": -6.7
+    "hit_rate_pct": 19.4,
+    "total_stake_pts": 310.0,
+    "total_profit_pts": -48.77,
+    "roi_pct": -15.73
   },
   "rolling_30d": {
-    "n_alerts": 28,
+    "n_alerts": 31,
     "n_wins": 6,
     "n_no_runs": 0,
-    "hit_rate_pct": 21.4,
-    "total_stake_pts": 280.0,
-    "total_profit_pts": -18.77,
-    "roi_pct": -6.7
+    "hit_rate_pct": 19.4,
+    "total_stake_pts": 310.0,
+    "total_profit_pts": -48.77,
+    "roi_pct": -15.73
   },
   "best_winners_30d": [
     {
