@@ -1,0 +1,604 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import tracker from '../../public/blackbook_systems_tracker.json';
+import { TIER1_BY_ID } from '../data/angles.ts';
+
+interface WindowSummary {
+  n: number;
+  wins: number;
+  hit_rate_pct: number | null;
+  total_stake_pts: number;
+  total_profit_pts: number;
+  roi_pct: number | null;
+}
+
+interface SystemBase {
+  id: string;
+  kind: 'stream' | 'bb_angle' | 'watchlist' | 'longshot' | 'baseline';
+  display_name: string;
+  race_code: string;
+  status: string;
+  note?: string;
+  windows: { '7d': WindowSummary; '30d': WindowSummary; ytd: WindowSummary; lifetime: WindowSummary };
+}
+
+interface StreamSystem extends SystemBase {
+  kind: 'stream';
+  pool: string;
+}
+interface BBAngleSystem extends SystemBase {
+  kind: 'bb_angle';
+  tier: string;
+  angle_kind?: string;
+  lookback_days?: number;
+  baseline_used: number;
+}
+interface WatchlistSystem extends SystemBase {
+  kind: 'watchlist';
+  tier: number;
+  // Optional: horses_to_track row omits these (its rule has no single
+  // canonical backtest_n/lift — the row carries baseline_used + note only).
+  historical_backtest_n?: number;
+  historical_backtest_roi_pct?: number;
+  historical_lift_pp?: number;
+  baseline_used: number;
+}
+interface LongshotSystem extends SystemBase {
+  kind: 'longshot';
+  historical_roi_pct: number;
+  baseline_used: number;
+}
+interface BaselineSystem extends SystemBase {
+  kind: 'baseline';
+  historical_roi_pct: number;
+}
+
+type System = StreamSystem | BBAngleSystem | WatchlistSystem | LongshotSystem | BaselineSystem;
+
+interface Tracker {
+  generated_at: string;
+  as_of_date: string | null;
+  n_systems: number;
+  n_by_kind: Record<string, number>;
+  windows: string[];
+  systems: System[];
+  _schema_version: string;
+}
+
+const data = tracker as Tracker;
+
+// ----- formatting helpers -----
+const fmtN = (n: number): string => n.toLocaleString('en-GB');
+const fmtInt = (n: number | null | undefined): string => (n == null ? '—' : Math.round(n).toLocaleString('en-GB'));
+const fmtPct = (n: number | null | undefined): string => (n == null ? '—' : (n >= 0 ? '+' : '') + n.toFixed(1) + '%');
+const fmtPL = (n: number): string => (n >= 0 ? '+' : '') + n.toFixed(1) + 'pt';
+const signClass = (n: number | null | undefined): string => n == null ? '' : (n >= 0 ? 'pos' : 'neg');
+
+// ----- stream public-vocab labels -----
+const POOL_LABEL: Record<string, string> = {
+  form: 'Form Read',
+  value: 'Value Pick',
+  core: 'Model',
+  top: 'Top Conviction',
+};
+const FLAG_LABEL: Record<string, string> = {
+  master: 'Speed rating',
+  elo: 'Elo rating',
+  lgbm: 'Model',
+  edge: 'Market edge',
+  trend: 'Trend',
+};
+function streamLabel(s: StreamSystem): string {
+  if (s.pool === 'top') {
+    const m = s.id.match(/^cairo_top_([a-z]+)_[A-Z]+$/);
+    const flag = m ? m[1] : '';
+    return `Top Conviction (${FLAG_LABEL[flag] || flag})`;
+  }
+  return POOL_LABEL[s.pool] || s.pool;
+}
+
+// ----- status pill classification -----
+function statusPill(status: string): { label: string; cls: string } {
+  switch (status) {
+    case 'OPEN':          return { label: 'Open',          cls: 'pill-live' };
+    case 'PAPER':         return { label: 'Paper',         cls: 'pill-paper' };
+    case 'paper':         return { label: 'Paper',         cls: 'pill-paper' };
+    case 'research_only': return { label: 'Research only', cls: 'pill-research' };
+    case 'proposed':      return { label: 'Proposed',      cls: 'pill-research' };
+    case 'reference':     return { label: 'Reference',     cls: 'pill-reference' };
+    default:              return { label: status,          cls: 'pill-reference' };
+  }
+}
+
+// ----- partition + sort -----
+const streams = data.systems.filter((s): s is StreamSystem => s.kind === 'stream');
+const watchlists = data.systems.filter((s): s is WatchlistSystem => s.kind === 'watchlist');
+const bbAngles = data.systems.filter((s): s is BBAngleSystem => s.kind === 'bb_angle');
+const longshots = data.systems.filter((s): s is LongshotSystem => s.kind === 'longshot');
+const baselines = data.systems.filter((s): s is BaselineSystem => s.kind === 'baseline');
+
+// Streams: OPEN first (by lifetime ROI desc), then PAPER (by name).
+streams.sort((a, b) => {
+  if (a.status !== b.status) return a.status === 'OPEN' ? -1 : 1;
+  if (a.status === 'OPEN') {
+    return (b.windows.lifetime.roi_pct ?? -999) - (a.windows.lifetime.roi_pct ?? -999);
+  }
+  return a.id.localeCompare(b.id);
+});
+
+const CODE_ORDER = ['FLT', 'AWF', 'HDL', 'CHS', 'NHF'];
+watchlists.sort((a, b) => {
+  const ci = CODE_ORDER.indexOf(a.race_code) - CODE_ORDER.indexOf(b.race_code);
+  if (ci !== 0) return ci;
+  return (a.tier ?? 99) - (b.tier ?? 99);
+});
+bbAngles.sort((a, b) => CODE_ORDER.indexOf(a.race_code) - CODE_ORDER.indexOf(b.race_code));
+longshots.sort((a, b) => b.historical_roi_pct - a.historical_roi_pct);
+baselines.sort((a, b) => CODE_ORDER.indexOf(a.race_code) - CODE_ORDER.indexOf(b.race_code));
+
+const generatedLabel = new Date(data.generated_at).toLocaleString('en-GB', {
+  day: 'numeric', month: 'short', hour: '2-digit', minute: '2-digit', timeZone: 'Europe/London',
+}) + ' BST';
+---
+
+<BaseLayout
+  title="Systems — Blackbook Racing"
+  description="Every stream, model, watchlist and angle we run, with live bets, wins, P&L and ROI per window. Includes paper-tracked and research-only systems for transparency."
+>
+  <article class="page">
+    <p class="eyebrow">Public ledger · per system</p>
+    <h1 class="page-title">Systems.</h1>
+    <p class="lede">
+      Every stream, model, watchlist and angle we run — live numbers where they exist, paper-tracked
+      and research-only systems flagged transparently where they don't. Live ledger numbers settle to
+      Betfair Starting Price after each race; backtest numbers come from the research that justified
+      adding the system in the first place.
+    </p>
+
+    <p class="meta meta-top">
+      {data.n_systems} systems · {data.n_by_kind.stream} streams · {data.n_by_kind.watchlist} watchlists ·
+      {data.n_by_kind.bb_angle} angles · {data.n_by_kind.longshot} longshots · {data.n_by_kind.baseline} baselines ·
+      updated {generatedLabel}
+    </p>
+
+    <!-- ===== Streams ===== -->
+    <section class="system-section">
+      <header class="section-head">
+        <p class="section-eyebrow">Streams · {streams.length}</p>
+        <p class="meta">Per-code · per-pool selection cohorts. Live aggregates from settled picks.</p>
+      </header>
+      <div class="table-wrap">
+        <table class="systems-table">
+          <thead>
+            <tr>
+              <th class="th-name">Stream</th>
+              <th class="th-tag">Code</th>
+              <th class="th-tag">Status</th>
+              <th class="th-num">Bets</th>
+              <th class="th-num">Wins</th>
+              <th class="th-num">Hit</th>
+              <th class="th-num">P&amp;L</th>
+              <th class="th-num">ROI</th>
+              <th class="th-num">30d ROI</th>
+            </tr>
+          </thead>
+          <tbody>
+            {streams.map((s) => {
+              const lt = s.windows.lifetime;
+              const d30 = s.windows['30d'];
+              const pill = statusPill(s.status);
+              return (
+                <tr class={lt.n === 0 ? 'row-empty' : ''}>
+                  <td class="td-name">{streamLabel(s)}</td>
+                  <td class="td-code">{s.race_code}</td>
+                  <td><span class={'pill ' + pill.cls}>{pill.label}</span></td>
+                  <td class="td-num">{fmtInt(lt.n)}</td>
+                  <td class="td-num">{fmtInt(lt.wins)}</td>
+                  <td class="td-num">{lt.hit_rate_pct == null ? '—' : lt.hit_rate_pct.toFixed(1) + '%'}</td>
+                  <td class={'td-num ' + signClass(lt.total_profit_pts)}>{lt.n === 0 ? '—' : fmtPL(lt.total_profit_pts)}</td>
+                  <td class={'td-num ' + signClass(lt.roi_pct)}>{fmtPct(lt.roi_pct)}</td>
+                  <td class={'td-num td-soft ' + signClass(d30.roi_pct)}>{fmtPct(d30.roi_pct)}</td>
+                </tr>
+              );
+            })}
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- ===== Watchlists ===== -->
+    <section class="system-section">
+      <header class="section-head">
+        <p class="section-eyebrow">Watchlists · {watchlists.length}</p>
+        <p class="meta">Trending + horses-to-track. Paper-tracked — alert-vs-outcome ledger pending; backtest numbers below are research-validated.</p>
+      </header>
+      <div class="table-wrap">
+        <table class="systems-table">
+          <thead>
+            <tr>
+              <th class="th-name">Watchlist</th>
+              <th class="th-tag">Code</th>
+              <th class="th-tag">Status</th>
+              <th class="th-num">Backtest bets</th>
+              <th class="th-num">Backtest ROI</th>
+              <th class="th-num">Baseline</th>
+              <th class="th-num">Lift</th>
+            </tr>
+          </thead>
+          <tbody>
+            {watchlists.map((w) => {
+              const pill = statusPill(w.status);
+              const hasHistorical = w.historical_backtest_n != null;
+              return (
+                <tr>
+                  <td class="td-name">{w.display_name}</td>
+                  <td class="td-code">{w.race_code}</td>
+                  <td><span class={'pill ' + pill.cls}>{pill.label}</span></td>
+                  <td class="td-num">{hasHistorical ? fmtN(w.historical_backtest_n!) : '—'}</td>
+                  <td class={'td-num ' + signClass(w.historical_backtest_roi_pct)}>{w.historical_backtest_roi_pct == null ? '—' : fmtPct(w.historical_backtest_roi_pct)}</td>
+                  <td class={'td-num td-soft ' + signClass(w.baseline_used)}>{fmtPct(w.baseline_used)}</td>
+                  <td class={'td-num ' + signClass(w.historical_lift_pp)}>{w.historical_lift_pp == null ? '—' : (w.historical_lift_pp >= 0 ? '+' : '') + w.historical_lift_pp.toFixed(1) + 'pp'}</td>
+                </tr>
+              );
+            })}
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- ===== Blackbook angles ===== -->
+    <section class="system-section">
+      <header class="section-head">
+        <p class="section-eyebrow">Blackbook angles · {bbAngles.length} Tier-1</p>
+        <p class="meta">10 angles, each with four years of historical proof. Live alert-vs-outcome ledger ships in a follow-up — historical numbers shown from the 2022–2025 research.</p>
+      </header>
+      <div class="table-wrap">
+        <table class="systems-table">
+          <thead>
+            <tr>
+              <th class="th-name">Angle</th>
+              <th class="th-tag">Code</th>
+              <th class="th-tag">Status</th>
+              <th class="th-num">Backtest bets</th>
+              <th class="th-num">Backtest ROI</th>
+              <th class="th-num">Baseline</th>
+              <th class="th-num">Lift</th>
+            </tr>
+          </thead>
+          <tbody>
+            {bbAngles.map((a) => {
+              const meta = TIER1_BY_ID[a.id];
+              const pill = statusPill(a.status);
+              const href = meta ? `/angles/${a.id}` : null;
+              const label = meta ? meta.label : a.display_name;
+              return (
+                <tr>
+                  <td class="td-name">{href ? <a href={href}>{label}</a> : label}</td>
+                  <td class="td-code">{a.race_code}</td>
+                  <td><span class={'pill ' + pill.cls}>{pill.label}</span></td>
+                  <td class="td-num">{meta ? fmtN(meta.n) : '—'}</td>
+                  <td class={'td-num ' + (meta ? signClass(meta.roi_pct) : '')}>{meta ? fmtPct(meta.roi_pct) : '—'}</td>
+                  <td class={'td-num td-soft ' + signClass(a.baseline_used)}>{fmtPct(a.baseline_used)}</td>
+                  <td class={'td-num ' + (meta ? signClass(meta.lift_pp) : '')}>{meta ? (meta.lift_pp >= 0 ? '+' : '') + meta.lift_pp.toFixed(1) + 'pp' : '—'}</td>
+                </tr>
+              );
+            })}
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- ===== Longshots ===== -->
+    <section class="system-section">
+      <header class="section-head">
+        <p class="section-eyebrow">Longshots · {longshots.length}</p>
+        <p class="meta">Proposed big-field NH back-the-field cohorts. Awaiting Lab validation; not yet live.</p>
+      </header>
+      <div class="table-wrap">
+        <table class="systems-table">
+          <thead>
+            <tr>
+              <th class="th-name">Longshot</th>
+              <th class="th-tag">Code</th>
+              <th class="th-tag">Status</th>
+              <th class="th-num">Backtest ROI</th>
+              <th class="th-num">Baseline</th>
+              <th class="th-num">Lift</th>
+            </tr>
+          </thead>
+          <tbody>
+            {longshots.map((l) => {
+              const pill = statusPill(l.status);
+              const lift = l.historical_roi_pct - l.baseline_used;
+              return (
+                <tr>
+                  <td class="td-name">{l.display_name}</td>
+                  <td class="td-code">{l.race_code}</td>
+                  <td><span class={'pill ' + pill.cls}>{pill.label}</span></td>
+                  <td class={'td-num ' + signClass(l.historical_roi_pct)}>{fmtPct(l.historical_roi_pct)}</td>
+                  <td class={'td-num td-soft ' + signClass(l.baseline_used)}>{fmtPct(l.baseline_used)}</td>
+                  <td class={'td-num ' + signClass(lift)}>{(lift >= 0 ? '+' : '') + lift.toFixed(1) + 'pp'}</td>
+                </tr>
+              );
+            })}
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- ===== Baselines ===== -->
+    <section class="system-section">
+      <header class="section-head">
+        <p class="section-eyebrow">Reference baselines · {baselines.length}</p>
+        <p class="meta">What you'd make backing every runner in a code blindly at BSP. Used to compute lift over baseline for every system above.</p>
+      </header>
+      <div class="table-wrap">
+        <table class="systems-table">
+          <thead>
+            <tr>
+              <th class="th-name">Baseline</th>
+              <th class="th-tag">Code</th>
+              <th class="th-tag">Status</th>
+              <th class="th-num">Yield (2023–2026)</th>
+            </tr>
+          </thead>
+          <tbody>
+            {baselines.map((b) => {
+              const pill = statusPill(b.status);
+              return (
+                <tr>
+                  <td class="td-name">{b.display_name}</td>
+                  <td class="td-code">{b.race_code}</td>
+                  <td><span class={'pill ' + pill.cls}>{pill.label}</span></td>
+                  <td class={'td-num ' + signClass(b.historical_roi_pct)}>{fmtPct(b.historical_roi_pct)}</td>
+                </tr>
+              );
+            })}
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <section class="legend">
+      <h2>How to read</h2>
+      <ul>
+        <li><span class="pill pill-live">Open</span> Live cohort with real settled-pick numbers in every window.</li>
+        <li><span class="pill pill-paper">Paper</span> Tracked off-book — alert-vs-outcome ledger not yet shipped. Backtest numbers shown.</li>
+        <li><span class="pill pill-research">Research only</span> / <span class="pill pill-research">Proposed</span> Defined and validated; settlement ledger or implementation pending.</li>
+        <li><span class="pill pill-reference">Reference</span> Universe-wide baseline, used for lift-over-baseline accounting on every code-specific system.</li>
+      </ul>
+      <p class="legend-foot">
+        Live numbers are lifetime (full settled history). 30d ROI is the rolling 30-day cut as a recency check.
+        P&amp;L is settled at Betfair Starting Price net of standard commission, 1pt stake per pick.
+      </p>
+    </section>
+  </article>
+
+  <style>
+    .page {
+      padding-top: 16px;
+      max-width: 1120px;
+      margin: 0 auto;
+    }
+
+    .eyebrow {
+      font-family: 'Inter', sans-serif;
+      font-size: 11px;
+      letter-spacing: 0.25em;
+      text-transform: uppercase;
+      color: var(--gold);
+      font-weight: 600;
+      text-align: center;
+      margin-bottom: 12px;
+    }
+
+    .page-title {
+      font-family: 'Cormorant Garamond', serif;
+      font-weight: 700;
+      font-size: 44px;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+      text-align: center;
+      margin-bottom: 18px;
+    }
+
+    .lede {
+      font-family: 'EB Garamond', serif;
+      font-size: 18px;
+      line-height: 1.6;
+      color: var(--ink-soft);
+      text-align: center;
+      max-width: 680px;
+      margin: 0 auto 24px;
+    }
+
+    .meta {
+      font-family: 'Inter', sans-serif;
+      font-size: 12px;
+      color: var(--ink-soft);
+      margin: 0;
+    }
+
+    .meta-top {
+      text-align: center;
+      margin: 0 auto 40px;
+      color: var(--ink-mute);
+    }
+
+    .system-section {
+      margin-bottom: 48px;
+    }
+
+    .section-head {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      gap: 12px;
+      flex-wrap: wrap;
+      border-bottom: 1px solid var(--ink-line);
+      padding-bottom: 10px;
+      margin-bottom: 14px;
+    }
+
+    .section-eyebrow {
+      font-family: 'Inter', sans-serif;
+      font-size: 11px;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--ink);
+      font-weight: 600;
+      margin: 0;
+    }
+
+    .table-wrap {
+      border: 1px solid var(--ink-line);
+      border-radius: 4px;
+      overflow-x: auto;
+    }
+
+    .systems-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-family: 'Inter', sans-serif;
+      font-size: 13px;
+    }
+
+    .systems-table th {
+      text-align: left;
+      font-size: 10px;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: var(--ink-soft);
+      font-weight: 600;
+      padding: 11px 12px;
+      border-bottom: 1px solid var(--ink-line);
+      background: var(--cream);
+      white-space: nowrap;
+    }
+
+    .systems-table th.th-num {
+      text-align: right;
+    }
+
+    .systems-table td {
+      padding: 11px 12px;
+      border-bottom: 1px solid var(--ink-line);
+      vertical-align: middle;
+    }
+
+    .systems-table tbody tr:last-child td {
+      border-bottom: none;
+    }
+
+    .row-empty {
+      opacity: 0.62;
+    }
+
+    .td-name {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 16px;
+      font-weight: 600;
+      color: var(--ink);
+      min-width: 220px;
+    }
+
+    .td-name a {
+      color: var(--ink);
+      text-decoration: underline;
+      text-decoration-color: var(--gold);
+      text-underline-offset: 4px;
+      text-decoration-thickness: 1px;
+    }
+
+    .td-name a:hover {
+      text-decoration-thickness: 2px;
+    }
+
+    .td-code {
+      font-weight: 600;
+      color: var(--gold);
+      letter-spacing: 0.08em;
+      font-size: 12px;
+      white-space: nowrap;
+    }
+
+    .td-num {
+      text-align: right;
+      font-feature-settings: 'tnum';
+      font-weight: 500;
+      color: var(--ink);
+      white-space: nowrap;
+    }
+
+    .td-num.pos { color: #2d5e3e; font-weight: 600; }
+    .td-num.neg { color: #8a3a2a; }
+    .td-soft   { color: var(--ink-mute); font-weight: 400; }
+
+    .pill {
+      display: inline-block;
+      font-family: 'Inter', sans-serif;
+      font-size: 9px;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      font-weight: 700;
+      padding: 3px 8px;
+      border-radius: 3px;
+      white-space: nowrap;
+    }
+
+    .pill-live      { background: #2d5e3e; color: var(--cream); }
+    .pill-paper     { background: #a87b2a; color: var(--cream); }
+    .pill-research  { background: rgba(10, 10, 10, 0.55); color: var(--cream); }
+    .pill-reference { background: rgba(10, 10, 10, 0.10); color: var(--ink); border: 1px solid var(--rule); }
+
+    .legend {
+      margin-top: 24px;
+      padding: 22px 26px;
+      border: 1px dashed var(--ink-line);
+      border-radius: 4px;
+    }
+
+    .legend h2 {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 22px;
+      font-weight: 700;
+      margin: 0 0 12px;
+    }
+
+    .legend ul {
+      list-style: none;
+      padding: 0;
+      margin: 0 0 14px;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .legend li {
+      font-family: 'EB Garamond', serif;
+      font-size: 15px;
+      line-height: 1.55;
+      color: var(--ink-soft);
+    }
+
+    .legend li .pill {
+      margin-right: 8px;
+      vertical-align: 1px;
+    }
+
+    .legend-foot {
+      font-family: 'EB Garamond', serif;
+      font-size: 14px;
+      color: var(--ink-mute);
+      margin: 10px 0 0;
+      line-height: 1.5;
+    }
+
+    @media (max-width: 720px) {
+      .page-title { font-size: 32px; }
+      .systems-table { font-size: 12px; }
+      .systems-table th, .systems-table td { padding: 9px 8px; }
+      .td-name { font-size: 14px; min-width: 180px; }
+    }
+  </style>
+</BaseLayout>
