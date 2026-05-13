@@ -1,0 +1,11 @@
+📊 *New article — The chase-market baseline*
+
+Back every horse in every chase at Betfair SP since 2020 and you've made money.
+
+Not just last year. Every year. Between +23% and +37% ROI, seven years running.
+
+That isn't a tipping edge — it's a structural feature of jumps markets that recreational money keeps in place. And it changes how anyone should read a chase tipster's headline ROI, including ours.
+
+It's why we're reporting chase angle returns as *lift over baseline* from now on.
+
+→ Read the full piece (about 7 min): https://blackbookracing.com/articles/2026-05-11-bsp-nh-yield-bias
