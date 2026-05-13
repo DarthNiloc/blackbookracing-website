@@ -1,0 +1,111 @@
+{
+  "generated_at": "2026-05-13T07:07:59Z",
+  "stake_per_alert_pts": 10.0,
+  "rolling_window_days": 30,
+  "first_race_date": "2026-05-11",
+  "last_race_date": "2026-05-11",
+  "all_time": {
+    "n_alerts": 19,
+    "n_wins": 1,
+    "n_no_runs": 1,
+    "hit_rate_pct": 5.3,
+    "total_stake_pts": 190.0,
+    "total_profit_pts": -170.2,
+    "roi_pct": -89.58
+  },
+  "rolling_30d": {
+    "n_alerts": 19,
+    "n_wins": 1,
+    "n_no_runs": 1,
+    "hit_rate_pct": 5.3,
+    "total_stake_pts": 190.0,
+    "total_profit_pts": -170.2,
+    "roi_pct": -89.58
+  },
+  "best_winners_30d": [
+    {
+      "horse": "Laravie",
+      "watchlist": "resurgent_flt_lower",
+      "course": "Catterick",
+      "race_date": "2026-05-11",
+      "bsp": 2.0,
+      "profit_pts": 9.8
+    }
+  ],
+  "by_watchlist_all_time": {
+    "fade_chs": {
+      "n_alerts": 2,
+      "n_wins": 0,
+      "n_no_runs": 1,
+      "hit_rate_pct": 0.0,
+      "total_stake_pts": 20.0,
+      "total_profit_pts": -20.0,
+      "roi_pct": -100.0
+    },
+    "fade_flt_lower": {
+      "n_alerts": 14,
+      "n_wins": 0,
+      "n_no_runs": 0,
+      "hit_rate_pct": 0.0,
+      "total_stake_pts": 140.0,
+      "total_profit_pts": -140.0,
+      "roi_pct": -100.0
+    },
+    "resurgent_flt_lower": {
+      "n_alerts": 2,
+      "n_wins": 1,
+      "n_no_runs": 0,
+      "hit_rate_pct": 50.0,
+      "total_stake_pts": 20.0,
+      "total_profit_pts": -0.2,
+      "roi_pct": -1.0
+    },
+    "fade_hdl": {
+      "n_alerts": 1,
+      "n_wins": 0,
+      "n_no_runs": 0,
+      "hit_rate_pct": 0.0,
+      "total_stake_pts": 10.0,
+      "total_profit_pts": -10.0,
+      "roi_pct": -100.0
+    }
+  },
+  "by_watchlist_30d": {
+    "fade_chs": {
+      "n_alerts": 2,
+      "n_wins": 0,
+      "n_no_runs": 1,
+      "hit_rate_pct": 0.0,
+      "total_stake_pts": 20.0,
+      "total_profit_pts": -20.0,
+      "roi_pct": -100.0
+    },
+    "fade_flt_lower": {
+      "n_alerts": 14,
+      "n_wins": 0,
+      "n_no_runs": 0,
+      "hit_rate_pct": 0.0,
+      "total_stake_pts": 140.0,
+      "total_profit_pts": -140.0,
+      "roi_pct": -100.0
+    },
+    "resurgent_flt_lower": {
+      "n_alerts": 2,
+      "n_wins": 1,
+      "n_no_runs": 0,
+      "hit_rate_pct": 50.0,
+      "total_stake_pts": 20.0,
+      "total_profit_pts": -0.2,
+      "roi_pct": -1.0
+    },
+    "fade_hdl": {
+      "n_alerts": 1,
+      "n_wins": 0,
+      "n_no_runs": 0,
+      "hit_rate_pct": 0.0,
+      "total_stake_pts": 10.0,
+      "total_profit_pts": -10.0,
+      "roi_pct": -100.0
+    }
+  }
+}
