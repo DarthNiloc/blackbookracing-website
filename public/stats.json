@@ -1,108 +1,116 @@
 {
-  "generated_at": "2026-05-13T07:07:58Z",
-  "window_start": "2026-04-29",
-  "window_end": "2026-05-13",
+  "generated_at": "2026-05-14T07:07:24Z",
+  "window_start": "2026-04-30",
+  "window_end": "2026-05-14",
   "window_days": 14,
   "min_runs": 10,
   "commission": 0.02,
   "trainers": [
     {
       "name": "A P O'Brien",
-      "n_runs": 16,
+      "n_runs": 17,
       "n_wins": 7,
-      "strike_rate_pct": 43.8,
-      "profit_pts": 5.25,
-      "roi_pct": 32.8
+      "strike_rate_pct": 41.2,
+      "profit_pts": 4.25,
+      "roi_pct": 25.0
+    },
+    {
+      "name": "Paul Nicholls",
+      "n_runs": 13,
+      "n_wins": 5,
+      "strike_rate_pct": 38.5,
+      "profit_pts": 1.03,
+      "roi_pct": 7.9
     },
     {
       "name": "Dan Skelton",
-      "n_runs": 33,
+      "n_runs": 36,
       "n_wins": 12,
-      "strike_rate_pct": 36.4,
-      "profit_pts": 17.56,
-      "roi_pct": 53.2
+      "strike_rate_pct": 33.3,
+      "profit_pts": 14.56,
+      "roi_pct": 40.4
     },
     {
       "name": "Jamie Snowden",
-      "n_runs": 13,
-      "n_wins": 4,
-      "strike_rate_pct": 30.8,
-      "profit_pts": 0.99,
-      "roi_pct": 7.6
+      "n_runs": 15,
+      "n_wins": 5,
+      "strike_rate_pct": 33.3,
+      "profit_pts": 1.82,
+      "roi_pct": 12.1
     },
     {
-      "name": "Ollie Sangster",
-      "n_runs": 20,
-      "n_wins": 6,
+      "name": "Lemos De Souza",
+      "n_runs": 10,
+      "n_wins": 3,
       "strike_rate_pct": 30.0,
-      "profit_pts": 25.93,
-      "roi_pct": 129.6
-    },
-    {
-      "name": "Grace Harris",
-      "n_runs": 14,
-      "n_wins": 4,
-      "strike_rate_pct": 28.6,
-      "profit_pts": 44.5,
-      "roi_pct": 317.9
+      "profit_pts": 11.04,
+      "roi_pct": 110.4
     },
     {
       "name": "Olly Murphy",
-      "n_runs": 15,
-      "n_wins": 4,
-      "strike_rate_pct": 26.7,
-      "profit_pts": 0.43,
-      "roi_pct": 2.9
+      "n_runs": 21,
+      "n_wins": 6,
+      "strike_rate_pct": 28.6,
+      "profit_pts": 10.01,
+      "roi_pct": 47.7
     },
     {
-      "name": "Gemma Tutty",
-      "n_runs": 12,
-      "n_wins": 3,
-      "strike_rate_pct": 25.0,
-      "profit_pts": 16.23,
-      "roi_pct": 135.2
+      "name": "Ollie Sangster",
+      "n_runs": 22,
+      "n_wins": 6,
+      "strike_rate_pct": 27.3,
+      "profit_pts": 19.4,
+      "roi_pct": 88.2
     },
     {
-      "name": "Bryan Smart",
-      "n_runs": 12,
-      "n_wins": 3,
-      "strike_rate_pct": 25.0,
-      "profit_pts": 5.76,
-      "roi_pct": 48.0
-    },
-    {
-      "name": "George Scott",
-      "n_runs": 20,
-      "n_wins": 5,
-      "strike_rate_pct": 25.0,
-      "profit_pts": -2.63,
-      "roi_pct": -13.2
-    },
-    {
-      "name": "James Owen",
-      "n_runs": 53,
+      "name": "William Haggas",
+      "n_runs": 49,
       "n_wins": 13,
-      "strike_rate_pct": 24.5,
-      "profit_pts": 24.1,
-      "roi_pct": 45.5
+      "strike_rate_pct": 26.5,
+      "profit_pts": -2.59,
+      "roi_pct": -5.3
+    },
+    {
+      "name": "John & Thady Gosden",
+      "n_runs": 35,
+      "n_wins": 9,
+      "strike_rate_pct": 25.7,
+      "profit_pts": -10.61,
+      "roi_pct": -30.3
+    },
+    {
+      "name": "Adrian Paul Keatley",
+      "n_runs": 12,
+      "n_wins": 3,
+      "strike_rate_pct": 25.0,
+      "profit_pts": 6.47,
+      "roi_pct": 53.9
     }
   ],
   "jockeys": [
     {
+      "name": "Danny McMenamin",
+      "n_runs": 11,
+      "n_wins": 6,
+      "strike_rate_pct": 54.5,
+      "profit_pts": 19.75,
+      "roi_pct": 179.6
+    },
+    {
       "name": "Harry Skelton",
-      "n_runs": 27,
+      "n_runs": 30,
       "n_wins": 11,
-      "strike_rate_pct": 40.7,
-      "profit_pts": 12.27,
-      "roi_pct": 45.4
+      "strike_rate_pct": 36.7,
+      "profit_pts": 9.27,
+      "roi_pct": 30.9
     },
     {
       "name": "Jack Callan",
-      "n_runs": 21,
+      "n_runs": 22,
       "n_wins": 8,
-      "strike_rate_pct": 38.1,
-      "profit_pts": 60.09,
-      "roi_pct": 286.1
+      "strike_rate_pct": 36.4,
+      "profit_pts": 59.09,
+      "roi_pct": 268.6
     },
     {
       "name": "Bryan Carver",
@@ -114,59 +122,51 @@
     },
     {
       "name": "Cieren Fallon",
-      "n_runs": 34,
-      "n_wins": 11,
-      "strike_rate_pct": 32.4,
-      "profit_pts": 35.24,
-      "roi_pct": 103.7
+      "n_runs": 38,
+      "n_wins": 12,
+      "strike_rate_pct": 31.6,
+      "profit_pts": 33.81,
+      "roi_pct": 89.0
     },
     {
       "name": "Sam Twiston-Davies",
-      "n_runs": 16,
-      "n_wins": 5,
-      "strike_rate_pct": 31.3,
-      "profit_pts": -0.8,
-      "roi_pct": -5.0
+      "n_runs": 19,
+      "n_wins": 6,
+      "strike_rate_pct": 31.6,
+      "profit_pts": -0.45,
+      "roi_pct": -2.4
     },
     {
-      "name": "Rowan Scott",
-      "n_runs": 29,
-      "n_wins": 9,
-      "strike_rate_pct": 31.0,
-      "profit_pts": 39.65,
-      "roi_pct": 136.7
-    },
-    {
-      "name": "Gavin Sheehan",
-      "n_runs": 24,
-      "n_wins": 7,
-      "strike_rate_pct": 29.2,
-      "profit_pts": 10.83,
-      "roi_pct": 45.1
-    },
-    {
-      "name": "Ryan Moore",
-      "n_runs": 24,
-      "n_wins": 7,
-      "strike_rate_pct": 29.2,
-      "profit_pts": -8.04,
-      "roi_pct": -33.5
+      "name": "Jack Quinlan",
+      "n_runs": 10,
+      "n_wins": 3,
+      "strike_rate_pct": 30.0,
+      "profit_pts": 0.79,
+      "roi_pct": 7.9
     },
     {
       "name": "Sean Bowen",
-      "n_runs": 29,
-      "n_wins": 8,
-      "strike_rate_pct": 27.6,
-      "profit_pts": -1.02,
-      "roi_pct": -3.5
+      "n_runs": 32,
+      "n_wins": 9,
+      "strike_rate_pct": 28.1,
+      "profit_pts": -0.72,
+      "roi_pct": -2.3
     },
     {
-      "name": "James Doyle",
-      "n_runs": 23,
-      "n_wins": 6,
-      "strike_rate_pct": 26.1,
-      "profit_pts": 9.61,
-      "roi_pct": 41.8
+      "name": "Rowan Scott",
+      "n_runs": 25,
+      "n_wins": 7,
+      "strike_rate_pct": 28.0,
+      "profit_pts": 40.74,
+      "roi_pct": 163.0
+    },
+    {
+      "name": "Gavin Sheehan",
+      "n_runs": 25,
+      "n_wins": 7,
+      "strike_rate_pct": 28.0,
+      "profit_pts": 9.83,
+      "roi_pct": 39.3
     }
   ]
 }
