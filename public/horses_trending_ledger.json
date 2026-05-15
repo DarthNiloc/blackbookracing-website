@@ -1,26 +1,26 @@
 {
-  "generated_at": "2026-05-14T07:07:26Z",
+  "generated_at": "2026-05-15T07:10:55Z",
   "stake_per_alert_pts": 10.0,
   "rolling_window_days": 30,
   "first_race_date": "2026-05-11",
-  "last_race_date": "2026-05-13",
+  "last_race_date": "2026-05-14",
   "all_time": {
-    "n_alerts": 38,
+    "n_alerts": 45,
     "n_wins": 1,
-    "n_no_runs": 3,
-    "hit_rate_pct": 2.6,
-    "total_stake_pts": 380.0,
-    "total_profit_pts": -360.2,
-    "roi_pct": -94.79
+    "n_no_runs": 5,
+    "hit_rate_pct": 2.2,
+    "total_stake_pts": 450.0,
+    "total_profit_pts": -430.2,
+    "roi_pct": -95.6
   },
   "rolling_30d": {
-    "n_alerts": 38,
+    "n_alerts": 45,
     "n_wins": 1,
-    "n_no_runs": 3,
-    "hit_rate_pct": 2.6,
-    "total_stake_pts": 380.0,
-    "total_profit_pts": -360.2,
-    "roi_pct": -94.79
+    "n_no_runs": 5,
+    "hit_rate_pct": 2.2,
+    "total_stake_pts": 450.0,
+    "total_profit_pts": -430.2,
+    "roi_pct": -95.6
   },
   "best_winners_30d": [
     {
@@ -34,77 +34,77 @@
   ],
   "by_watchlist_all_time": {
     "fade_chs": {
-      "n_alerts": 8,
+      "n_alerts": 9,
       "n_wins": 0,
       "n_no_runs": 2,
       "hit_rate_pct": 0.0,
-      "total_stake_pts": 80.0,
-      "total_profit_pts": -80.0,
+      "total_stake_pts": 90.0,
+      "total_profit_pts": -90.0,
       "roi_pct": -100.0
     },
     "fade_flt_lower": {
-      "n_alerts": 21,
+      "n_alerts": 23,
       "n_wins": 0,
       "n_no_runs": 1,
       "hit_rate_pct": 0.0,
-      "total_stake_pts": 210.0,
-      "total_profit_pts": -210.0,
+      "total_stake_pts": 230.0,
+      "total_profit_pts": -230.0,
       "roi_pct": -100.0
     },
     "resurgent_flt_lower": {
-      "n_alerts": 6,
+      "n_alerts": 7,
       "n_wins": 1,
       "n_no_runs": 0,
-      "hit_rate_pct": 16.7,
-      "total_stake_pts": 60.0,
-      "total_profit_pts": -40.2,
-      "roi_pct": -67.0
+      "hit_rate_pct": 14.3,
+      "total_stake_pts": 70.0,
+      "total_profit_pts": -50.2,
+      "roi_pct": -71.71
     },
     "fade_hdl": {
-      "n_alerts": 3,
+      "n_alerts": 6,
       "n_wins": 0,
-      "n_no_runs": 0,
+      "n_no_runs": 2,
       "hit_rate_pct": 0.0,
-      "total_stake_pts": 30.0,
-      "total_profit_pts": -30.0,
+      "total_stake_pts": 60.0,
+      "total_profit_pts": -60.0,
       "roi_pct": -100.0
     }
   },
   "by_watchlist_30d": {
     "fade_chs": {
-      "n_alerts": 8,
+      "n_alerts": 9,
       "n_wins": 0,
       "n_no_runs": 2,
       "hit_rate_pct": 0.0,
-      "total_stake_pts": 80.0,
-      "total_profit_pts": -80.0,
+      "total_stake_pts": 90.0,
+      "total_profit_pts": -90.0,
       "roi_pct": -100.0
     },
     "fade_flt_lower": {
-      "n_alerts": 21,
+      "n_alerts": 23,
       "n_wins": 0,
       "n_no_runs": 1,
       "hit_rate_pct": 0.0,
-      "total_stake_pts": 210.0,
-      "total_profit_pts": -210.0,
+      "total_stake_pts": 230.0,
+      "total_profit_pts": -230.0,
       "roi_pct": -100.0
     },
     "resurgent_flt_lower": {
-      "n_alerts": 6,
+      "n_alerts": 7,
       "n_wins": 1,
       "n_no_runs": 0,
-      "hit_rate_pct": 16.7,
-      "total_stake_pts": 60.0,
-      "total_profit_pts": -40.2,
-      "roi_pct": -67.0
+      "hit_rate_pct": 14.3,
+      "total_stake_pts": 70.0,
+      "total_profit_pts": -50.2,
+      "roi_pct": -71.71
     },
     "fade_hdl": {
-      "n_alerts": 3,
+      "n_alerts": 6,
       "n_wins": 0,
-      "n_no_runs": 0,
+      "n_no_runs": 2,
       "hit_rate_pct": 0.0,
-      "total_stake_pts": 30.0,
-      "total_profit_pts": -30.0,
+      "total_stake_pts": 60.0,
+      "total_profit_pts": -60.0,
       "roi_pct": -100.0
     }
   }

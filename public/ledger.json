@@ -1,9 +1,9 @@
 {
-  "generated_at": "2026-05-14T07:07:23Z",
+  "generated_at": "2026-05-15T07:10:51Z",
   "first_date": "2026-04-20",
-  "last_date": "2026-05-13",
-  "window_30d_first": "2026-04-14",
-  "window_30d_last": "2026-05-14",
+  "last_date": "2026-05-14",
+  "window_30d_first": "2026-04-15",
+  "window_30d_last": "2026-05-15",
   "tiers": [
     {
       "key": "free",
@@ -292,38 +292,38 @@
       "label": "Blackbook",
       "blurb": "The full package \u2014 every signal, every code, including hurdles.",
       "first_date": "2026-04-20",
-      "last_date": "2026-05-13",
-      "n_days": 23,
+      "last_date": "2026-05-14",
+      "n_days": 24,
       "headline": {
-        "n_picks": 838,
-        "n_wins": 272,
+        "n_picks": 852,
+        "n_wins": 276,
         "n_voided": 5,
-        "hit_rate_pct": 32.5,
-        "total_stake_pts": 838.0,
-        "total_profit_pts": 224.18,
-        "roi_pct": 26.75
+        "hit_rate_pct": 32.4,
+        "total_stake_pts": 852.0,
+        "total_profit_pts": 218.47,
+        "roi_pct": 25.64
       },
       "headline_30d": {
-        "n_picks": 838,
-        "n_wins": 272,
+        "n_picks": 852,
+        "n_wins": 276,
         "n_voided": 5,
-        "hit_rate_pct": 32.5,
-        "total_stake_pts": 838.0,
-        "total_profit_pts": 224.18,
-        "roi_pct": 26.75
+        "hit_rate_pct": 32.4,
+        "total_stake_pts": 852.0,
+        "total_profit_pts": 218.47,
+        "roi_pct": 25.64
       },
       "by_code": [
         {
           "race_code": "FLT",
           "label": "Flat",
           "total": {
-            "n_picks": 638,
-            "n_wins": 201,
+            "n_picks": 652,
+            "n_wins": 205,
             "n_voided": 5,
-            "hit_rate_pct": 31.5,
-            "total_stake_pts": 638.0,
-            "total_profit_pts": 165.93,
-            "roi_pct": 26.01
+            "hit_rate_pct": 31.4,
+            "total_stake_pts": 652.0,
+            "total_profit_pts": 160.22,
+            "roi_pct": 24.57
           },
           "banks": [
             {
@@ -351,13 +351,13 @@
             {
               "bank_key": "form",
               "bank_label": "Form Read",
-              "n_picks": 389,
-              "n_wins": 135,
+              "n_picks": 403,
+              "n_wins": 139,
               "n_voided": 2,
-              "hit_rate_pct": 34.7,
-              "total_stake_pts": 389.0,
-              "total_profit_pts": 107.99,
-              "roi_pct": 27.76
+              "hit_rate_pct": 34.5,
+              "total_stake_pts": 403.0,
+              "total_profit_pts": 102.28,
+              "roi_pct": 25.38
             }
           ]
         },
