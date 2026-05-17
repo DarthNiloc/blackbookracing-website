@@ -1,28 +1,36 @@
 {
-  "generated_at": "2026-05-16T07:09:31Z",
+  "generated_at": "2026-05-17T07:08:28Z",
   "stake_per_alert_pts": 10.0,
   "rolling_window_days": 30,
   "first_race_date": "2026-05-11",
-  "last_race_date": "2026-05-15",
+  "last_race_date": "2026-05-16",
   "all_time": {
-    "n_alerts": 52,
-    "n_wins": 1,
-    "n_no_runs": 6,
-    "hit_rate_pct": 1.9,
-    "total_stake_pts": 520.0,
-    "total_profit_pts": -500.2,
-    "roi_pct": -96.19
+    "n_alerts": 71,
+    "n_wins": 2,
+    "n_no_runs": 8,
+    "hit_rate_pct": 2.8,
+    "total_stake_pts": 710.0,
+    "total_profit_pts": -572.4,
+    "roi_pct": -80.62
   },
   "rolling_30d": {
-    "n_alerts": 52,
-    "n_wins": 1,
-    "n_no_runs": 6,
-    "hit_rate_pct": 1.9,
-    "total_stake_pts": 520.0,
-    "total_profit_pts": -500.2,
-    "roi_pct": -96.19
+    "n_alerts": 71,
+    "n_wins": 2,
+    "n_no_runs": 8,
+    "hit_rate_pct": 2.8,
+    "total_stake_pts": 710.0,
+    "total_profit_pts": -572.4,
+    "roi_pct": -80.62
   },
   "best_winners_30d": [
+    {
+      "horse": "King Ulanda",
+      "watchlist": "fade_chs",
+      "course": "Bangor-On-Dee",
+      "race_date": "2026-05-16",
+      "bsp": 12.0,
+      "profit_pts": 107.8
+    },
     {
       "horse": "Laravie",
       "watchlist": "resurgent_flt_lower",
@@ -34,31 +42,31 @@
   ],
   "by_watchlist_all_time": {
     "fade_chs": {
-      "n_alerts": 9,
-      "n_wins": 0,
-      "n_no_runs": 3,
-      "hit_rate_pct": 0.0,
-      "total_stake_pts": 90.0,
-      "total_profit_pts": -90.0,
-      "roi_pct": -100.0
+      "n_alerts": 12,
+      "n_wins": 1,
+      "n_no_runs": 4,
+      "hit_rate_pct": 8.3,
+      "total_stake_pts": 120.0,
+      "total_profit_pts": -2.2,
+      "roi_pct": -1.83
     },
     "fade_flt_lower": {
-      "n_alerts": 28,
+      "n_alerts": 40,
       "n_wins": 0,
-      "n_no_runs": 1,
+      "n_no_runs": 2,
       "hit_rate_pct": 0.0,
-      "total_stake_pts": 280.0,
-      "total_profit_pts": -280.0,
+      "total_stake_pts": 400.0,
+      "total_profit_pts": -400.0,
       "roi_pct": -100.0
     },
     "resurgent_flt_lower": {
-      "n_alerts": 8,
+      "n_alerts": 12,
       "n_wins": 1,
       "n_no_runs": 0,
-      "hit_rate_pct": 12.5,
-      "total_stake_pts": 80.0,
-      "total_profit_pts": -60.2,
-      "roi_pct": -75.25
+      "hit_rate_pct": 8.3,
+      "total_stake_pts": 120.0,
+      "total_profit_pts": -100.2,
+      "roi_pct": -83.5
     },
     "fade_hdl": {
       "n_alerts": 7,
@@ -72,31 +80,31 @@
   },
   "by_watchlist_30d": {
     "fade_chs": {
-      "n_alerts": 9,
-      "n_wins": 0,
-      "n_no_runs": 3,
-      "hit_rate_pct": 0.0,
-      "total_stake_pts": 90.0,
-      "total_profit_pts": -90.0,
-      "roi_pct": -100.0
+      "n_alerts": 12,
+      "n_wins": 1,
+      "n_no_runs": 4,
+      "hit_rate_pct": 8.3,
+      "total_stake_pts": 120.0,
+      "total_profit_pts": -2.2,
+      "roi_pct": -1.83
     },
     "fade_flt_lower": {
-      "n_alerts": 28,
+      "n_alerts": 40,
       "n_wins": 0,
-      "n_no_runs": 1,
+      "n_no_runs": 2,
       "hit_rate_pct": 0.0,
-      "total_stake_pts": 280.0,
-      "total_profit_pts": -280.0,
+      "total_stake_pts": 400.0,
+      "total_profit_pts": -400.0,
       "roi_pct": -100.0
     },
     "resurgent_flt_lower": {
-      "n_alerts": 8,
+      "n_alerts": 12,
       "n_wins": 1,
       "n_no_runs": 0,
-      "hit_rate_pct": 12.5,
-      "total_stake_pts": 80.0,
-      "total_profit_pts": -60.2,
-      "roi_pct": -75.25
+      "hit_rate_pct": 8.3,
+      "total_stake_pts": 120.0,
+      "total_profit_pts": -100.2,
+      "roi_pct": -83.5
     },
     "fade_hdl": {
       "n_alerts": 7,

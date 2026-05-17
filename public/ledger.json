@@ -1,59 +1,59 @@
 {
-  "generated_at": "2026-05-16T07:09:28Z",
+  "generated_at": "2026-05-17T07:08:24Z",
   "first_date": "2026-04-20",
-  "last_date": "2026-05-15",
-  "window_30d_first": "2026-04-16",
-  "window_30d_last": "2026-05-16",
+  "last_date": "2026-05-16",
+  "window_30d_first": "2026-04-17",
+  "window_30d_last": "2026-05-17",
   "tiers": [
     {
       "key": "free",
       "label": "Free",
       "blurb": "One top-conviction selection each race day. UK flat racing \u2014 turf and all-weather.",
       "first_date": "2026-04-20",
-      "last_date": "2026-05-13",
-      "n_days": 22,
+      "last_date": "2026-05-16",
+      "n_days": 23,
       "headline": {
-        "n_picks": 22,
+        "n_picks": 23,
         "n_wins": 10,
         "n_voided": 0,
-        "hit_rate_pct": 45.5,
-        "total_stake_pts": 22.0,
-        "total_profit_pts": 65.57,
-        "roi_pct": 298.05
+        "hit_rate_pct": 43.5,
+        "total_stake_pts": 23.0,
+        "total_profit_pts": 64.57,
+        "roi_pct": 280.74
       },
       "headline_30d": {
-        "n_picks": 22,
+        "n_picks": 23,
         "n_wins": 10,
         "n_voided": 0,
-        "hit_rate_pct": 45.5,
-        "total_stake_pts": 22.0,
-        "total_profit_pts": 65.57,
-        "roi_pct": 298.05
+        "hit_rate_pct": 43.5,
+        "total_stake_pts": 23.0,
+        "total_profit_pts": 64.57,
+        "roi_pct": 280.74
       },
       "by_code": [
         {
           "race_code": "FLT",
           "label": "Flat",
           "total": {
-            "n_picks": 20,
+            "n_picks": 21,
             "n_wins": 10,
             "n_voided": 0,
-            "hit_rate_pct": 50.0,
-            "total_stake_pts": 20.0,
-            "total_profit_pts": 67.57,
-            "roi_pct": 337.85
+            "hit_rate_pct": 47.6,
+            "total_stake_pts": 21.0,
+            "total_profit_pts": 66.57,
+            "roi_pct": 317.0
           },
           "banks": [
             {
               "bank_key": "top",
               "bank_label": "Top Conviction",
-              "n_picks": 20,
+              "n_picks": 21,
               "n_wins": 10,
               "n_voided": 0,
-              "hit_rate_pct": 50.0,
-              "total_stake_pts": 20.0,
-              "total_profit_pts": 67.57,
-              "roi_pct": 337.85
+              "hit_rate_pct": 47.6,
+              "total_stake_pts": 21.0,
+              "total_profit_pts": 66.57,
+              "roi_pct": 317.0
             }
           ]
         },
@@ -212,50 +212,50 @@
       "label": "Club",
       "blurb": "The full top-conviction slate across UK flat racing \u2014 turf and all-weather.",
       "first_date": "2026-04-20",
-      "last_date": "2026-05-13",
-      "n_days": 22,
+      "last_date": "2026-05-16",
+      "n_days": 23,
       "headline": {
-        "n_picks": 284,
-        "n_wins": 78,
+        "n_picks": 303,
+        "n_wins": 82,
         "n_voided": 3,
-        "hit_rate_pct": 27.5,
-        "total_stake_pts": 284.0,
-        "total_profit_pts": 70.01,
-        "roi_pct": 24.65
+        "hit_rate_pct": 27.1,
+        "total_stake_pts": 303.0,
+        "total_profit_pts": 65.19,
+        "roi_pct": 21.51
       },
       "headline_30d": {
-        "n_picks": 284,
-        "n_wins": 78,
+        "n_picks": 303,
+        "n_wins": 82,
         "n_voided": 3,
-        "hit_rate_pct": 27.5,
-        "total_stake_pts": 284.0,
-        "total_profit_pts": 70.01,
-        "roi_pct": 24.65
+        "hit_rate_pct": 27.1,
+        "total_stake_pts": 303.0,
+        "total_profit_pts": 65.19,
+        "roi_pct": 21.51
       },
       "by_code": [
         {
           "race_code": "FLT",
           "label": "Flat",
           "total": {
-            "n_picks": 240,
-            "n_wins": 64,
+            "n_picks": 259,
+            "n_wins": 68,
             "n_voided": 3,
-            "hit_rate_pct": 26.7,
-            "total_stake_pts": 240.0,
-            "total_profit_pts": 54.37,
-            "roi_pct": 22.65
+            "hit_rate_pct": 26.3,
+            "total_stake_pts": 259.0,
+            "total_profit_pts": 49.55,
+            "roi_pct": 19.13
           },
           "banks": [
             {
               "bank_key": "top",
               "bank_label": "Top Conviction",
-              "n_picks": 240,
-              "n_wins": 64,
+              "n_picks": 259,
+              "n_wins": 68,
               "n_voided": 3,
-              "hit_rate_pct": 26.7,
-              "total_stake_pts": 240.0,
-              "total_profit_pts": 54.37,
-              "roi_pct": 22.65
+              "hit_rate_pct": 26.3,
+              "total_stake_pts": 259.0,
+              "total_profit_pts": 49.55,
+              "roi_pct": 19.13
             }
           ]
         },
@@ -292,72 +292,72 @@
       "label": "Blackbook",
       "blurb": "The full package \u2014 every signal, every code, including hurdles.",
       "first_date": "2026-04-20",
-      "last_date": "2026-05-15",
-      "n_days": 25,
+      "last_date": "2026-05-16",
+      "n_days": 26,
       "headline": {
-        "n_picks": 881,
-        "n_wins": 285,
-        "n_voided": 6,
-        "hit_rate_pct": 32.3,
-        "total_stake_pts": 881.0,
-        "total_profit_pts": 220.51,
-        "roi_pct": 25.03
+        "n_picks": 943,
+        "n_wins": 298,
+        "n_voided": 9,
+        "hit_rate_pct": 31.6,
+        "total_stake_pts": 943.0,
+        "total_profit_pts": 205.5,
+        "roi_pct": 21.79
       },
       "headline_30d": {
-        "n_picks": 881,
-        "n_wins": 285,
-        "n_voided": 6,
-        "hit_rate_pct": 32.3,
-        "total_stake_pts": 881.0,
-        "total_profit_pts": 220.51,
-        "roi_pct": 25.03
+        "n_picks": 943,
+        "n_wins": 298,
+        "n_voided": 9,
+        "hit_rate_pct": 31.6,
+        "total_stake_pts": 943.0,
+        "total_profit_pts": 205.5,
+        "roi_pct": 21.79
       },
       "by_code": [
         {
           "race_code": "FLT",
           "label": "Flat",
           "total": {
-            "n_picks": 681,
-            "n_wins": 214,
-            "n_voided": 6,
-            "hit_rate_pct": 31.4,
-            "total_stake_pts": 681.0,
-            "total_profit_pts": 162.26,
-            "roi_pct": 23.83
+            "n_picks": 734,
+            "n_wins": 224,
+            "n_voided": 7,
+            "hit_rate_pct": 30.5,
+            "total_stake_pts": 734.0,
+            "total_profit_pts": 147.39,
+            "roi_pct": 20.08
           },
           "banks": [
             {
               "bank_key": "top",
               "bank_label": "Top Conviction",
-              "n_picks": 240,
-              "n_wins": 64,
+              "n_picks": 259,
+              "n_wins": 68,
               "n_voided": 3,
-              "hit_rate_pct": 26.7,
-              "total_stake_pts": 240.0,
-              "total_profit_pts": 54.37,
-              "roi_pct": 22.65
+              "hit_rate_pct": 26.3,
+              "total_stake_pts": 259.0,
+              "total_profit_pts": 49.55,
+              "roi_pct": 19.13
             },
             {
               "bank_key": "value",
               "bank_label": "Value Pick",
-              "n_picks": 9,
+              "n_picks": 13,
               "n_wins": 2,
               "n_voided": 0,
-              "hit_rate_pct": 22.2,
-              "total_stake_pts": 9.0,
-              "total_profit_pts": 3.57,
-              "roi_pct": 39.67
+              "hit_rate_pct": 15.4,
+              "total_stake_pts": 13.0,
+              "total_profit_pts": -0.43,
+              "roi_pct": -3.31
             },
             {
               "bank_key": "form",
               "bank_label": "Form Read",
-              "n_picks": 432,
-              "n_wins": 148,
-              "n_voided": 3,
-              "hit_rate_pct": 34.3,
-              "total_stake_pts": 432.0,
-              "total_profit_pts": 104.32,
-              "roi_pct": 24.15
+              "n_picks": 462,
+              "n_wins": 154,
+              "n_voided": 4,
+              "hit_rate_pct": 33.3,
+              "total_stake_pts": 462.0,
+              "total_profit_pts": 98.27,
+              "roi_pct": 21.27
             }
           ]
         },
@@ -413,25 +413,25 @@
           "race_code": "HDL",
           "label": "Hurdle",
           "total": {
-            "n_picks": 64,
-            "n_wins": 21,
-            "n_voided": 0,
-            "hit_rate_pct": 32.8,
-            "total_stake_pts": 64.0,
-            "total_profit_pts": 14.51,
-            "roi_pct": 22.67
+            "n_picks": 73,
+            "n_wins": 24,
+            "n_voided": 2,
+            "hit_rate_pct": 32.9,
+            "total_stake_pts": 73.0,
+            "total_profit_pts": 14.37,
+            "roi_pct": 19.68
           },
           "banks": [
             {
               "bank_key": "top",
               "bank_label": "Top Conviction",
-              "n_picks": 35,
-              "n_wins": 12,
-              "n_voided": 0,
-              "hit_rate_pct": 34.3,
-              "total_stake_pts": 35.0,
-              "total_profit_pts": 12.87,
-              "roi_pct": 36.77
+              "n_picks": 38,
+              "n_wins": 13,
+              "n_voided": 1,
+              "hit_rate_pct": 34.2,
+              "total_stake_pts": 38.0,
+              "total_profit_pts": 12.84,
+              "roi_pct": 33.79
             },
             {
               "bank_key": "value",
@@ -447,13 +447,13 @@
             {
               "bank_key": "form",
               "bank_label": "Form Read",
-              "n_picks": 13,
-              "n_wins": 5,
-              "n_voided": 0,
-              "hit_rate_pct": 38.5,
-              "total_stake_pts": 13.0,
-              "total_profit_pts": -0.72,
-              "roi_pct": -5.54
+              "n_picks": 19,
+              "n_wins": 7,
+              "n_voided": 1,
+              "hit_rate_pct": 36.8,
+              "total_stake_pts": 19.0,
+              "total_profit_pts": -0.83,
+              "roi_pct": -4.37
             }
           ]
         }
