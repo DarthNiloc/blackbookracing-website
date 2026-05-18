@@ -1,28 +1,36 @@
 {
-  "generated_at": "2026-05-17T07:08:28Z",
+  "generated_at": "2026-05-18T08:06:44Z",
   "stake_per_alert_pts": 10.0,
   "rolling_window_days": 30,
   "first_race_date": "2026-05-11",
-  "last_race_date": "2026-05-16",
+  "last_race_date": "2026-05-17",
   "all_time": {
-    "n_alerts": 71,
-    "n_wins": 2,
-    "n_no_runs": 8,
-    "hit_rate_pct": 2.8,
-    "total_stake_pts": 710.0,
-    "total_profit_pts": -572.4,
-    "roi_pct": -80.62
+    "n_alerts": 77,
+    "n_wins": 3,
+    "n_no_runs": 9,
+    "hit_rate_pct": 3.9,
+    "total_stake_pts": 770.0,
+    "total_profit_pts": -220.6,
+    "roi_pct": -28.65
   },
   "rolling_30d": {
-    "n_alerts": 71,
-    "n_wins": 2,
-    "n_no_runs": 8,
-    "hit_rate_pct": 2.8,
-    "total_stake_pts": 710.0,
-    "total_profit_pts": -572.4,
-    "roi_pct": -80.62
+    "n_alerts": 77,
+    "n_wins": 3,
+    "n_no_runs": 9,
+    "hit_rate_pct": 3.9,
+    "total_stake_pts": 770.0,
+    "total_profit_pts": -220.6,
+    "roi_pct": -28.65
   },
   "best_winners_30d": [
+    {
+      "horse": "Penny Ghent",
+      "watchlist": "fade_flt_lower",
+      "course": "Ripon",
+      "race_date": "2026-05-17",
+      "bsp": 42.0,
+      "profit_pts": 401.8
+    },
     {
       "horse": "King Ulanda",
       "watchlist": "fade_chs",
@@ -42,22 +50,22 @@
   ],
   "by_watchlist_all_time": {
     "fade_chs": {
-      "n_alerts": 12,
+      "n_alerts": 13,
       "n_wins": 1,
       "n_no_runs": 4,
-      "hit_rate_pct": 8.3,
-      "total_stake_pts": 120.0,
-      "total_profit_pts": -2.2,
-      "roi_pct": -1.83
+      "hit_rate_pct": 7.7,
+      "total_stake_pts": 130.0,
+      "total_profit_pts": -12.2,
+      "roi_pct": -9.38
     },
     "fade_flt_lower": {
-      "n_alerts": 40,
-      "n_wins": 0,
-      "n_no_runs": 2,
-      "hit_rate_pct": 0.0,
-      "total_stake_pts": 400.0,
-      "total_profit_pts": -400.0,
-      "roi_pct": -100.0
+      "n_alerts": 45,
+      "n_wins": 1,
+      "n_no_runs": 3,
+      "hit_rate_pct": 2.2,
+      "total_stake_pts": 450.0,
+      "total_profit_pts": -38.2,
+      "roi_pct": -8.49
     },
     "resurgent_flt_lower": {
       "n_alerts": 12,
@@ -80,22 +88,22 @@
   },
   "by_watchlist_30d": {
     "fade_chs": {
-      "n_alerts": 12,
+      "n_alerts": 13,
       "n_wins": 1,
       "n_no_runs": 4,
-      "hit_rate_pct": 8.3,
-      "total_stake_pts": 120.0,
-      "total_profit_pts": -2.2,
-      "roi_pct": -1.83
+      "hit_rate_pct": 7.7,
+      "total_stake_pts": 130.0,
+      "total_profit_pts": -12.2,
+      "roi_pct": -9.38
     },
     "fade_flt_lower": {
-      "n_alerts": 40,
-      "n_wins": 0,
-      "n_no_runs": 2,
-      "hit_rate_pct": 0.0,
-      "total_stake_pts": 400.0,
-      "total_profit_pts": -400.0,
-      "roi_pct": -100.0
+      "n_alerts": 45,
+      "n_wins": 1,
+      "n_no_runs": 3,
+      "hit_rate_pct": 2.2,
+      "total_stake_pts": 450.0,
+      "total_profit_pts": -38.2,
+      "roi_pct": -8.49
     },
     "resurgent_flt_lower": {
       "n_alerts": 12,

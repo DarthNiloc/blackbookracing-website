@@ -1,6 +1,6 @@
 {
-  "generated_at": "2026-05-17T07:01:17+00:00",
-  "as_of_date": "2026-05-16",
+  "generated_at": "2026-05-18T07:56:42+00:00",
+  "as_of_date": "2026-05-17",
   "n_systems": 65,
   "n_by_kind": {
     "stream": 42,
@@ -25,36 +25,36 @@
       "status": "OPEN",
       "windows": {
         "7d": {
-          "n": 122,
-          "wins": 34,
-          "hit_rate_pct": 27.87,
-          "total_stake_pts": 122.0,
-          "total_profit_pts": -16.46,
-          "roi_pct": -13.49
+          "n": 137,
+          "wins": 38,
+          "hit_rate_pct": 27.74,
+          "total_stake_pts": 137.0,
+          "total_profit_pts": -17.44,
+          "roi_pct": -12.73
         },
         "30d": {
-          "n": 462,
-          "wins": 154,
-          "hit_rate_pct": 33.33,
-          "total_stake_pts": 462.0,
-          "total_profit_pts": 98.26,
-          "roi_pct": 21.27
+          "n": 477,
+          "wins": 158,
+          "hit_rate_pct": 33.12,
+          "total_stake_pts": 477.0,
+          "total_profit_pts": 97.28,
+          "roi_pct": 20.39
         },
         "ytd": {
-          "n": 462,
-          "wins": 154,
-          "hit_rate_pct": 33.33,
-          "total_stake_pts": 462.0,
-          "total_profit_pts": 98.26,
-          "roi_pct": 21.27
+          "n": 477,
+          "wins": 158,
+          "hit_rate_pct": 33.12,
+          "total_stake_pts": 477.0,
+          "total_profit_pts": 97.28,
+          "roi_pct": 20.39
         },
         "lifetime": {
-          "n": 462,
-          "wins": 154,
-          "hit_rate_pct": 33.33,
-          "total_stake_pts": 462.0,
-          "total_profit_pts": 98.26,
-          "roi_pct": 21.27
+          "n": 477,
+          "wins": 158,
+          "hit_rate_pct": 33.12,
+          "total_stake_pts": 477.0,
+          "total_profit_pts": 97.28,
+          "roi_pct": 20.39
         }
       }
     },
@@ -67,36 +67,36 @@
       "status": "PAPER",
       "windows": {
         "7d": {
-          "n": 103,
-          "wins": 24,
-          "hit_rate_pct": 23.3,
-          "total_stake_pts": 103.0,
-          "total_profit_pts": -6.16,
-          "roi_pct": -5.98
+          "n": 116,
+          "wins": 29,
+          "hit_rate_pct": 25.0,
+          "total_stake_pts": 116.0,
+          "total_profit_pts": 4.68,
+          "roi_pct": 4.03
         },
         "30d": {
-          "n": 310,
-          "wins": 80,
-          "hit_rate_pct": 25.81,
-          "total_stake_pts": 310.0,
-          "total_profit_pts": 63.42,
-          "roi_pct": 20.46
+          "n": 323,
+          "wins": 85,
+          "hit_rate_pct": 26.32,
+          "total_stake_pts": 323.0,
+          "total_profit_pts": 74.25,
+          "roi_pct": 22.99
         },
         "ytd": {
-          "n": 310,
-          "wins": 80,
-          "hit_rate_pct": 25.81,
-          "total_stake_pts": 310.0,
-          "total_profit_pts": 63.42,
-          "roi_pct": 20.46
+          "n": 323,
+          "wins": 85,
+          "hit_rate_pct": 26.32,
+          "total_stake_pts": 323.0,
+          "total_profit_pts": 74.25,
+          "roi_pct": 22.99
         },
         "lifetime": {
-          "n": 310,
-          "wins": 80,
-          "hit_rate_pct": 25.81,
-          "total_stake_pts": 310.0,
-          "total_profit_pts": 63.42,
-          "roi_pct": 20.46
+          "n": 323,
+          "wins": 85,
+          "hit_rate_pct": 26.32,
+          "total_stake_pts": 323.0,
+          "total_profit_pts": 74.25,
+          "roi_pct": 22.99
         }
       }
     },
@@ -109,36 +109,36 @@
       "status": "PAPER",
       "windows": {
         "7d": {
-          "n": 21,
-          "wins": 7,
-          "hit_rate_pct": 33.33,
-          "total_stake_pts": 21.0,
-          "total_profit_pts": 0.91,
-          "roi_pct": 4.31
+          "n": 22,
+          "wins": 8,
+          "hit_rate_pct": 36.36,
+          "total_stake_pts": 22.0,
+          "total_profit_pts": 2.67,
+          "roi_pct": 12.16
         },
         "30d": {
-          "n": 76,
-          "wins": 23,
-          "hit_rate_pct": 30.26,
-          "total_stake_pts": 76.0,
-          "total_profit_pts": -8.04,
-          "roi_pct": -10.58
+          "n": 79,
+          "wins": 25,
+          "hit_rate_pct": 31.65,
+          "total_stake_pts": 79.0,
+          "total_profit_pts": -6.03,
+          "roi_pct": -7.64
         },
         "ytd": {
-          "n": 76,
-          "wins": 23,
-          "hit_rate_pct": 30.26,
-          "total_stake_pts": 76.0,
-          "total_profit_pts": -8.04,
-          "roi_pct": -10.58
+          "n": 79,
+          "wins": 25,
+          "hit_rate_pct": 31.65,
+          "total_stake_pts": 79.0,
+          "total_profit_pts": -6.03,
+          "roi_pct": -7.64
         },
         "lifetime": {
-          "n": 76,
-          "wins": 23,
-          "hit_rate_pct": 30.26,
-          "total_stake_pts": 76.0,
-          "total_profit_pts": -8.04,
-          "roi_pct": -10.58
+          "n": 79,
+          "wins": 25,
+          "hit_rate_pct": 31.65,
+          "total_stake_pts": 79.0,
+          "total_profit_pts": -6.03,
+          "roi_pct": -7.64
         }
       }
     },
@@ -151,36 +151,36 @@
       "status": "PAPER",
       "windows": {
         "7d": {
-          "n": 18,
-          "wins": 6,
-          "hit_rate_pct": 33.33,
-          "total_stake_pts": 18.0,
-          "total_profit_pts": 1.67,
-          "roi_pct": 9.28
+          "n": 20,
+          "wins": 7,
+          "hit_rate_pct": 35.0,
+          "total_stake_pts": 20.0,
+          "total_profit_pts": 1.28,
+          "roi_pct": 6.39
         },
         "30d": {
-          "n": 48,
-          "wins": 12,
-          "hit_rate_pct": 25.0,
-          "total_stake_pts": 48.0,
-          "total_profit_pts": -7.6,
-          "roi_pct": -15.82
+          "n": 51,
+          "wins": 13,
+          "hit_rate_pct": 25.49,
+          "total_stake_pts": 51.0,
+          "total_profit_pts": -8.99,
+          "roi_pct": -17.62
         },
         "ytd": {
-          "n": 48,
-          "wins": 12,
-          "hit_rate_pct": 25.0,
-          "total_stake_pts": 48.0,
-          "total_profit_pts": -7.6,
-          "roi_pct": -15.82
+          "n": 51,
+          "wins": 13,
+          "hit_rate_pct": 25.49,
+          "total_stake_pts": 51.0,
+          "total_profit_pts": -8.99,
+          "roi_pct": -17.62
         },
         "lifetime": {
-          "n": 48,
-          "wins": 12,
-          "hit_rate_pct": 25.0,
-          "total_stake_pts": 48.0,
-          "total_profit_pts": -7.6,
-          "roi_pct": -15.82
+          "n": 51,
+          "wins": 13,
+          "hit_rate_pct": 25.49,
+          "total_stake_pts": 51.0,
+          "total_profit_pts": -8.99,
+          "roi_pct": -17.62
         }
       }
     },
@@ -197,32 +197,32 @@
           "wins": 12,
           "hit_rate_pct": 34.29,
           "total_stake_pts": 35.0,
-          "total_profit_pts": -0.72,
-          "roi_pct": -2.06
+          "total_profit_pts": -3.51,
+          "roi_pct": -10.03
         },
         "30d": {
-          "n": 121,
-          "wins": 36,
-          "hit_rate_pct": 29.75,
-          "total_stake_pts": 121.0,
-          "total_profit_pts": -29.22,
-          "roi_pct": -24.15
+          "n": 124,
+          "wins": 38,
+          "hit_rate_pct": 30.65,
+          "total_stake_pts": 124.0,
+          "total_profit_pts": -27.94,
+          "roi_pct": -22.53
         },
         "ytd": {
-          "n": 121,
-          "wins": 36,
-          "hit_rate_pct": 29.75,
-          "total_stake_pts": 121.0,
-          "total_profit_pts": -29.22,
-          "roi_pct": -24.15
+          "n": 124,
+          "wins": 38,
+          "hit_rate_pct": 30.65,
+          "total_stake_pts": 124.0,
+          "total_profit_pts": -27.94,
+          "roi_pct": -22.53
         },
         "lifetime": {
-          "n": 121,
-          "wins": 36,
-          "hit_rate_pct": 29.75,
-          "total_stake_pts": 121.0,
-          "total_profit_pts": -29.22,
-          "roi_pct": -24.15
+          "n": 124,
+          "wins": 38,
+          "hit_rate_pct": 30.65,
+          "total_stake_pts": 124.0,
+          "total_profit_pts": -27.94,
+          "roi_pct": -22.53
         }
       }
     },
@@ -235,36 +235,36 @@
       "status": "OPEN",
       "windows": {
         "7d": {
-          "n": 28,
+          "n": 27,
           "wins": 8,
-          "hit_rate_pct": 28.57,
-          "total_stake_pts": 28.0,
-          "total_profit_pts": -3.72,
-          "roi_pct": -13.29
+          "hit_rate_pct": 29.63,
+          "total_stake_pts": 27.0,
+          "total_profit_pts": -6.01,
+          "roi_pct": -22.27
         },
         "30d": {
-          "n": 76,
-          "wins": 23,
-          "hit_rate_pct": 30.26,
-          "total_stake_pts": 76.0,
-          "total_profit_pts": 9.88,
-          "roi_pct": 13.0
+          "n": 78,
+          "wins": 24,
+          "hit_rate_pct": 30.77,
+          "total_stake_pts": 78.0,
+          "total_profit_pts": 9.21,
+          "roi_pct": 11.81
         },
         "ytd": {
-          "n": 76,
-          "wins": 23,
-          "hit_rate_pct": 30.26,
-          "total_stake_pts": 76.0,
-          "total_profit_pts": 9.88,
-          "roi_pct": 13.0
+          "n": 78,
+          "wins": 24,
+          "hit_rate_pct": 30.77,
+          "total_stake_pts": 78.0,
+          "total_profit_pts": 9.21,
+          "roi_pct": 11.81
         },
         "lifetime": {
-          "n": 76,
-          "wins": 23,
-          "hit_rate_pct": 30.26,
-          "total_stake_pts": 76.0,
-          "total_profit_pts": 9.88,
-          "roi_pct": 13.0
+          "n": 78,
+          "wins": 24,
+          "hit_rate_pct": 30.77,
+          "total_stake_pts": 78.0,
+          "total_profit_pts": 9.21,
+          "roi_pct": 11.81
         }
       }
     },
@@ -277,36 +277,36 @@
       "status": "PAPER",
       "windows": {
         "7d": {
-          "n": 7,
+          "n": 8,
           "wins": 3,
-          "hit_rate_pct": 42.86,
-          "total_stake_pts": 7.0,
-          "total_profit_pts": 7.18,
-          "roi_pct": 102.51
+          "hit_rate_pct": 37.5,
+          "total_stake_pts": 8.0,
+          "total_profit_pts": 6.18,
+          "roi_pct": 77.19
         },
         "30d": {
-          "n": 16,
+          "n": 17,
           "wins": 6,
-          "hit_rate_pct": 37.5,
-          "total_stake_pts": 16.0,
-          "total_profit_pts": 18.15,
-          "roi_pct": 113.43
+          "hit_rate_pct": 35.29,
+          "total_stake_pts": 17.0,
+          "total_profit_pts": 17.15,
+          "roi_pct": 100.88
         },
         "ytd": {
-          "n": 16,
+          "n": 17,
           "wins": 6,
-          "hit_rate_pct": 37.5,
-          "total_stake_pts": 16.0,
-          "total_profit_pts": 18.15,
-          "roi_pct": 113.43
+          "hit_rate_pct": 35.29,
+          "total_stake_pts": 17.0,
+          "total_profit_pts": 17.15,
+          "roi_pct": 100.88
         },
         "lifetime": {
-          "n": 16,
+          "n": 17,
           "wins": 6,
-          "hit_rate_pct": 37.5,
-          "total_stake_pts": 16.0,
-          "total_profit_pts": 18.15,
-          "roi_pct": 113.43
+          "hit_rate_pct": 35.29,
+          "total_stake_pts": 17.0,
+          "total_profit_pts": 17.15,
+          "roi_pct": 100.88
         }
       }
     },
@@ -445,36 +445,36 @@
       "status": "PAPER",
       "windows": {
         "7d": {
-          "n": 31,
+          "n": 28,
           "wins": 8,
-          "hit_rate_pct": 25.81,
-          "total_stake_pts": 31.0,
-          "total_profit_pts": -10.56,
-          "roi_pct": -34.08
+          "hit_rate_pct": 28.57,
+          "total_stake_pts": 28.0,
+          "total_profit_pts": -10.58,
+          "roi_pct": -37.78
         },
         "30d": {
-          "n": 53,
-          "wins": 21,
-          "hit_rate_pct": 39.62,
-          "total_stake_pts": 53.0,
-          "total_profit_pts": 1.27,
-          "roi_pct": 2.4
+          "n": 54,
+          "wins": 22,
+          "hit_rate_pct": 40.74,
+          "total_stake_pts": 54.0,
+          "total_profit_pts": 1.88,
+          "roi_pct": 3.48
         },
         "ytd": {
-          "n": 53,
-          "wins": 21,
-          "hit_rate_pct": 39.62,
-          "total_stake_pts": 53.0,
-          "total_profit_pts": 1.27,
-          "roi_pct": 2.4
+          "n": 54,
+          "wins": 22,
+          "hit_rate_pct": 40.74,
+          "total_stake_pts": 54.0,
+          "total_profit_pts": 1.88,
+          "roi_pct": 3.48
         },
         "lifetime": {
-          "n": 53,
-          "wins": 21,
-          "hit_rate_pct": 39.62,
-          "total_stake_pts": 53.0,
-          "total_profit_pts": 1.27,
-          "roi_pct": 2.4
+          "n": 54,
+          "wins": 22,
+          "hit_rate_pct": 40.74,
+          "total_stake_pts": 54.0,
+          "total_profit_pts": 1.88,
+          "roi_pct": 3.48
         }
       }
     },
@@ -487,36 +487,36 @@
       "status": "PAPER",
       "windows": {
         "7d": {
-          "n": 17,
-          "wins": 8,
-          "hit_rate_pct": 47.06,
-          "total_stake_pts": 17.0,
-          "total_profit_pts": -6.31,
-          "roi_pct": -37.11
+          "n": 19,
+          "wins": 10,
+          "hit_rate_pct": 52.63,
+          "total_stake_pts": 19.0,
+          "total_profit_pts": -5.41,
+          "roi_pct": -28.48
         },
         "30d": {
-          "n": 46,
-          "wins": 27,
-          "hit_rate_pct": 58.7,
-          "total_stake_pts": 46.0,
-          "total_profit_pts": -7.44,
-          "roi_pct": -16.17
+          "n": 48,
+          "wins": 29,
+          "hit_rate_pct": 60.42,
+          "total_stake_pts": 48.0,
+          "total_profit_pts": -6.54,
+          "roi_pct": -13.63
         },
         "ytd": {
-          "n": 46,
-          "wins": 27,
-          "hit_rate_pct": 58.7,
-          "total_stake_pts": 46.0,
-          "total_profit_pts": -7.44,
-          "roi_pct": -16.17
+          "n": 48,
+          "wins": 29,
+          "hit_rate_pct": 60.42,
+          "total_stake_pts": 48.0,
+          "total_profit_pts": -6.54,
+          "roi_pct": -13.63
         },
         "lifetime": {
-          "n": 46,
-          "wins": 27,
-          "hit_rate_pct": 58.7,
-          "total_stake_pts": 46.0,
-          "total_profit_pts": -7.44,
-          "roi_pct": -16.17
+          "n": 48,
+          "wins": 29,
+          "hit_rate_pct": 60.42,
+          "total_stake_pts": 48.0,
+          "total_profit_pts": -6.54,
+          "roi_pct": -13.63
         }
       }
     },
@@ -572,35 +572,35 @@
       "windows": {
         "7d": {
           "n": 9,
-          "wins": 7,
-          "hit_rate_pct": 77.78,
+          "wins": 8,
+          "hit_rate_pct": 88.89,
           "total_stake_pts": 9.0,
-          "total_profit_pts": 0.47,
-          "roi_pct": 5.19
+          "total_profit_pts": 1.58,
+          "roi_pct": 17.61
         },
         "30d": {
-          "n": 13,
-          "wins": 10,
-          "hit_rate_pct": 76.92,
-          "total_stake_pts": 13.0,
-          "total_profit_pts": -0.01,
-          "roi_pct": -0.1
+          "n": 14,
+          "wins": 11,
+          "hit_rate_pct": 78.57,
+          "total_stake_pts": 14.0,
+          "total_profit_pts": 0.1,
+          "roi_pct": 0.74
         },
         "ytd": {
-          "n": 13,
-          "wins": 10,
-          "hit_rate_pct": 76.92,
-          "total_stake_pts": 13.0,
-          "total_profit_pts": -0.01,
-          "roi_pct": -0.1
+          "n": 14,
+          "wins": 11,
+          "hit_rate_pct": 78.57,
+          "total_stake_pts": 14.0,
+          "total_profit_pts": 0.1,
+          "roi_pct": 0.74
         },
         "lifetime": {
-          "n": 13,
-          "wins": 10,
-          "hit_rate_pct": 76.92,
-          "total_stake_pts": 13.0,
-          "total_profit_pts": -0.01,
-          "roi_pct": -0.1
+          "n": 14,
+          "wins": 11,
+          "hit_rate_pct": 78.57,
+          "total_stake_pts": 14.0,
+          "total_profit_pts": 0.1,
+          "roi_pct": 0.74
         }
       }
     },
@@ -697,36 +697,36 @@
       "status": "PAPER",
       "windows": {
         "7d": {
-          "n": 65,
-          "wins": 20,
-          "hit_rate_pct": 30.77,
-          "total_stake_pts": 65.0,
-          "total_profit_pts": 15.4,
-          "roi_pct": 23.69
+          "n": 72,
+          "wins": 23,
+          "hit_rate_pct": 31.94,
+          "total_stake_pts": 72.0,
+          "total_profit_pts": 25.8,
+          "roi_pct": 35.84
         },
         "30d": {
-          "n": 201,
-          "wins": 62,
-          "hit_rate_pct": 30.85,
-          "total_stake_pts": 201.0,
-          "total_profit_pts": 35.41,
-          "roi_pct": 17.61
+          "n": 208,
+          "wins": 65,
+          "hit_rate_pct": 31.25,
+          "total_stake_pts": 208.0,
+          "total_profit_pts": 45.81,
+          "roi_pct": 22.02
         },
         "ytd": {
-          "n": 201,
-          "wins": 62,
-          "hit_rate_pct": 30.85,
-          "total_stake_pts": 201.0,
-          "total_profit_pts": 35.41,
-          "roi_pct": 17.61
+          "n": 208,
+          "wins": 65,
+          "hit_rate_pct": 31.25,
+          "total_stake_pts": 208.0,
+          "total_profit_pts": 45.81,
+          "roi_pct": 22.02
         },
         "lifetime": {
-          "n": 201,
-          "wins": 62,
-          "hit_rate_pct": 30.85,
-          "total_stake_pts": 201.0,
-          "total_profit_pts": 35.41,
-          "roi_pct": 17.61
+          "n": 208,
+          "wins": 65,
+          "hit_rate_pct": 31.25,
+          "total_stake_pts": 208.0,
+          "total_profit_pts": 45.81,
+          "roi_pct": 22.02
         }
       }
     },
@@ -739,36 +739,36 @@
       "status": "PAPER",
       "windows": {
         "7d": {
-          "n": 12,
-          "wins": 5,
-          "hit_rate_pct": 41.67,
-          "total_stake_pts": 12.0,
-          "total_profit_pts": 1.57,
-          "roi_pct": 13.12
+          "n": 15,
+          "wins": 6,
+          "hit_rate_pct": 40.0,
+          "total_stake_pts": 15.0,
+          "total_profit_pts": 0.18,
+          "roi_pct": 1.21
         },
         "30d": {
-          "n": 36,
-          "wins": 10,
-          "hit_rate_pct": 27.78,
-          "total_stake_pts": 36.0,
-          "total_profit_pts": -5.65,
-          "roi_pct": -15.68
+          "n": 39,
+          "wins": 11,
+          "hit_rate_pct": 28.21,
+          "total_stake_pts": 39.0,
+          "total_profit_pts": -7.04,
+          "roi_pct": -18.05
         },
         "ytd": {
-          "n": 36,
-          "wins": 10,
-          "hit_rate_pct": 27.78,
-          "total_stake_pts": 36.0,
-          "total_profit_pts": -5.65,
-          "roi_pct": -15.68
+          "n": 39,
+          "wins": 11,
+          "hit_rate_pct": 28.21,
+          "total_stake_pts": 39.0,
+          "total_profit_pts": -7.04,
+          "roi_pct": -18.05
         },
         "lifetime": {
-          "n": 36,
-          "wins": 10,
-          "hit_rate_pct": 27.78,
-          "total_stake_pts": 36.0,
-          "total_profit_pts": -5.65,
-          "roi_pct": -15.68
+          "n": 39,
+          "wins": 11,
+          "hit_rate_pct": 28.21,
+          "total_stake_pts": 39.0,
+          "total_profit_pts": -7.04,
+          "roi_pct": -18.05
         }
       }
     },
@@ -782,35 +782,35 @@
       "windows": {
         "7d": {
           "n": 18,
-          "wins": 7,
-          "hit_rate_pct": 38.89,
+          "wins": 8,
+          "hit_rate_pct": 44.44,
           "total_stake_pts": 18.0,
-          "total_profit_pts": 1.66,
-          "roi_pct": 9.2
+          "total_profit_pts": 2.99,
+          "roi_pct": 16.59
         },
         "30d": {
-          "n": 51,
-          "wins": 19,
-          "hit_rate_pct": 37.25,
-          "total_stake_pts": 51.0,
-          "total_profit_pts": 16.52,
-          "roi_pct": 32.39
+          "n": 53,
+          "wins": 20,
+          "hit_rate_pct": 37.74,
+          "total_stake_pts": 53.0,
+          "total_profit_pts": 15.85,
+          "roi_pct": 29.9
         },
         "ytd": {
-          "n": 51,
-          "wins": 19,
-          "hit_rate_pct": 37.25,
-          "total_stake_pts": 51.0,
-          "total_profit_pts": 16.52,
-          "roi_pct": 32.39
+          "n": 53,
+          "wins": 20,
+          "hit_rate_pct": 37.74,
+          "total_stake_pts": 53.0,
+          "total_profit_pts": 15.85,
+          "roi_pct": 29.9
         },
         "lifetime": {
-          "n": 51,
-          "wins": 19,
-          "hit_rate_pct": 37.25,
-          "total_stake_pts": 51.0,
-          "total_profit_pts": 16.52,
-          "roi_pct": 32.39
+          "n": 53,
+          "wins": 20,
+          "hit_rate_pct": 37.74,
+          "total_stake_pts": 53.0,
+          "total_profit_pts": 15.85,
+          "roi_pct": 29.9
         }
       }
     },
@@ -907,36 +907,36 @@
       "status": "PAPER",
       "windows": {
         "7d": {
-          "n": 29,
-          "wins": 11,
-          "hit_rate_pct": 37.93,
-          "total_stake_pts": 29.0,
-          "total_profit_pts": -3.04,
-          "roi_pct": -10.47
+          "n": 33,
+          "wins": 14,
+          "hit_rate_pct": 42.42,
+          "total_stake_pts": 33.0,
+          "total_profit_pts": 10.37,
+          "roi_pct": 31.42
         },
         "30d": {
-          "n": 88,
-          "wins": 32,
-          "hit_rate_pct": 36.36,
-          "total_stake_pts": 88.0,
-          "total_profit_pts": 45.88,
-          "roi_pct": 52.14
+          "n": 92,
+          "wins": 35,
+          "hit_rate_pct": 38.04,
+          "total_stake_pts": 92.0,
+          "total_profit_pts": 59.28,
+          "roi_pct": 64.44
         },
         "ytd": {
-          "n": 88,
-          "wins": 32,
-          "hit_rate_pct": 36.36,
-          "total_stake_pts": 88.0,
-          "total_profit_pts": 45.88,
-          "roi_pct": 52.14
+          "n": 92,
+          "wins": 35,
+          "hit_rate_pct": 38.04,
+          "total_stake_pts": 92.0,
+          "total_profit_pts": 59.28,
+          "roi_pct": 64.44
         },
         "lifetime": {
-          "n": 88,
-          "wins": 32,
-          "hit_rate_pct": 36.36,
-          "total_stake_pts": 88.0,
-          "total_profit_pts": 45.88,
-          "roi_pct": 52.14
+          "n": 92,
+          "wins": 35,
+          "hit_rate_pct": 38.04,
+          "total_stake_pts": 92.0,
+          "total_profit_pts": 59.28,
+          "roi_pct": 64.44
         }
       }
     },
@@ -949,36 +949,36 @@
       "status": "PAPER",
       "windows": {
         "7d": {
-          "n": 3,
-          "wins": 1,
-          "hit_rate_pct": 33.33,
-          "total_stake_pts": 3.0,
-          "total_profit_pts": 0.3,
-          "roi_pct": 10.1
+          "n": 4,
+          "wins": 2,
+          "hit_rate_pct": 50.0,
+          "total_stake_pts": 4.0,
+          "total_profit_pts": 0.91,
+          "roi_pct": 22.77
         },
         "30d": {
-          "n": 11,
-          "wins": 2,
-          "hit_rate_pct": 18.18,
-          "total_stake_pts": 11.0,
-          "total_profit_pts": -4.12,
-          "roi_pct": -37.43
+          "n": 12,
+          "wins": 3,
+          "hit_rate_pct": 25.0,
+          "total_stake_pts": 12.0,
+          "total_profit_pts": -3.51,
+          "roi_pct": -29.25
         },
         "ytd": {
-          "n": 11,
-          "wins": 2,
-          "hit_rate_pct": 18.18,
-          "total_stake_pts": 11.0,
-          "total_profit_pts": -4.12,
-          "roi_pct": -37.43
+          "n": 12,
+          "wins": 3,
+          "hit_rate_pct": 25.0,
+          "total_stake_pts": 12.0,
+          "total_profit_pts": -3.51,
+          "roi_pct": -29.25
         },
         "lifetime": {
-          "n": 11,
-          "wins": 2,
-          "hit_rate_pct": 18.18,
-          "total_stake_pts": 11.0,
-          "total_profit_pts": -4.12,
-          "roi_pct": -37.43
+          "n": 12,
+          "wins": 3,
+          "hit_rate_pct": 25.0,
+          "total_stake_pts": 12.0,
+          "total_profit_pts": -3.51,
+          "roi_pct": -29.25
         }
       }
     },
@@ -991,36 +991,36 @@
       "status": "PAPER",
       "windows": {
         "7d": {
-          "n": 4,
-          "wins": 2,
-          "hit_rate_pct": 50.0,
-          "total_stake_pts": 4.0,
-          "total_profit_pts": 0.89,
-          "roi_pct": 22.23
+          "n": 5,
+          "wins": 3,
+          "hit_rate_pct": 60.0,
+          "total_stake_pts": 5.0,
+          "total_profit_pts": 1.22,
+          "roi_pct": 24.39
         },
         "30d": {
-          "n": 15,
-          "wins": 7,
-          "hit_rate_pct": 46.67,
-          "total_stake_pts": 15.0,
-          "total_profit_pts": 0.25,
-          "roi_pct": 1.68
+          "n": 16,
+          "wins": 8,
+          "hit_rate_pct": 50.0,
+          "total_stake_pts": 16.0,
+          "total_profit_pts": 0.58,
+          "roi_pct": 3.64
         },
         "ytd": {
-          "n": 15,
-          "wins": 7,
-          "hit_rate_pct": 46.67,
-          "total_stake_pts": 15.0,
-          "total_profit_pts": 0.25,
-          "roi_pct": 1.68
+          "n": 16,
+          "wins": 8,
+          "hit_rate_pct": 50.0,
+          "total_stake_pts": 16.0,
+          "total_profit_pts": 0.58,
+          "roi_pct": 3.64
         },
         "lifetime": {
-          "n": 15,
-          "wins": 7,
-          "hit_rate_pct": 46.67,
-          "total_stake_pts": 15.0,
-          "total_profit_pts": 0.25,
-          "roi_pct": 1.68
+          "n": 16,
+          "wins": 8,
+          "hit_rate_pct": 50.0,
+          "total_stake_pts": 16.0,
+          "total_profit_pts": 0.58,
+          "roi_pct": 3.64
         }
       }
     },
@@ -1117,36 +1117,36 @@
       "status": "OPEN",
       "windows": {
         "7d": {
-          "n": 83,
-          "wins": 23,
-          "hit_rate_pct": 27.71,
-          "total_stake_pts": 83.0,
-          "total_profit_pts": -12.54,
-          "roi_pct": -15.11
+          "n": 93,
+          "wins": 28,
+          "hit_rate_pct": 30.11,
+          "total_stake_pts": 93.0,
+          "total_profit_pts": 1.3,
+          "roi_pct": 1.4
         },
         "30d": {
-          "n": 224,
-          "wins": 72,
-          "hit_rate_pct": 32.14,
-          "total_stake_pts": 224.0,
-          "total_profit_pts": 48.06,
-          "roi_pct": 21.46
+          "n": 234,
+          "wins": 77,
+          "hit_rate_pct": 32.91,
+          "total_stake_pts": 234.0,
+          "total_profit_pts": 61.9,
+          "roi_pct": 26.45
         },
         "ytd": {
-          "n": 224,
-          "wins": 72,
-          "hit_rate_pct": 32.14,
-          "total_stake_pts": 224.0,
-          "total_profit_pts": 48.06,
-          "roi_pct": 21.46
+          "n": 234,
+          "wins": 77,
+          "hit_rate_pct": 32.91,
+          "total_stake_pts": 234.0,
+          "total_profit_pts": 61.9,
+          "roi_pct": 26.45
         },
         "lifetime": {
-          "n": 224,
-          "wins": 72,
-          "hit_rate_pct": 32.14,
-          "total_stake_pts": 224.0,
-          "total_profit_pts": 48.06,
-          "roi_pct": 21.46
+          "n": 234,
+          "wins": 77,
+          "hit_rate_pct": 32.91,
+          "total_stake_pts": 234.0,
+          "total_profit_pts": 61.9,
+          "roi_pct": 26.45
         }
       }
     },
@@ -1159,36 +1159,36 @@
       "status": "PAPER",
       "windows": {
         "7d": {
-          "n": 15,
-          "wins": 5,
-          "hit_rate_pct": 33.33,
-          "total_stake_pts": 15.0,
-          "total_profit_pts": -1.43,
-          "roi_pct": -9.5
+          "n": 17,
+          "wins": 6,
+          "hit_rate_pct": 35.29,
+          "total_stake_pts": 17.0,
+          "total_profit_pts": -1.82,
+          "roi_pct": -10.69
         },
         "30d": {
-          "n": 35,
-          "wins": 10,
-          "hit_rate_pct": 28.57,
-          "total_stake_pts": 35.0,
-          "total_profit_pts": -4.27,
-          "roi_pct": -12.2
+          "n": 37,
+          "wins": 11,
+          "hit_rate_pct": 29.73,
+          "total_stake_pts": 37.0,
+          "total_profit_pts": -4.66,
+          "roi_pct": -12.6
         },
         "ytd": {
-          "n": 35,
-          "wins": 10,
-          "hit_rate_pct": 28.57,
-          "total_stake_pts": 35.0,
-          "total_profit_pts": -4.27,
-          "roi_pct": -12.2
+          "n": 37,
+          "wins": 11,
+          "hit_rate_pct": 29.73,
+          "total_stake_pts": 37.0,
+          "total_profit_pts": -4.66,
+          "roi_pct": -12.6
         },
         "lifetime": {
-          "n": 35,
-          "wins": 10,
-          "hit_rate_pct": 28.57,
-          "total_stake_pts": 35.0,
-          "total_profit_pts": -4.27,
-          "roi_pct": -12.2
+          "n": 37,
+          "wins": 11,
+          "hit_rate_pct": 29.73,
+          "total_stake_pts": 37.0,
+          "total_profit_pts": -4.66,
+          "roi_pct": -12.6
         }
       }
     },
@@ -1201,36 +1201,36 @@
       "status": "PAPER",
       "windows": {
         "7d": {
-          "n": 25,
+          "n": 24,
           "wins": 8,
-          "hit_rate_pct": 32.0,
-          "total_stake_pts": 25.0,
-          "total_profit_pts": -0.72,
-          "roi_pct": -2.88
+          "hit_rate_pct": 33.33,
+          "total_stake_pts": 24.0,
+          "total_profit_pts": -3.01,
+          "roi_pct": -12.56
         },
         "30d": {
-          "n": 63,
-          "wins": 20,
-          "hit_rate_pct": 31.75,
-          "total_stake_pts": 63.0,
-          "total_profit_pts": 0.92,
-          "roi_pct": 1.47
+          "n": 65,
+          "wins": 21,
+          "hit_rate_pct": 32.31,
+          "total_stake_pts": 65.0,
+          "total_profit_pts": 0.25,
+          "roi_pct": 0.39
         },
         "ytd": {
-          "n": 63,
-          "wins": 20,
-          "hit_rate_pct": 31.75,
-          "total_stake_pts": 63.0,
-          "total_profit_pts": 0.92,
-          "roi_pct": 1.47
+          "n": 65,
+          "wins": 21,
+          "hit_rate_pct": 32.31,
+          "total_stake_pts": 65.0,
+          "total_profit_pts": 0.25,
+          "roi_pct": 0.39
         },
         "lifetime": {
-          "n": 63,
-          "wins": 20,
-          "hit_rate_pct": 31.75,
-          "total_stake_pts": 63.0,
-          "total_profit_pts": 0.92,
-          "roi_pct": 1.47
+          "n": 65,
+          "wins": 21,
+          "hit_rate_pct": 32.31,
+          "total_stake_pts": 65.0,
+          "total_profit_pts": 0.25,
+          "roi_pct": 0.39
         }
       }
     },
@@ -1327,36 +1327,36 @@
       "status": "PAPER",
       "windows": {
         "7d": {
-          "n": 78,
-          "wins": 21,
-          "hit_rate_pct": 26.92,
-          "total_stake_pts": 78.0,
-          "total_profit_pts": 1.59,
-          "roi_pct": 2.03
+          "n": 87,
+          "wins": 26,
+          "hit_rate_pct": 29.89,
+          "total_stake_pts": 87.0,
+          "total_profit_pts": 16.43,
+          "roi_pct": 18.88
         },
         "30d": {
-          "n": 222,
-          "wins": 63,
-          "hit_rate_pct": 28.38,
-          "total_stake_pts": 222.0,
-          "total_profit_pts": 28.73,
-          "roi_pct": 12.94
+          "n": 231,
+          "wins": 68,
+          "hit_rate_pct": 29.44,
+          "total_stake_pts": 231.0,
+          "total_profit_pts": 43.57,
+          "roi_pct": 18.86
         },
         "ytd": {
-          "n": 222,
-          "wins": 63,
-          "hit_rate_pct": 28.38,
-          "total_stake_pts": 222.0,
-          "total_profit_pts": 28.73,
-          "roi_pct": 12.94
+          "n": 231,
+          "wins": 68,
+          "hit_rate_pct": 29.44,
+          "total_stake_pts": 231.0,
+          "total_profit_pts": 43.57,
+          "roi_pct": 18.86
         },
         "lifetime": {
-          "n": 222,
-          "wins": 63,
-          "hit_rate_pct": 28.38,
-          "total_stake_pts": 222.0,
-          "total_profit_pts": 28.73,
-          "roi_pct": 12.94
+          "n": 231,
+          "wins": 68,
+          "hit_rate_pct": 29.44,
+          "total_stake_pts": 231.0,
+          "total_profit_pts": 43.57,
+          "roi_pct": 18.86
         }
       }
     },
@@ -1369,36 +1369,36 @@
       "status": "PAPER",
       "windows": {
         "7d": {
-          "n": 16,
-          "wins": 6,
-          "hit_rate_pct": 37.5,
-          "total_stake_pts": 16.0,
-          "total_profit_pts": 3.67,
-          "roi_pct": 22.94
+          "n": 18,
+          "wins": 7,
+          "hit_rate_pct": 38.89,
+          "total_stake_pts": 18.0,
+          "total_profit_pts": 3.28,
+          "roi_pct": 18.21
         },
         "30d": {
-          "n": 39,
-          "wins": 11,
-          "hit_rate_pct": 28.21,
-          "total_stake_pts": 39.0,
-          "total_profit_pts": -0.81,
-          "roi_pct": -2.08
+          "n": 41,
+          "wins": 12,
+          "hit_rate_pct": 29.27,
+          "total_stake_pts": 41.0,
+          "total_profit_pts": -1.2,
+          "roi_pct": -2.93
         },
         "ytd": {
-          "n": 39,
-          "wins": 11,
-          "hit_rate_pct": 28.21,
-          "total_stake_pts": 39.0,
-          "total_profit_pts": -0.81,
-          "roi_pct": -2.08
+          "n": 41,
+          "wins": 12,
+          "hit_rate_pct": 29.27,
+          "total_stake_pts": 41.0,
+          "total_profit_pts": -1.2,
+          "roi_pct": -2.93
         },
         "lifetime": {
-          "n": 39,
-          "wins": 11,
-          "hit_rate_pct": 28.21,
-          "total_stake_pts": 39.0,
-          "total_profit_pts": -0.81,
-          "roi_pct": -2.08
+          "n": 41,
+          "wins": 12,
+          "hit_rate_pct": 29.27,
+          "total_stake_pts": 41.0,
+          "total_profit_pts": -1.2,
+          "roi_pct": -2.93
         }
       }
     },
@@ -1415,32 +1415,32 @@
           "wins": 7,
           "hit_rate_pct": 31.82,
           "total_stake_pts": 22.0,
-          "total_profit_pts": -2.46,
-          "roi_pct": -11.2
+          "total_profit_pts": -5.76,
+          "roi_pct": -26.16
         },
         "30d": {
-          "n": 55,
-          "wins": 17,
-          "hit_rate_pct": 30.91,
-          "total_stake_pts": 55.0,
-          "total_profit_pts": -3.85,
-          "roi_pct": -7.01
+          "n": 57,
+          "wins": 18,
+          "hit_rate_pct": 31.58,
+          "total_stake_pts": 57.0,
+          "total_profit_pts": -4.52,
+          "roi_pct": -7.94
         },
         "ytd": {
-          "n": 55,
-          "wins": 17,
-          "hit_rate_pct": 30.91,
-          "total_stake_pts": 55.0,
-          "total_profit_pts": -3.85,
-          "roi_pct": -7.01
+          "n": 57,
+          "wins": 18,
+          "hit_rate_pct": 31.58,
+          "total_stake_pts": 57.0,
+          "total_profit_pts": -4.52,
+          "roi_pct": -7.94
         },
         "lifetime": {
-          "n": 55,
-          "wins": 17,
-          "hit_rate_pct": 30.91,
-          "total_stake_pts": 55.0,
-          "total_profit_pts": -3.85,
-          "roi_pct": -7.01
+          "n": 57,
+          "wins": 18,
+          "hit_rate_pct": 31.58,
+          "total_stake_pts": 57.0,
+          "total_profit_pts": -4.52,
+          "roi_pct": -7.94
         }
       }
     },
@@ -1537,36 +1537,36 @@
       "status": "PAPER",
       "windows": {
         "7d": {
-          "n": 30,
-          "wins": 8,
-          "hit_rate_pct": 26.67,
-          "total_stake_pts": 30.0,
-          "total_profit_pts": 20.48,
-          "roi_pct": 68.28
+          "n": 35,
+          "wins": 10,
+          "hit_rate_pct": 28.57,
+          "total_stake_pts": 35.0,
+          "total_profit_pts": 21.92,
+          "roi_pct": 62.62
         },
         "30d": {
-          "n": 96,
-          "wins": 22,
-          "hit_rate_pct": 22.92,
-          "total_stake_pts": 96.0,
-          "total_profit_pts": 53.49,
-          "roi_pct": 55.72
+          "n": 101,
+          "wins": 24,
+          "hit_rate_pct": 23.76,
+          "total_stake_pts": 101.0,
+          "total_profit_pts": 54.93,
+          "roi_pct": 54.38
         },
         "ytd": {
-          "n": 96,
-          "wins": 22,
-          "hit_rate_pct": 22.92,
-          "total_stake_pts": 96.0,
-          "total_profit_pts": 53.49,
-          "roi_pct": 55.72
+          "n": 101,
+          "wins": 24,
+          "hit_rate_pct": 23.76,
+          "total_stake_pts": 101.0,
+          "total_profit_pts": 54.93,
+          "roi_pct": 54.38
         },
         "lifetime": {
-          "n": 96,
-          "wins": 22,
-          "hit_rate_pct": 22.92,
-          "total_stake_pts": 96.0,
-          "total_profit_pts": 53.49,
-          "roi_pct": 55.72
+          "n": 101,
+          "wins": 24,
+          "hit_rate_pct": 23.76,
+          "total_stake_pts": 101.0,
+          "total_profit_pts": 54.93,
+          "roi_pct": 54.38
         }
       }
     },
@@ -1621,36 +1621,36 @@
       "status": "OPEN",
       "windows": {
         "7d": {
-          "n": 12,
-          "wins": 5,
-          "hit_rate_pct": 41.67,
-          "total_stake_pts": 12.0,
-          "total_profit_pts": 4.05,
-          "roi_pct": 33.72
+          "n": 11,
+          "wins": 4,
+          "hit_rate_pct": 36.36,
+          "total_stake_pts": 11.0,
+          "total_profit_pts": 0.42,
+          "roi_pct": 3.85
         },
         "30d": {
-          "n": 29,
+          "n": 30,
           "wins": 9,
-          "hit_rate_pct": 31.03,
-          "total_stake_pts": 29.0,
-          "total_profit_pts": 10.87,
-          "roi_pct": 37.47
+          "hit_rate_pct": 30.0,
+          "total_stake_pts": 30.0,
+          "total_profit_pts": 9.87,
+          "roi_pct": 32.89
         },
         "ytd": {
-          "n": 29,
+          "n": 30,
           "wins": 9,
-          "hit_rate_pct": 31.03,
-          "total_stake_pts": 29.0,
-          "total_profit_pts": 10.87,
-          "roi_pct": 37.47
+          "hit_rate_pct": 30.0,
+          "total_stake_pts": 30.0,
+          "total_profit_pts": 9.87,
+          "roi_pct": 32.89
         },
         "lifetime": {
-          "n": 29,
+          "n": 30,
           "wins": 9,
-          "hit_rate_pct": 31.03,
-          "total_stake_pts": 29.0,
-          "total_profit_pts": 10.87,
-          "roi_pct": 37.47
+          "hit_rate_pct": 30.0,
+          "total_stake_pts": 30.0,
+          "total_profit_pts": 9.87,
+          "roi_pct": 32.89
         }
       }
     },
@@ -1747,36 +1747,36 @@
       "status": "OPEN",
       "windows": {
         "7d": {
-          "n": 264,
-          "wins": 77,
-          "hit_rate_pct": 29.17,
-          "total_stake_pts": 264.0,
-          "total_profit_pts": -27.53,
-          "roi_pct": -10.43
+          "n": 280,
+          "wins": 87,
+          "hit_rate_pct": 31.07,
+          "total_stake_pts": 280.0,
+          "total_profit_pts": -18.86,
+          "roi_pct": -6.74
         },
         "30d": {
-          "n": 698,
-          "wins": 232,
-          "hit_rate_pct": 33.24,
-          "total_stake_pts": 698.0,
-          "total_profit_pts": 170.67,
-          "roi_pct": 24.45
+          "n": 718,
+          "wins": 244,
+          "hit_rate_pct": 33.98,
+          "total_stake_pts": 718.0,
+          "total_profit_pts": 184.59,
+          "roi_pct": 25.71
         },
         "ytd": {
-          "n": 698,
-          "wins": 232,
-          "hit_rate_pct": 33.24,
-          "total_stake_pts": 698.0,
-          "total_profit_pts": 170.67,
-          "roi_pct": 24.45
+          "n": 718,
+          "wins": 244,
+          "hit_rate_pct": 33.98,
+          "total_stake_pts": 718.0,
+          "total_profit_pts": 184.59,
+          "roi_pct": 25.71
         },
         "lifetime": {
-          "n": 698,
-          "wins": 232,
-          "hit_rate_pct": 33.24,
-          "total_stake_pts": 698.0,
-          "total_profit_pts": 170.67,
-          "roi_pct": 24.45
+          "n": 718,
+          "wins": 244,
+          "hit_rate_pct": 33.98,
+          "total_stake_pts": 718.0,
+          "total_profit_pts": 184.59,
+          "roi_pct": 25.71
         }
       }
     },
